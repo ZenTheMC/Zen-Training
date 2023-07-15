@@ -1,0 +1,12 @@
+.WorkoutForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.labels {
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid;
+}
