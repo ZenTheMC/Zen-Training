@@ -1,9 +1,17 @@
 import React from "react";
 import styles from "./MuscleGroupForm.module.css"
 
-const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExerciseName}) => {
+const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExerciseName, addExercise }) => {
+    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        addExercise(muscleGroup, exerciseName);
+        setMuscleGroup("");
+        setExerciseName("");
+    }
+    
     return (
-        <div className={styles.MuscleGroupForm}>
+        <form className={styles.MuscleGroupForm} onSubmit={handleSubmit}>
             <label className={styles.MuscleGroupLabel}>
                 Muscle group:
                 <select
@@ -29,15 +37,15 @@ const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExercis
             </label>
             <label className={styles.ExerciseNameLabel}>
                 Exercise name:
-                <input
-                    type="text"
+                <select
                     value={exerciseName}
-                    onChange={(event) => setExerciseName(event.target.value)}
-                    placeholder="Name (e.g., Bench Press)"
-                    required
-                />
+                    onChange={(event) => setExerciseName(event.target.value)} required>
+                    <option value="">Select an exercise</option>
+                    {/* Rest of the options, fetched from ExerciseForm */}
+                </select>
             </label>
-        </div>
+            <button type="submit">Add Exercise</button>
+        </form>
     )
 }
 

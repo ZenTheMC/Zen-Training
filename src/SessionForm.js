@@ -42,9 +42,7 @@ const SessionForm = ({ exerciseName, sets, setSets, reps, setReps, weight, setWe
                 <input
                     type="number" min="0"
                     value={rirTarget}
-                    onChange={(event) => setRirTarget(event.target.value)}
-                    placeholder="#"
-                    required
+                    readOnly
                 />
             </label>
         </div>
