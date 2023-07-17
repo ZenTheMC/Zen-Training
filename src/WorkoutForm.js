@@ -111,41 +111,41 @@ const WorkoutForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+    
+        if (userId === null) {
+            alert("Please sign in to create a mesocycle.");
+            return;
+        }
+    
         // Prepare the mesocycle data
         const mesocycle = {
             mesoLength,
             daysPerWeek,
-            days: {
-                // For each day, create an object where the keys are muscle groups and the values are objects representing exercises
-                ...days.map(day => ({
-                    [day.dayOfWeek]: {
-                        muscleGroups: {
-                            // For each muscle group, create an object where the keys are exercises and the values are objects representing exercise details
-                            ...day.muscleGroups.map(muscleGroup => ({
-                                [muscleGroup.muscleGroup]: {
-                                    exercises: {
-                                        // For each exercise, create an object representing the exercise details
-                                        ...muscleGroup.exercises.map(exercise => ({
-                                            [exercise.exerciseName]: {
-                                                sets: exercise.sets,
-                                                reps: exercise.reps,
-                                                weight: exercise.weight,
-                                                rirTarget: exercise.rirTarget,
-                                                youtubeVideoId: exercise.youtubeVideoId
-                                            }
-                                        }))
-                                    }
-                                }
-                            }))
-                        }
-                    }
-                }))
-            }
+            days: days.reduce((acc, day) => {
+                acc[day.dayOfWeek] = {
+                    muscleGroups: day.muscleGroups.reduce((acc, muscleGroup) => {
+                        acc[muscleGroup.muscleGroup] = {
+                            exercises: muscleGroup.exercises.reduce((acc, exercise) => {
+                                acc[exercise.exerciseName] = {
+                                    sets: exercise.sets,
+                                    reps: exercise.reps,
+                                    weight: exercise.weight,
+                                    rirTarget: exercise.rirTarget,
+                                    youtubeVideoId: exercise.youtubeVideoId
+                                };
+                                return acc;
+                            }, {})
+                        };
+                        return acc;
+                    }, {})
+                };
+                return acc;
+            }, {})
         };
-
+    
         // Submit meso data to Firebase
         addMesocycle(userId, mesocycle);
-
+    
         // Clear the form fields
         setMesoLength("");
         setDaysPerWeek("");
@@ -158,7 +158,7 @@ const WorkoutForm = () => {
         setWeight("");
         setRirTarget("");
         setYoutubeVideoId("");
-    };
+    };    
 
     return (
         <form className={styles.WorkoutForm} onSubmit={handleSubmit}>

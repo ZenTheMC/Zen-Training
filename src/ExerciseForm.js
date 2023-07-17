@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ExerciseForm.module.css";
+import { db } from './Firebase';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./Firebase";
 
 const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType, youtubeVideoId, setYoutubeVideoId }) => {
+    const [exercises, setExercises] = useState([]);
+    const [user] = useAuthState(auth);
+    const userId = user ? user.uid : null;
+
+    useEffect(() => {
+        // Fetch exercise options from Firestore when the component mounts
+        const fetchExercises = async () => {
+            const globalExercisesCollection = await db.collection('globalExercises').get();
+            const globalExercises = globalExercisesCollection.docs.map(doc => doc.data().exerciseName);
+
+            let userExercises = [];
+            if (userId) {
+                const userExercisesCollection = await db.collection('users').doc(userId).collection('exercises').get();
+                userExercises = userExercisesCollection.docs.map(doc => doc.data().exerciseName);
+            }
+
+            setExercises([...globalExercises, ...userExercises]);
+        };
+
+        fetchExercises();
+    }, [userId]);
+
     return (
         <div className={styles.ExerciseForm}>
             <h2 className={styles.ExerciseNameLabel}>
@@ -13,14 +38,9 @@ const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType, youtubeVide
                     value={exerciseType}
                     onChange={(event) => setExerciseType(event.target.value)} required>
                     <option value="">Select the type of exercise</option>
-                    <option value="Barbell">Barbell</option>
-                    <option value="Dumbbell">Dumbbell</option>
-                    <option value="Cable">Cable</option>
-                    <option value="Machine">Machine</option>
-                    <option value="Smith Machine">Smith Machine</option>
-                    <option value="Bodyweight">Bodyweight</option>
-                    <option value="Loaded Bodyweight">Loaded Bodyweight</option>
-                    <option value="Other">Other</option>
+                    {exercises.map(exercise => (
+                        <option key={exercise} value={exercise}>{exercise}</option>
+                    ))}
                 </select>
             </label>
             <label className={styles.YoutubeVideoIdLabel}>

@@ -1,4 +1,4 @@
-import { db } from './firebase';
+import { db } from './Firebase';
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
