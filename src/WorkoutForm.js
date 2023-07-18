@@ -20,7 +20,6 @@ const WorkoutForm = () => {
     const [weight, setWeight] = useState("");
     const [reps, setReps] = useState("");
     const [rirTarget, setRirTarget] = useState("");
-    const [youtubeVideoId, setYoutubeVideoId] = useState("");
     const [currentWeek, setCurrentWeek] = useState(1);
     const [currentDay, setCurrentDay] = useState(1);
     const [days, setDays] = useState([]);
@@ -42,7 +41,7 @@ const WorkoutForm = () => {
         setRirTarget(calculateRirTarget(currentWeek, mesoLength));
     }, [currentWeek, mesoLength]);
 
-    const addExercise = (muscleGroup, exerciseName) => {
+    const addExercise = (muscleGroup, exerciseName, exerciseType) => {
         setDays(prevDays => {
             // Find the current day in the days array
             const dayIndex = prevDays.findIndex(day => day.dayOfWeek === dayOfWeek);
@@ -54,11 +53,11 @@ const WorkoutForm = () => {
                         muscleGroup,
                         exercises: [{
                             exerciseName,
+                            exerciseType,
                             sets: null,
                             reps: null,
                             weight: null,
                             rirTarget: null,
-                            youtubeVideoId: null
                         }]
                     }]
                 }];
@@ -73,22 +72,22 @@ const WorkoutForm = () => {
                         muscleGroup,
                         exercises: [{
                             exerciseName,
+                            exerciseType,
                             sets: null,
                             reps: null,
                             weight: null,
                             rirTarget: null,
-                            youtubeVideoId: null
                         }]
                     });
                 } else {
                     // If the muscle group is in the muscleGroups array, update it
                     const exercise = {
                         exerciseName,
+                        exerciseType,
                         sets: null,
                         reps: null,
                         weight: null,
                         rirTarget: null,
-                        youtubeVideoId: null
                     };
                     day.muscleGroups[muscleGroupIndex].exercises.push(exercise);
                 }
@@ -97,7 +96,6 @@ const WorkoutForm = () => {
         });
     };
     
-
     const handleWorkoutCompletion = () => {
         // Increment currentDay
         setCurrentDay(currentDay + 1);
@@ -131,7 +129,6 @@ const WorkoutForm = () => {
                                     reps: exercise.reps,
                                     weight: exercise.weight,
                                     rirTarget: exercise.rirTarget,
-                                    youtubeVideoId: exercise.youtubeVideoId
                                 };
                                 return acc;
                             }, {})
@@ -157,7 +154,6 @@ const WorkoutForm = () => {
         setReps("");
         setWeight("");
         setRirTarget("");
-        setYoutubeVideoId("");
     };    
 
     return (
@@ -165,7 +161,7 @@ const WorkoutForm = () => {
             <MesocycleForm mesoLength={mesoLength} setMesoLength={setMesoLength} daysPerWeek={daysPerWeek} setDaysPerWeek={setDaysPerWeek} />
             <DayForm dayofWeek={dayOfWeek} setDayOfWeek={setDayOfWeek} />
             <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} addExercise={addExercise} />
-            <ExerciseForm exerciseName={exerciseName} exerciseType={exerciseType} setExerciseType={setExerciseType} youtubeVideoId={youtubeVideoId} setYoutubeVideoId={setYoutubeVideoId} />
+            <ExerciseForm exerciseName={exerciseName} exerciseType={exerciseType} setExerciseType={setExerciseType} />
             <SessionForm exerciseName={exerciseName} sets={sets} setSets={setSets} weight={weight} setWeight={setWeight} reps={reps} setReps={setReps} rirTarget={rirTarget} setRirTarget={setRirTarget} />
             <button type="button" onClick={handleWorkoutCompletion}>Complete Workout</button>
             <button type="submit">Create Mesocycle</button>

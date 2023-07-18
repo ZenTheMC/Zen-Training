@@ -3,8 +3,9 @@ import styles from "./ExerciseForm.module.css";
 import { db } from './Firebase';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
+import { collection, getDocs } from "firebase/firestore";
 
-const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType, youtubeVideoId, setYoutubeVideoId }) => {
+const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType }) => {
     const [exercises, setExercises] = useState([]);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
@@ -12,13 +13,21 @@ const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType, youtubeVide
     useEffect(() => {
         // Fetch exercise options from Firestore when the component mounts
         const fetchExercises = async () => {
-            const globalExercisesCollection = await db.collection('globalExercises').get();
-            const globalExercises = globalExercisesCollection.docs.map(doc => doc.data().exerciseName);
+            const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
+            const globalExercises = globalExercisesCollection.docs.map(doc => ({
+                name: doc.data().exerciseName,
+                type: doc.data().exerciseType,
+                muscleGroup: doc.data().muscleGroup
+            }));
 
             let userExercises = [];
             if (userId) {
-                const userExercisesCollection = await db.collection('users').doc(userId).collection('exercises').get();
-                userExercises = userExercisesCollection.docs.map(doc => doc.data().exerciseName);
+                const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
+                userExercises = userExercisesCollection.docs.map(doc => ({
+                    name: doc.data().exerciseName,
+                    type: doc.data().exerciseType,
+                    muscleGroup: doc.data().muscleGroup
+                }));
             }
 
             setExercises([...globalExercises, ...userExercises]);
@@ -39,18 +48,9 @@ const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType, youtubeVide
                     onChange={(event) => setExerciseType(event.target.value)} required>
                     <option value="">Select the type of exercise</option>
                     {exercises.map(exercise => (
-                        <option key={exercise} value={exercise}>{exercise}</option>
+                        <option key={exercise.name} value={exercise.type}>{exercise.name}</option>
                     ))}
                 </select>
-            </label>
-            <label className={styles.YoutubeVideoIdLabel}>
-                Tutorial YT video (optional):
-                <input
-                    type="text"
-                    value={youtubeVideoId}
-                    onChange={(event) => setYoutubeVideoId(event.target.value)}
-                    placeholder="url"
-                />
             </label>
         </div>
     )
