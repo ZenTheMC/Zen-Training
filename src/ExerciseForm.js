@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType }) => {
+const ExerciseForm = ({ exerciseName, setExerciseName, exerciseType, setExerciseType, muscleGroup }) => {
     const [exercises, setExercises] = useState([]);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
@@ -36,22 +36,29 @@ const ExerciseForm = ({ exerciseName, exerciseType, setExerciseType }) => {
         fetchExercises();
     }, [userId]);
 
+    // Filter exercises based on the selected muscle group
+    const filteredExercises = exercises.filter(exercise => exercise.muscleGroup === muscleGroup);
+
+    const handleExerciseChange = (event) => {
+        const selectedExercise = filteredExercises.find(exercise => exercise.name === event.target.value);
+        setExerciseName(selectedExercise.name);
+        setExerciseType(selectedExercise.type);
+    };
+
     return (
         <div className={styles.ExerciseForm}>
             <h2 className={styles.ExerciseNameLabel}>
-                {exerciseName}
+                Exercise Name:
             </h2>
-            <label className={styles.ExerciseTypeLabel}>
-                Exercise type:
-                <select
-                    value={exerciseType}
-                    onChange={(event) => setExerciseType(event.target.value)} required>
-                    <option value="">Select the type of exercise</option>
-                    {exercises.map(exercise => (
-                        <option key={exercise.name} value={exercise.type}>{exercise.name}</option>
-                    ))}
-                </select>
-            </label>
+            <select value={exerciseName} onChange={handleExerciseChange}>
+                <option value="">Select an exercise</option>
+                {filteredExercises.map(exercise => (
+                    <option key={exercise.name} value={exercise.name}>{exercise.name}</option>
+                ))}
+            </select>
+            <p className={styles.ExerciseTypeLabel}>
+                Exercise type: {exerciseType}
+            </p>
         </div>
     )
 }

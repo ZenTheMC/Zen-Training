@@ -8,6 +8,7 @@ import SessionForm from "./SessionForm";
 import { addMesocycle } from "./FirebaseFunctions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
+import { signOut } from "firebase/auth";
 
 const WorkoutForm = () => {
     const [mesoLength, setMesoLength] = useState("");
@@ -25,6 +26,7 @@ const WorkoutForm = () => {
     const [days, setDays] = useState([]);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
+    const [exercises, setExercises] = useState([]);
 
     useEffect(() => {
         // Calculate rirTarget based on currentWeek and mesoLength
@@ -154,17 +156,26 @@ const WorkoutForm = () => {
         setReps("");
         setWeight("");
         setRirTarget("");
-    };    
+    };
+
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Error signing out", error);
+        }
+    };
 
     return (
         <form className={styles.WorkoutForm} onSubmit={handleSubmit}>
             <MesocycleForm mesoLength={mesoLength} setMesoLength={setMesoLength} daysPerWeek={daysPerWeek} setDaysPerWeek={setDaysPerWeek} />
             <DayForm dayofWeek={dayOfWeek} setDayOfWeek={setDayOfWeek} />
-            <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} addExercise={addExercise} />
-            <ExerciseForm exerciseName={exerciseName} exerciseType={exerciseType} setExerciseType={setExerciseType} />
+            <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} setExerciseType={setExerciseType} addExercise={addExercise} exercises={exercises} />
+            <ExerciseForm exerciseName={exerciseName} exerciseType={exerciseType} setExerciseType={setExerciseType} muscleGroup={muscleGroup} />
             <SessionForm exerciseName={exerciseName} sets={sets} setSets={setSets} weight={weight} setWeight={setWeight} reps={reps} setReps={setReps} rirTarget={rirTarget} setRirTarget={setRirTarget} />
             <button type="button" onClick={handleWorkoutCompletion}>Complete Workout</button>
             <button type="submit">Create Mesocycle</button>
+            <button type="button" onClick={handleSignOut}>Sign Out</button>
         </form>
     );
 }
