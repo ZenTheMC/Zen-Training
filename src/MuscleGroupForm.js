@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExerciseName, addExercise, setExerciseType }) => {
+const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExerciseName, addExercise }) => {
     const [exercises, setExercises] = useState([]);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
@@ -16,7 +16,6 @@ const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExercis
             const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
             const globalExercises = globalExercisesCollection.docs.map(doc => ({
                 name: doc.data().exerciseName,
-                type: doc.data().exerciseType,
                 muscleGroup: doc.data().muscleGroup
             }));
 
@@ -25,7 +24,6 @@ const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExercis
                 const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
                 userExercises = userExercisesCollection.docs.map(doc => ({
                     name: doc.data().exerciseName,
-                    type: doc.data().exerciseType,
                     muscleGroup: doc.data().muscleGroup
                 }));
             }
@@ -42,7 +40,6 @@ const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExercis
     const handleExerciseNameChange = (event) => {
         const selectedExercise = filteredExercises.find(exercise => exercise.name === event.target.value);
         setExerciseName(selectedExercise.name);
-        setExerciseType(selectedExercise.type);
     };
 
     const handleSubmit = (event) => {

@@ -16,7 +16,6 @@ const WorkoutForm = () => {
     const [dayOfWeek, setDayOfWeek] = useState("");
     const [muscleGroup, setMuscleGroup] = useState("");
     const [exerciseName, setExerciseName] = useState("");
-    const [exerciseType, setExerciseType] = useState("");
     const [sets, setSets] = useState("");
     const [weight, setWeight] = useState("");
     const [reps, setReps] = useState("");
@@ -43,7 +42,7 @@ const WorkoutForm = () => {
         setRirTarget(calculateRirTarget(currentWeek, mesoLength));
     }, [currentWeek, mesoLength]);
 
-    const addExercise = (muscleGroup, exerciseName, exerciseType) => {
+    const addExercise = (muscleGroup, exerciseName) => {
         setDays(prevDays => {
             // Find the current day in the days array
             const dayIndex = prevDays.findIndex(day => day.dayOfWeek === dayOfWeek);
@@ -55,7 +54,6 @@ const WorkoutForm = () => {
                         muscleGroup,
                         exercises: [{
                             exerciseName,
-                            exerciseType,
                             sets: null,
                             reps: null,
                             weight: null,
@@ -74,7 +72,6 @@ const WorkoutForm = () => {
                         muscleGroup,
                         exercises: [{
                             exerciseName,
-                            exerciseType,
                             sets: null,
                             reps: null,
                             weight: null,
@@ -85,7 +82,6 @@ const WorkoutForm = () => {
                     // If the muscle group is in the muscleGroups array, update it
                     const exercise = {
                         exerciseName,
-                        exerciseType,
                         sets: null,
                         reps: null,
                         weight: null,
@@ -151,7 +147,6 @@ const WorkoutForm = () => {
         setDayOfWeek("");
         setMuscleGroup("");
         setExerciseName("");
-        setExerciseType("");
         setSets("");
         setReps("");
         setWeight("");
@@ -170,8 +165,8 @@ const WorkoutForm = () => {
         <form className={styles.WorkoutForm} onSubmit={handleSubmit}>
             <MesocycleForm mesoLength={mesoLength} setMesoLength={setMesoLength} daysPerWeek={daysPerWeek} setDaysPerWeek={setDaysPerWeek} />
             <DayForm dayofWeek={dayOfWeek} setDayOfWeek={setDayOfWeek} />
-            <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} setExerciseType={setExerciseType} addExercise={addExercise} exercises={exercises} />
-            <ExerciseForm exerciseName={exerciseName} exerciseType={exerciseType} setExerciseType={setExerciseType} muscleGroup={muscleGroup} />
+            <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} addExercise={addExercise} exercises={exercises} />
+            <ExerciseForm exerciseName={exerciseName} muscleGroup={muscleGroup} />
             <SessionForm exerciseName={exerciseName} sets={sets} setSets={setSets} weight={weight} setWeight={setWeight} reps={reps} setReps={setReps} rirTarget={rirTarget} setRirTarget={setRirTarget} />
             <button type="button" onClick={handleWorkoutCompletion}>Complete Workout</button>
             <button type="submit">Create Mesocycle</button>

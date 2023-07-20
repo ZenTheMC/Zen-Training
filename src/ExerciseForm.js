@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-const ExerciseForm = ({ exerciseName, setExerciseName, exerciseType, setExerciseType, muscleGroup }) => {
+const ExerciseForm = ({ exerciseName, setExerciseName, muscleGroup }) => {
     const [exercises, setExercises] = useState([]);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
@@ -16,7 +16,6 @@ const ExerciseForm = ({ exerciseName, setExerciseName, exerciseType, setExercise
             const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
             const globalExercises = globalExercisesCollection.docs.map(doc => ({
                 name: doc.data().exerciseName,
-                type: doc.data().exerciseType,
                 muscleGroup: doc.data().muscleGroup
             }));
 
@@ -25,7 +24,6 @@ const ExerciseForm = ({ exerciseName, setExerciseName, exerciseType, setExercise
                 const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
                 userExercises = userExercisesCollection.docs.map(doc => ({
                     name: doc.data().exerciseName,
-                    type: doc.data().exerciseType,
                     muscleGroup: doc.data().muscleGroup
                 }));
             }
@@ -42,7 +40,6 @@ const ExerciseForm = ({ exerciseName, setExerciseName, exerciseType, setExercise
     const handleExerciseChange = (event) => {
         const selectedExercise = filteredExercises.find(exercise => exercise.name === event.target.value);
         setExerciseName(selectedExercise.name);
-        setExerciseType(selectedExercise.type);
     };
 
     return (
@@ -56,9 +53,6 @@ const ExerciseForm = ({ exerciseName, setExerciseName, exerciseType, setExercise
                     <option key={exercise.name} value={exercise.name}>{exercise.name}</option>
                 ))}
             </select>
-            <p className={styles.ExerciseTypeLabel}>
-                Exercise type: {exerciseType}
-            </p>
         </div>
     )
 }
