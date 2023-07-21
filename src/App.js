@@ -15,6 +15,7 @@ const App = () => {
         <Route path="/signin" element={user ? <Navigate to="/workout" /> : <SignInForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/workout" element={user ? <WorkoutForm /> : <Navigate to="/signin" />} />
+        <Route path="/*" element={<Navigate to="/signin" />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>
