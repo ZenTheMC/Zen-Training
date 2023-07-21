@@ -25,7 +25,7 @@ const WorkoutForm = () => {
     const [days, setDays] = useState([]);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
-    const [exercises, setExercises] = useState([]);
+    const [exercises] = useState([]);
 
     useEffect(() => {
         // Calculate rirTarget based on currentWeek and mesoLength
