@@ -9,6 +9,7 @@ const CreateMeso = () => {
         weeks: "",
         days: [] // This will be an array of Day objects. Each Day object will include the day of the week and an array of Exercises.
     });
+    const [mesoName, setMesoName] = useState("");
 
     const addDay = () => {
         setMeso(prevMeso => ({ ...prevMeso, days: [...prevMeso.days, { dayOfWeek: "", exercises: [] }] }));
@@ -60,7 +61,8 @@ const CreateMeso = () => {
             <SaveMeso
                 meso={meso}
                 setMeso={setMeso}
-                // TODO: Pass a function as a prop to handle saving the meso
+                mesoName={mesoName}
+                setMesoName={setMesoName}
             />
         </div>
     );

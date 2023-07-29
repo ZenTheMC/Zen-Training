@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { addMesocycle } from "./FirebaseFunctions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 
-const SaveMeso = ({ meso, setMeso }) => {
-    const [mesoName, setMesoName] = useState("");
+const SaveMeso = ({ meso, setMeso, mesoName, setMesoName }) => {
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
 
