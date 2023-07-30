@@ -1,13 +1,8 @@
 import React from "react";
 import MuscleGroupForm from "./MuscleGroupForm";
-import ExerciseForm from "./ExerciseForm";
 import styles from "./DayColumn.module.css";
 
-const DayColumn = ({ day, deleteDay, setMuscleGroup, setExerciseName, addExercise }) => {
-    
-    const handleDayChange = (event) => {
-        day.dayOfWeek = event.target.value;
-    }
+const DayColumn = ({ day, index, deleteDay, setMuscleGroup, setExerciseName, addExercise, exercises, handleDayChange }) => {
 
     const handleDelete = () => {
         deleteDay(day.dayOfWeek);
@@ -17,7 +12,9 @@ const DayColumn = ({ day, deleteDay, setMuscleGroup, setExerciseName, addExercis
         <div className={styles.DayColumn}>
             <label>
                 Day of the week:
-                <select value={day.dayOfWeek} onChange={handleDayChange}>
+                <select 
+                    value={day.dayOfWeek} 
+                    onChange={(event) => { handleDayChange(index, event.target.value); }}>
                     <option value="">Select a day</option>
                     <option value="Monday">Monday</option>
                     <option value="Tuesday">Tuesday</option>
@@ -37,14 +34,11 @@ const DayColumn = ({ day, deleteDay, setMuscleGroup, setExerciseName, addExercis
                         exerciseName={exercise.name}
                         setExerciseName={(exerciseName) => setExerciseName(index, exerciseName)}
                         addExercise={() => addExercise(index)}
-                    />
-                    <ExerciseForm
-                        exerciseName={exercise.name}
-                        setExerciseName={(exerciseName) => setExerciseName(index, exerciseName)}
+                        exercises={exercises}
                     />
                     <button onClick={() => addExercise(index)}>+ Add a muscle group</button>
                 </div>
-            ))};
+            ))}
         </div>
     );
 };

@@ -1,18 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DayColumn from "./DayColumn";
 import SaveMeso from "./SaveMeso";
-import styles from "./CreateMeso.module.css"
+import styles from "./CreateMeso.module.css";
+import { db } from "./Firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./Firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const CreateMeso = () => {
     const [meso, setMeso] = useState({
         name: "",
         weeks: "",
-        days: [] // This will be an array of Day objects. Each Day object will include the day of the week and an array of Exercises.
+        days: []
     });
     const [mesoName, setMesoName] = useState("");
+    const [exercises, setExercises] = useState([]);
+    const [user] = useAuthState(auth);
+    const userId = user ? user.uid : null;
+    
+    useEffect(() => {
+        // Fetch exercises from firebase
+        const fetchExercises = async () => {
+            const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
+            const globalExercises = globalExercisesCollection.docs.map(doc => ({
+                name: doc.data().exerciseName,
+                muscleGroup: doc.data().muscleGroup
+            }));
+
+            let userExercises = [];
+            if (userId) {
+                const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
+                userExercises = userExercisesCollection.docs.map(doc => ({
+                    name: doc.data().exerciseName,
+                    muscleGroup: doc.data().muscleGroup
+                }));
+            }
+
+            setExercises([...globalExercises, ...userExercises]);
+        };
+
+        fetchExercises();
+    }, [userId]);
 
     const addDay = () => {
-        setMeso(prevMeso => ({ ...prevMeso, days: [...prevMeso.days, { dayOfWeek: "", exercises: [] }] }));
+        setMeso(prevMeso => ({ 
+            ...prevMeso, 
+            days: [
+                ...prevMeso.days, 
+                { 
+                    dayOfWeek: "", 
+                    exercises: [{ muscleGroup: "", name: "" }] // add initial exercise
+                }
+            ] 
+        }));
     };
 
     const deleteDay = (dayOfWeek) => {
@@ -43,21 +83,31 @@ const CreateMeso = () => {
         });
     };
 
-    // TODO: Implement function to save/create the meso
+    const handleDayChange = (dayIndex, newdayOfWeek) => {
+        setMeso(prevMeso => {
+            const newDays = [...prevMeso.days];
+            newDays[dayIndex].dayOfWeek = newdayOfWeek;
+            return { ...prevMeso, days: newDays };
+        });
+    };    
 
     return (
         <div className={styles.CreateMeso}>
+            <h1>Create A Mesocycle</h1>
             {meso.days.map((day, index) => (
                 <DayColumn
                     key={index}
                     day={day}
                     deleteDay={deleteDay}
+                    index={index}
+                    handleDayChange={handleDayChange}
+                    exercises={exercises}
                     setMuscleGroup={(exerciseIndex, muscleGroup) => setMuscleGroup(index, exerciseIndex, muscleGroup)}
                     setExerciseName={(exerciseIndex, exerciseName) => setExerciseName(index, exerciseIndex, exerciseName)}
                     addExercise={() => addExercise(index)}
                 />
             ))};
-            <button onClick={addDay}>+ Add a Day</button>
+            <button onClick={addDay}>+ Add Day</button>
             <SaveMeso
                 meso={meso}
                 setMeso={setMeso}

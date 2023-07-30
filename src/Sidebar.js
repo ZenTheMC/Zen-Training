@@ -4,7 +4,7 @@ const Sidebar = () => {
     return (
         <div>
             {/* Other sidebar content */}
-            <Link to="/newmeso">Create Mesocycle</Link>
+            <Link to="/newmeso">Create Mesocycle Page</Link>
         </div>
     );
 }
