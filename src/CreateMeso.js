@@ -89,24 +89,24 @@ const CreateMeso = () => {
             newDays[dayIndex].dayOfWeek = newdayOfWeek;
             return { ...prevMeso, days: newDays };
         });
-    };    
+    };  
 
     return (
         <div className={styles.CreateMeso}>
             <h1>Create A Mesocycle</h1>
-            {meso.days.map((day, index) => (
+            {meso.days.map((day, dayIndex) => (
                 <DayColumn
-                    key={index}
+                    key={dayIndex}
                     day={day}
+                    dayIndex={dayIndex}
                     deleteDay={deleteDay}
-                    index={index}
                     handleDayChange={handleDayChange}
                     exercises={exercises}
-                    setMuscleGroup={(exerciseIndex, muscleGroup) => setMuscleGroup(index, exerciseIndex, muscleGroup)}
-                    setExerciseName={(exerciseIndex, exerciseName) => setExerciseName(index, exerciseIndex, exerciseName)}
-                    addExercise={() => addExercise(index)}
+                    setMuscleGroup={(exerciseIndex, muscleGroup) => setMuscleGroup(dayIndex, exerciseIndex, muscleGroup)}
+                    setExerciseName={(exerciseIndex, exerciseName) => setExerciseName(dayIndex, exerciseIndex, exerciseName)}
+                    addExercise={() => addExercise(dayIndex)}
                 />
-            ))};
+            ))}
             <button onClick={addDay}>+ Add Day</button>
             <SaveMeso
                 meso={meso}

@@ -2,7 +2,7 @@ import React from "react";
 import MuscleGroupForm from "./MuscleGroupForm";
 import styles from "./DayColumn.module.css";
 
-const DayColumn = ({ day, index, deleteDay, setMuscleGroup, setExerciseName, addExercise, exercises, handleDayChange }) => {
+const DayColumn = ({ day, dayIndex, deleteDay, setMuscleGroup, setExerciseName, addExercise, exercises, handleDayChange }) => {
 
     const handleDelete = () => {
         deleteDay(day.dayOfWeek);
@@ -14,7 +14,7 @@ const DayColumn = ({ day, index, deleteDay, setMuscleGroup, setExerciseName, add
                 Day of the week:
                 <select 
                     value={day.dayOfWeek} 
-                    onChange={(event) => { handleDayChange(index, event.target.value); }}>
+                    onChange={(event) => { handleDayChange(dayIndex, event.target.value); }}>
                     <option value="">Select a day</option>
                     <option value="Monday">Monday</option>
                     <option value="Tuesday">Tuesday</option>
@@ -30,13 +30,13 @@ const DayColumn = ({ day, index, deleteDay, setMuscleGroup, setExerciseName, add
                 <div key={index}>
                     <MuscleGroupForm
                         muscleGroup={exercise.muscleGroup}
-                        setMuscleGroup={(muscleGroup) => setMuscleGroup(index, muscleGroup)}
+                        setMuscleGroup={(muscleGroup) => setMuscleGroup(dayIndex, index, muscleGroup)}
                         exerciseName={exercise.name}
-                        setExerciseName={(exerciseName) => setExerciseName(index, exerciseName)}
-                        addExercise={() => addExercise(index)}
+                        setExerciseName={(exerciseName) => setExerciseName(dayIndex, index, exerciseName)}
+                        addExercise={() => addExercise(dayIndex)}
                         exercises={exercises}
                     />
-                    <button onClick={() => addExercise(index)}>+ Add a muscle group</button>
+                    <button onClick={() => addExercise(dayIndex)}>+ Add a muscle group</button> {/* Removed addExerciseField */}
                 </div>
             ))}
         </div>

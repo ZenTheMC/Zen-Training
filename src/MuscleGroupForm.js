@@ -1,52 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./MuscleGroupForm.module.css";
-import { db } from './Firebase';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./Firebase";
-import { collection, getDocs } from "firebase/firestore";
 
-const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExerciseName, addExercise }) => {
-    const [exercises, setExercises] = useState([]);
-    const [user] = useAuthState(auth);
-    const userId = user ? user.uid : null;
-
-    useEffect(() => {
-        // Fetch exercise options from Firestore when the component mounts
-        const fetchExercises = async () => {
-            const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
-            const globalExercises = globalExercisesCollection.docs.map(doc => ({
-                name: doc.data().exerciseName,
-                muscleGroup: doc.data().muscleGroup
-            }));
-
-            let userExercises = [];
-            if (userId) {
-                const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
-                userExercises = userExercisesCollection.docs.map(doc => ({
-                    name: doc.data().exerciseName,
-                    muscleGroup: doc.data().muscleGroup
-                }));
-            }
-
-            setExercises([...globalExercises, ...userExercises]);
-        };
-
-        fetchExercises();
-    }, [userId]);
+const MuscleGroupForm = ({ addExercise, exercises }) => {
+    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
+    const [selectedExerciseName, setSelectedExerciseName] = useState("");
 
     // Filter exercises based on the selected muscle group
-    const filteredExercises = exercises.filter(exercise => exercise.muscleGroup === muscleGroup);
+    const filteredExercises = exercises.filter(exercise => exercise.muscleGroup === selectedMuscleGroup);
 
     const handleExerciseNameChange = (event) => {
         const selectedExercise = filteredExercises.find(exercise => exercise.name === event.target.value);
-        setExerciseName(selectedExercise.name);
+        setSelectedExerciseName(selectedExercise.name);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        addExercise(muscleGroup, exerciseName);
-        setMuscleGroup("");
-        setExerciseName("");
+        addExercise(selectedMuscleGroup, selectedExerciseName);
+        setSelectedMuscleGroup("");
+        setSelectedExerciseName("");
     }
     
     return (
@@ -54,8 +25,8 @@ const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExercis
             <label className={styles.MuscleGroupLabel}>
                 Muscle group:
                 <select
-                    value={muscleGroup}
-                    onChange={(event) => setMuscleGroup(event.target.value)} required>
+                    value={selectedMuscleGroup}
+                    onChange={(event) => setSelectedMuscleGroup(event.target.value)} required>
                     <option value="">Select a muscle group</option>
                     <option value="Chest">Chest</option>
                     <option value="Back">Back</option>
@@ -77,7 +48,7 @@ const MuscleGroupForm = ({ muscleGroup, setMuscleGroup, exerciseName, setExercis
             <label className={styles.ExerciseNameLabel}>
                 Exercise name:
                 <select
-                    value={exerciseName}
+                    value={selectedExerciseName}
                     onChange={handleExerciseNameChange} required>
                     <option value="">Select an exercise</option>
                     {filteredExercises.map(exercise => (

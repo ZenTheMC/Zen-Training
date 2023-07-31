@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { addMesocycle } from "./FirebaseFunctions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
@@ -6,6 +6,7 @@ import { auth } from "./Firebase";
 const SaveMeso = ({ meso, setMeso, mesoName, setMesoName }) => {
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
+    const [mesoLength, setMesoLength] = useState("");
 
     const handleSaveMeso = async (event) => {
         event.preventDefault();
@@ -15,9 +16,10 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName }) => {
             return;
         }
 
-        // Prepare the mesocycle data
+        // Prepare meso name and meso length in the meso data
         const mesocycle = {
-            name: mesoName,  // include the name in the mesocycle data
+            name: mesoName, 
+            length: mesoLength, 
             ...meso
         };
 
@@ -25,7 +27,8 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName }) => {
         await addMesocycle(userId, mesocycle);
 
         // Clear the form fields
-        setMesoName("");  // reset the mesocycle name
+        setMesoName("");
+        setMesoLength("");
 
         // Reset the meso state in the CreateMeso component
         setMeso({
@@ -42,7 +45,14 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName }) => {
                 type="text"
                 value={mesoName}
                 onChange={(e) => setMesoName(e.target.value)}
-                placeholder="Enter a name for the mesocycle"
+                placeholder="Meso Name"
+                required
+            />
+            <input
+                type="number"
+                value={mesoLength}
+                onChange={(e) => setMesoLength(e.target.value)}
+                placeholder="Meso Length (Weeks)"
                 required
             />
             <button type="submit">Save Mesocycle</button>
