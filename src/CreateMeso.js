@@ -8,7 +8,7 @@ import { auth } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 const CreateMeso = () => {
-    const [meso, setMeso] = useState({ name: "", weeks: "", days: [] });
+    const [meso, setMeso] = useState({ days: [] });  // Updated here
     const [mesoName, setMesoName] = useState("");
     const [mesoWeeks, setMesoWeeks] = useState("");
     const [exercises, setExercises] = useState([]);

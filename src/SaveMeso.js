@@ -9,31 +9,29 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
 
     const handleSaveMeso = async (event) => {
         event.preventDefault();
-
+    
         if (userId === null) {
             alert("Please sign in to save a mesocycle.");
             return;
         }
-
+    
         // Prepare meso name and meso length in the meso data
         const mesocycle = {
-            name: mesoName, 
-            weeks: mesoWeeks, 
-            ...meso
+            name: mesoName,
+            weeks: mesoWeeks,
+            ...meso,
         };
-
+    
         // Submit meso data to Firebase
         await addMesocycle(userId, mesocycle);
-
+    
         // Clear the form fields
         setMesoName("");
         setMesoWeeks("");
-
+    
         // Reset the meso state in the CreateMeso component
         setMeso({
-            name: "",
-            weeks: "",
-            days: []
+            days: [],
         });
     };
 
