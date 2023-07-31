@@ -2,19 +2,27 @@ import React from "react";
 import MuscleGroupForm from "./MuscleGroupForm";
 import styles from "./DayColumn.module.css";
 
-const DayColumn = ({ day, dayIndex, deleteDay, setMuscleGroup, setExerciseName, addExercise, exercises, handleDayChange }) => {
-
+const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises }) => {
     const handleDelete = () => {
-        deleteDay(day.dayOfWeek);
-    }
+        deleteDay(dayIndex);
+    };
+
+    const handleDayDetailsChange = (value) => {
+        handleDayChange(dayIndex, value);
+    };
+
+    const addExercise = () => {
+        handleDayChange(dayIndex, { exercises: [...day.exercises, { muscleGroup: "", name: "" }] });
+    };
 
     return (
         <div className={styles.DayColumn}>
             <label>
                 Day of the week:
-                <select 
-                    value={day.dayOfWeek} 
-                    onChange={(event) => { handleDayChange(dayIndex, event.target.value); }}>
+                <select
+                    value={day.dayOfWeek}
+                    onChange={(event) => handleDayDetailsChange({ dayOfWeek: event.target.value })}
+                    required>
                     <option value="">Select a day</option>
                     <option value="Monday">Monday</option>
                     <option value="Tuesday">Tuesday</option>
@@ -26,19 +34,15 @@ const DayColumn = ({ day, dayIndex, deleteDay, setMuscleGroup, setExerciseName, 
                 </select>
             </label>
             <button onClick={handleDelete}>Delete Day</button>
-            {day.exercises.map((exercise, index) => (
-                <div key={index}>
-                    <MuscleGroupForm
-                        muscleGroup={exercise.muscleGroup}
-                        setMuscleGroup={(muscleGroup) => setMuscleGroup(dayIndex, index, muscleGroup)}
-                        exerciseName={exercise.name}
-                        setExerciseName={(exerciseName) => setExerciseName(dayIndex, index, exerciseName)}
-                        addExercise={() => addExercise(dayIndex)}
-                        exercises={exercises}
-                    />
-                    <button onClick={() => addExercise(dayIndex)}>+ Add a muscle group</button> {/* Removed addExerciseField */}
-                </div>
+            {day.exercises.map((exercise, exerciseIndex) => (
+                <MuscleGroupForm
+                    key={exerciseIndex}
+                    exercise={exercise}
+                    handleExerciseChange={(value) => handleDayDetailsChange({ exercises: day.exercises.map((ex, i) => i === exerciseIndex ? { ...ex, ...value } : ex) })}
+                    exercises={exercises}
+                />
             ))}
+            <button onClick={addExercise}>+ Add Exercise</button>
         </div>
     );
 };

@@ -1,32 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./MuscleGroupForm.module.css";
 
-const MuscleGroupForm = ({ addExercise, exercises }) => {
-    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
-    const [selectedExerciseName, setSelectedExerciseName] = useState("");
+const MuscleGroupForm = ({ exercise, handleExerciseChange, exercises }) => {
+    const filteredExercises = exercises.filter(ex => ex.muscleGroup === exercise.muscleGroup);
 
-    // Filter exercises based on the selected muscle group
-    const filteredExercises = exercises.filter(exercise => exercise.muscleGroup === selectedMuscleGroup);
-
-    const handleExerciseNameChange = (event) => {
-        const selectedExercise = filteredExercises.find(exercise => exercise.name === event.target.value);
-        setSelectedExerciseName(selectedExercise.name);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        addExercise(selectedMuscleGroup, selectedExerciseName);
-        setSelectedMuscleGroup("");
-        setSelectedExerciseName("");
-    }
-    
     return (
-        <form className={styles.MuscleGroupForm} onSubmit={handleSubmit}>
+        <div className={styles.MuscleGroupForm}>
             <label className={styles.MuscleGroupLabel}>
                 Muscle group:
                 <select
-                    value={selectedMuscleGroup}
-                    onChange={(event) => setSelectedMuscleGroup(event.target.value)} required>
+                    value={exercise.muscleGroup}
+                    onChange={(event) => handleExerciseChange({ muscleGroup: event.target.value })}
+                    required>
                     <option value="">Select a muscle group</option>
                     <option value="Chest">Chest</option>
                     <option value="Back">Back</option>
@@ -48,17 +33,17 @@ const MuscleGroupForm = ({ addExercise, exercises }) => {
             <label className={styles.ExerciseNameLabel}>
                 Exercise name:
                 <select
-                    value={selectedExerciseName}
-                    onChange={handleExerciseNameChange} required>
+                    value={exercise.name}
+                    onChange={(event) => handleExerciseChange({ name: event.target.value })}
+                    required>
                     <option value="">Select an exercise</option>
-                    {filteredExercises.map(exercise => (
-                        <option key={exercise.name} value={exercise.name}>{exercise.name}</option>
+                    {filteredExercises.map(ex => (
+                        <option key={ex.name} value={ex.name}>{ex.name}</option>
                     ))}
                 </select>
             </label>
-            <button type="submit">Add Exercise</button>
-        </form>
+        </div>
     )
-}
+};
 
 export default MuscleGroupForm;

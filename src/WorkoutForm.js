@@ -165,7 +165,7 @@ const WorkoutForm = () => {
         <form className={styles.WorkoutForm} onSubmit={handleSubmit}>
             <MesocycleForm mesoLength={mesoLength} setMesoLength={setMesoLength} daysPerWeek={daysPerWeek} setDaysPerWeek={setDaysPerWeek} />
             <DayForm dayofWeek={dayOfWeek} setDayOfWeek={setDayOfWeek} />
-            <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} addExercise={addExercise} exercises={exercises} />
+            <MuscleGroupForm muscleGroup={muscleGroup} setMuscleGroup={setMuscleGroup} exerciseName={exerciseName} setExerciseName={setExerciseName} addExercise={addExercise} exercises={exercises} exercise={{ muscleGroup: "", name: "" }} /* dummy value */ handleExerciseChange={() => {}} /* dummy value */ />
             <ExerciseForm exerciseName={exerciseName} muscleGroup={muscleGroup} />
             <SessionForm exerciseName={exerciseName} sets={sets} setSets={setSets} weight={weight} setWeight={setWeight} reps={reps} setReps={setReps} rirTarget={rirTarget} setRirTarget={setRirTarget} />
             <button type="button" onClick={handleWorkoutCompletion}>Complete Workout</button>
