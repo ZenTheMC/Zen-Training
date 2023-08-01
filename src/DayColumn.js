@@ -42,7 +42,7 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises }) => 
                     exercises={exercises}
                 />
             ))}
-            <button onClick={addExercise}>+ Add Exercise</button>
+            <button onClick={addExercise}>+ Add Another Muscle</button>
         </div>
     );
 };

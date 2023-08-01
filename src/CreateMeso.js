@@ -66,7 +66,7 @@ const CreateMeso = () => {
 
     return (
         <div className={styles.CreateMeso}>
-            <h1>Create A Mesocycle</h1>
+            <h1>Create A Custom Program</h1>
             <input type="text" name="name" value={mesoName} onChange={handleMesoNameChange} placeholder="Meso Name" required />
             <input type="number" name="weeks" value={mesoWeeks} onChange={handleMesoWeeksChange} placeholder="Meso Length (Weeks)" required />
             {meso.days.map((day, dayIndex) => (
