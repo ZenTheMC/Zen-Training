@@ -3,4 +3,30 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgb(165, 161, 161);
+    margin-left: 15%;
+}
+
+.Inputs {
+    margin-bottom: 50px;
+    background-color: rgb(199, 235, 154);
+}
+
+.Input {
+    margin: 12px;
+}
+
+.Days {
+    display: flex;
+    border: solid black 1px;
+    margin: 5px;
+}
+
+.Completion {
+    margin-bottom: 50px;
+}
+
+.AddDayButton {
+    background-color: rgb(245, 193, 163);
+    border: black 1px;
 }

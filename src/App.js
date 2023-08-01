@@ -7,22 +7,25 @@ import Sidebar from "./Sidebar";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import { useAuthState } from "react-firebase-hooks/auth";
+import styles from "./App.module.css"
 
 const App = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <Router>
-      <Sidebar />
-      <Routes>
-        <Route path="/signin" element={user ? <Navigate to="/workout" /> : <SignInForm />} />
-        <Route path="/signup" element={<SignUpForm />} />
-        <Route path="/workout" element={user ? <WorkoutForm /> : <Navigate to="/signin" />} />
-        <Route path="/newmeso" element={user ? <CreateMeso /> : <Navigate to="/signin" />} />
-        <Route path="/*" element={<Navigate to="/signin" />} />
-        {/* Add more routes as needed */}
-      </Routes>
-    </Router>
+    <div className={styles.App}>
+      <Router>
+        <Sidebar />
+        <Routes>
+          <Route path="/signin" element={user ? <Navigate to="/workout" /> : <SignInForm />} />
+          <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/workout" element={user ? <WorkoutForm /> : <Navigate to="/signin" />} />
+          <Route path="/newmeso" element={user ? <CreateMeso /> : <Navigate to="/signin" />} />
+          <Route path="/*" element={<Navigate to="/signin" />} />
+          {/* Add more routes as needed */}
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

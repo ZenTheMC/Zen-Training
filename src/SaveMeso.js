@@ -2,6 +2,7 @@ import React from "react";
 import { addMesocycle } from "./FirebaseFunctions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
+import styles from "./SaveMeso.module.css";
 
 const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeeks }) => {
     const [user] = useAuthState(auth);
@@ -36,9 +37,11 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
     };
 
     return (
-        <form onSubmit={handleSaveMeso}>
-            <button type="submit">Save Mesocycle</button>
-        </form>
+        <div className={styles.SaveMeso}>
+            <form onSubmit={handleSaveMeso}>
+                <button className={styles.SubmitButton} type="submit">Save Mesocycle</button>
+            </form>
+        </div>
     );
 }
 

@@ -1,0 +1,16 @@
+.MuscleGroupForm {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.MuscleGroupLabel {
+    margin-right: 8px;
+    margin-top: 8px;
+}
+
+.ExerciseNameLabel {
+    margin-right: 8px;
+    margin-top: 8px;
+}

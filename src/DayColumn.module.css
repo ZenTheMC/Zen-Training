@@ -1,0 +1,28 @@
+.DayColumn {
+    display: flex;
+    flex-direction: column;
+    border: solid black 1px;
+    background-color: rgb(231, 211, 249);
+}
+
+.DayLabel {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(171, 251, 251);
+    padding: 8px;
+    margin-bottom: 20px;
+}
+
+.Workout {
+    display: flex;
+    flex-direction: column;
+}
+
+.AddMuscleButton {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    align-self: center;
+    width: 50%;
+    background-color: rgb(237, 239, 172);
+    border: solid black 1px;
+}
