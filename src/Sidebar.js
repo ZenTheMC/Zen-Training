@@ -17,6 +17,7 @@ const Sidebar = () => {
         <div className={styles.Sidebar}>
             {/* Other sidebar content */}
             <Link className={styles.Link} to="/newmeso">Create Mesocycle</Link>
+            <Link className={styles.Link} to="/workout">Temporary Page</Link>
             <button className={styles.SignOutButton} type="button" onClick={handleSignOut}>Sign Out</button>
         </div>
     );

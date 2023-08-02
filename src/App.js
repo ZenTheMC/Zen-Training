@@ -17,7 +17,7 @@ const App = () => {
       <Router>
         <Sidebar />
         <Routes>
-          <Route path="/signin" element={user ? <Navigate to="/workout" /> : <SignInForm />} />
+          <Route path="/signin" element={user ? <Navigate to="/newmeso" /> : <SignInForm />} />
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/workout" element={user ? <WorkoutForm /> : <Navigate to="/signin" />} />
           <Route path="/newmeso" element={user ? <CreateMeso /> : <Navigate to="/signin" />} />
