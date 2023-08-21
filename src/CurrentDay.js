@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
+import { getMesocycles } from './FirebaseFunctions';
 
 const CurrentDay = ({ userId }) => {
 
@@ -18,9 +19,18 @@ const CurrentDay = ({ userId }) => {
     setCurrentDay(dayOfWeek);
   };
 
-  // Fetch mesocycle data from Firebase (will be implemented later)
-  const fetchMesocycleData = () => {
-    // Fetch data from Firebase and update state
+  // Fetch mesocycle data from Firebase
+  const fetchMesocycleData = async () => {
+    try {
+        const mesocycles = await getMesocycles(userId);
+        if (mesocycles && mesocycles.length > 0) {
+            setMesocycle(mesocycles[0]);
+        } else {
+            console.log("No mesocycles found for the user!");
+        }
+    } catch (error) {
+        console.error("Error fetching mesocycle data:", error);
+    }
   };
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import { useAuthState } from "react-firebase-hooks/auth";
 import styles from "./App.module.css"
+import CurrentDay from "./CurrentDay";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/workout" element={user ? <WorkoutForm /> : <Navigate to="/signin" />} />
           <Route path="/newmeso" element={user ? <CreateMeso /> : <Navigate to="/signin" />} />
+          <Route path="/today" element={user ? <CurrentDay /> : <Navigate to="/signin" />} />
           <Route path="/*" element={<Navigate to="/signin" />} />
           {/* Add more routes as needed */}
         </Routes>
