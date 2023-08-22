@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
-import { getMesocycles } from './FirebaseFunctions';
+import { getMesocycles, updateMesocycleCompletionStatus } from './FirebaseFunctions';
 
 const CurrentDay = ({ userId }) => {
 
@@ -24,7 +24,14 @@ const CurrentDay = ({ userId }) => {
     try {
         const mesocycles = await getMesocycles(userId);
         if (mesocycles && mesocycles.length > 0) {
-            setMesocycle(mesocycles[0]);
+            // Sort by completion status and creation time
+            mesocycles.sort((a, b) => {
+                if (a.completed && !b.completed) return 1;
+                if (!a.completed && b.completed) return -1;
+                return b.createdAt.seconds - a.createdAt.seconds;  // Most recent comes first
+            });
+
+            setMesocycle(mesocycles[0]);  // Fetch the first mesocycle based on sorted conditions
         } else {
             console.log("No mesocycles found for the user!");
         }
@@ -36,6 +43,17 @@ const CurrentDay = ({ userId }) => {
   useEffect(() => {
     fetchMesocycleData();
   }, []);
+
+  const handleWorkoutCompletion = (userId, mesocycleId) => {
+    // Update workout data, etc.
+
+    // Check if it's the last day of the last week
+    if (currentWeek === mesocycle.weeks && currentDay === mesocycle.days[mesocycle.days.length - 1].dayOfWeek) {
+        updateMesocycleCompletionStatus(userId, mesocycleId);  // This function will update the status in Firebase
+    } else {
+        // Logic to proceed to the next day or week
+    }
+  };
 
   return (
     <div>
