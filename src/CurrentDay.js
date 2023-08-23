@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
 import { getMesocycles, updateMesocycleCompletionStatus } from './FirebaseFunctions';
+import styles from './CurrentDay.module.css';
 
 const CurrentDay = ({ userId }) => {
 
@@ -55,8 +56,15 @@ const CurrentDay = ({ userId }) => {
     }
   };
 
+  const calculateRIR = (week, totalWeeks) => {
+    if (week === totalWeeks) return 8;
+    return totalWeeks - week;
+  };
+
+  const currentDayExercises = mesocycle.days.find(day => day.dayOfWeek === currentDay);
+
   return (
-    <div>
+    <div className={styles.CurrentDay}>
       <h1>{mesocycle.name}</h1>
       <div>
         Week: {currentWeek} <br />
@@ -67,6 +75,17 @@ const CurrentDay = ({ userId }) => {
         days={mesocycle.days}
         onSelectDay={handleSelectDay}
       />
+      {currentDayExercises && currentDayExercises.exercises.map((exercise, index) => (
+        <div key={index}>
+          <p><strong>Muscle Group:</strong> {exercise.muscleGroup}</p>
+          <p><strong>Exercise Name:</strong> {exercise.name}</p>
+          <input placeholder="Weight" />
+          <input placeholder="Reps" />
+          <input placeholder="Sets" />
+          <p>RIR: {calculateRIR(currentWeek, mesocycle.weeks)}</p>
+          {/* Add a button or mechanism to save this data */}
+        </div>
+      ))}
       {/* TODO: Add other components such as ExerciseList and ExerciseCards */}
       <MesoInfo name={mesocycle.name} currentWeek={currentWeek} currentDay={currentDay} />
     </div>

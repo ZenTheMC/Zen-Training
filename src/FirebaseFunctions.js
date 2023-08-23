@@ -13,15 +13,18 @@ export const addMesocycle = async (userId, mesocycle) => {
     } catch (error) {
         console.error("Error adding document: ", error);
     }
-}
+};
 
 export const getMesocycles = async (userId) => {
     const mesocyclesRef = collection(doc(db, 'users', userId), 'mesocycles');
     const mesocyclesSnap = await getDocs(mesocyclesRef);
 
-    const mesocycles = mesocyclesSnap.docs.map(doc => doc.data());
+    const mesocycles = mesocyclesSnap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
     return mesocycles;
-}
+};
 
 export const updateMesocycleCompletionStatus = async (userId, mesocycleId) => {
     try {
