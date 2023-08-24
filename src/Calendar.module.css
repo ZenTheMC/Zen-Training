@@ -1,0 +1,11 @@
+.Calendar {
+    border: 5px solid;
+    padding: 1px;
+    margin-bottom: 50px;
+}
+
+.Table {
+    border: 2px solid;
+    cursor: pointer;
+    padding: 3px;
+}

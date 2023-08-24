@@ -1,0 +1,13 @@
+.Name {
+    font-size: 40px;
+}
+
+.Week {
+    font-size: 20px;
+    font-style: italic;
+}
+
+.Day {
+    font-size: 20px;
+    margin-bottom: 50px;
+}

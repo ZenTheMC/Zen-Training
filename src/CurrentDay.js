@@ -65,29 +65,25 @@ const CurrentDay = ({ userId }) => {
 
   return (
     <div className={styles.CurrentDay}>
-      <h1>{mesocycle.name}</h1>
-      <div>
-        Week: {currentWeek} <br />
-        Day: {currentDay}
-      </div>
+      <MesoInfo name={mesocycle.name} currentWeek={currentWeek} currentDay={currentDay} />
       <Calendar
         weeks={mesocycle.weeks}
         days={mesocycle.days}
         onSelectDay={handleSelectDay}
       />
+      <h2 className={styles.Title}>Training Session</h2>
       {currentDayExercises && currentDayExercises.exercises.map((exercise, index) => (
-        <div key={index}>
-          <p><strong>Muscle Group:</strong> {exercise.muscleGroup}</p>
-          <p><strong>Exercise Name:</strong> {exercise.name}</p>
+        <div className={styles.Exercise} key={index}>
+          <p className={styles.ExerciseName}>{exercise.name}</p>
+          <p className={styles.MuscleGroup}>{exercise.muscleGroup}</p>
+          <p className={styles.Rir}>RIR {calculateRIR(currentWeek, mesocycle.weeks)}</p>
           <input placeholder="Weight" />
           <input placeholder="Reps" />
           <input placeholder="Sets" />
-          <p>RIR: {calculateRIR(currentWeek, mesocycle.weeks)}</p>
           {/* Add a button or mechanism to save this data */}
         </div>
       ))}
       {/* TODO: Add other components such as ExerciseList and ExerciseCards */}
-      <MesoInfo name={mesocycle.name} currentWeek={currentWeek} currentDay={currentDay} />
     </div>
   );
 };

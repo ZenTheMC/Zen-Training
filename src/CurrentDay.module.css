@@ -6,3 +6,23 @@
     background-color: rgb(165, 161, 161);
     margin-left: 15%;
 }
+
+.Title {
+    margin-bottom: 50px;
+}
+
+.Exercise {
+    margin-bottom: 40px;
+}
+
+.ExerciseName {
+    font-weight: bold;
+}
+
+.MuscleGroup {
+    font-style: italic;
+}
+
+.Rir {
+    font-size: 13px;
+}
