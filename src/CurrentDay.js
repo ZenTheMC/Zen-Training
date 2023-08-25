@@ -8,6 +8,8 @@ const CurrentDay = ({ userId }) => {
 
   const [currentWeek, setCurrentWeek] = useState();
   const [currentDay, setCurrentDay] = useState("");
+  const [exerciseSets, setExerciseSets] = useState({});
+  const [shownOptions, setShownOptions] = useState(null);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -61,6 +63,43 @@ const CurrentDay = ({ userId }) => {
     return totalWeeks - week;
   };
 
+  const addSet = (exerciseName) => {
+    setExerciseSets(prevState => ({
+      ...prevState,
+      [exerciseName]: [...(prevState[exerciseName] || [{ weight: "", reps: "" }]), { weight: "", reps: "" }]
+    }));
+  };
+
+  const removeSet = (exerciseName) => {
+    setExerciseSets(prevState => {
+      const updatedSets = [...prevState[exerciseName]];
+      updatedSets.pop();
+      return {
+        ...prevState,
+        [exerciseName]: updatedSets
+      };
+    });
+  };
+
+  const handleSetChange = (exerciseName, setIndex, field, value) => {
+    setExerciseSets(prevState => {
+      const updatedSets = [...prevState[exerciseName]];
+      updatedSets[setIndex][field] = value;
+      return {
+        ...prevState,
+        [exerciseName]: updatedSets
+      };
+    });
+  };
+
+  const showOptionsForExercises = (exerciseName) => {
+    setShownOptions(exerciseName);
+  };
+
+  const hideOptions = () => {
+    setShownOptions(null);
+  };
+
   const currentDayExercises = mesocycle.days.find(day => day.dayOfWeek === currentDay);
 
   return (
@@ -73,13 +112,23 @@ const CurrentDay = ({ userId }) => {
       />
       <h2 className={styles.Title}>Training Session</h2>
       {currentDayExercises && currentDayExercises.exercises.map((exercise, index) => (
-        <div className={styles.Exercise} key={index}>
-          <p className={styles.ExerciseName}>{exercise.name}</p>
+        <div className={styles.Exercise} key={index} onBlur={hideOptions} tabIndex={0}>
+          <div className={`${styles.ExerciseName} ${styles.ExerciseNameContainer}`}>
+            {exercise.name}
+            <span className={styles.Ellipsis} onClick={() => showOptionsForExercises(exercise.name)}>...</span>
+            <div className={`${styles.Options} ${shownOptions === exercise.name ? styles.showOptions : ""}`}>
+              <button onClick={() => addSet(exercise.name)}>Add Set</button>
+              <button onClick={() => removeSet(exercise.name)}>Remove Set</button>
+            </div>
+          </div>
           <p className={styles.MuscleGroup}>{exercise.muscleGroup}</p>
           <p className={styles.Rir}>RIR {calculateRIR(currentWeek, mesocycle.weeks)}</p>
-          <input placeholder="Weight" />
-          <input placeholder="Reps" />
-          <input placeholder="Sets" />
+          {(exerciseSets[exercise.name] || Array(2).fill({ weight: "", reps: "" })).map((set, setIndex) => (
+            <div key={setIndex}>
+              <input placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
+              <input placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
+              </div>
+          ))}
           {/* Add a button or mechanism to save this data */}
         </div>
       ))}
