@@ -9,7 +9,6 @@ const CurrentDay = ({ userId }) => {
   const [currentWeek, setCurrentWeek] = useState();
   const [currentDay, setCurrentDay] = useState("");
   const [exerciseSets, setExerciseSets] = useState({});
-  const [shownOptions, setShownOptions] = useState(null);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -45,6 +44,7 @@ const CurrentDay = ({ userId }) => {
 
   useEffect(() => {
     fetchMesocycleData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleWorkoutCompletion = (userId, mesocycleId) => {
@@ -89,22 +89,21 @@ const CurrentDay = ({ userId }) => {
     });
   };
 
-  const showOptionsForExercises = (event, exerciseName) => {
-    event.stopPropagation();
-    setShownOptions(exerciseName);
-    document.addEventListener('click', hideOptions);
-  };
-  
-  const hideOptions = () => {
-    setShownOptions(null);
-    document.removeEventListener('click', hideOptions);
-  };
-
   useEffect(() => {
     console.log("exerciseSets has changed:", exerciseSets);
   }, [exerciseSets]);
 
   const currentDayExercises = mesocycle.days.find(day => day.dayOfWeek === currentDay);
+
+  useEffect(() => {
+    if (currentDayExercises) {
+      const initialSets = {};
+      currentDayExercises.exercises.forEach(exercise => {
+        initialSets[exercise.name] = Array(2).fill({ weight: "", reps: "" });
+      });
+      setExerciseSets(initialSets);
+    }
+  }, [currentDayExercises]);
 
   return (
     <div className={styles.CurrentDay}>
@@ -117,13 +116,12 @@ const CurrentDay = ({ userId }) => {
       />
       <h2 className={styles.Title}>Training Session</h2>
       {currentDayExercises && currentDayExercises.exercises.map((exercise, index) => (
-        <div className={styles.Exercise} key={index} onBlur={hideOptions} tabIndex={0}>
-          <div className={`${styles.ExerciseName} ${styles.ExerciseNameContainer}`}>
-            {exercise.name}
-            <span className={styles.Ellipsis} onClick={(e) => showOptionsForExercises(e, exercise.name)}>...</span>
-            <div className={`${styles.Options} ${shownOptions === exercise.name ? styles.showOptions : ""}`}>
-              <button onClick={(e) => { e.stopPropagation(); addSet(exercise.name); }}>Add Set</button>
-              <button onClick={(e) => { e.stopPropagation(); removeSet(exercise.name); }}>Remove Set</button>
+        <div className={styles.Exercise} key={index}>
+          <div className={styles.ExerciseNameContainer}>
+            <span className={styles.ExerciseName}>{exercise.name}</span>
+            <div className={styles.Buttons}>
+              <button onClick={() => addSet(exercise.name)}>+</button>
+              <button onClick={() => removeSet(exercise.name)}>-</button>
             </div>
           </div>
           <p className={styles.MuscleGroup}>{exercise.muscleGroup}</p>
