@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { db, auth } from "./Firebase";
+import { doc, collection, setDoc } from "firebase/firestore";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
 import { getMesocycles, updateMesocycleCompletionStatus } from './FirebaseFunctions';
@@ -9,6 +11,7 @@ const CurrentDay = ({ userId }) => {
   const [currentWeek, setCurrentWeek] = useState();
   const [currentDay, setCurrentDay] = useState("");
   const [exerciseSets, setExerciseSets] = useState({});
+  const [currentMesocycleId, setCurrentMesocycleId] = useState(null);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -33,6 +36,7 @@ const CurrentDay = ({ userId }) => {
           return b.createdAt.seconds - a.createdAt.seconds;  // Most recent comes first
         });
 
+        setCurrentMesocycleId(mesocycles[0].id); // Store the id of the current mesocycle
         setMesocycle(mesocycles[0]);  // Fetch the first mesocycle based on sorted conditions
       } else {
         console.log("No mesocycles found for the user!");
@@ -94,6 +98,7 @@ const CurrentDay = ({ userId }) => {
   }, [exerciseSets]);
 
   const currentDayExercises = mesocycle.days.find(day => day.dayOfWeek === currentDay);
+  const currentDayIndex = mesocycle.days.findIndex(day => day.dayOfWeek === currentDay);
 
   useEffect(() => {
     if (currentDayExercises) {
@@ -105,6 +110,32 @@ const CurrentDay = ({ userId }) => {
     }
   }, [currentDayExercises]);
 
+  const logSet = async (dayIndex, exerciseIndex, setIndex, setData) => {
+    
+    if (dayIndex === -1) {
+      console.error("Current day not found in mesocycle.days array");
+      return;
+    }
+    
+    // Get the current user's document ID
+    const userId = auth.currentUser.uid;
+  
+    // Get the current mesocycle document ID
+    const mesocycleId = currentMesocycleId; // Use the currentMesocycleId from the state
+  
+    // Create a reference to the mesocycle document
+    const mesocycleRef = doc(collection(db, 'users', userId, 'mesocycles'), mesocycleId);
+  
+    // Update the document
+    await setDoc(mesocycleRef, {
+      [`days.${dayIndex}.exercises.${exerciseIndex}.sets.${setIndex}`]: {
+        completed: true,
+        weight: setData.weight,
+        reps: setData.reps,
+      },
+    }, { merge: true });
+  };
+
   return (
     <div className={styles.CurrentDay}>
       {console.log('exerciseSets in render:', exerciseSets)}
@@ -115,8 +146,8 @@ const CurrentDay = ({ userId }) => {
         onSelectDay={handleSelectDay}
       />
       <h2 className={styles.Title}>Training Session</h2>
-      {currentDayExercises && currentDayExercises.exercises.map((exercise, index) => (
-        <div className={styles.Exercise} key={index}>
+      {currentDayExercises && currentDayExercises.exercises.map((exercise, exerciseIndex) => (
+        <div className={styles.Exercise} key={exerciseIndex}>
           <div className={styles.ExerciseNameContainer}>
             <span className={styles.ExerciseName}>{exercise.name}</span>
             <div className={styles.Buttons}>
@@ -130,6 +161,7 @@ const CurrentDay = ({ userId }) => {
             <div key={setIndex}>
               <input placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
               <input placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
+              <button onClick={() => logSet(currentDayIndex, exerciseIndex, setIndex, set)}>Log Set</button>
             </div>
           ))}
           {/* Add a button or mechanism to save this data */}
