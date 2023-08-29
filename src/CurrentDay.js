@@ -104,7 +104,7 @@ const CurrentDay = ({ userId }) => {
     if (currentDayExercises) {
       const initialSets = {};
       currentDayExercises.exercises.forEach(exercise => {
-        initialSets[exercise.name] = Array(2).fill({ weight: "", reps: "" });
+        initialSets[exercise.name] = Array.from({ length: 2 }, () => ({ weight: "", reps: "" }));
       });
       setExerciseSets(initialSets);
     }
