@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "./Firebase";
-import { doc, collection, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
 import { getMesocycles, updateMesocycleCompletionStatus } from './FirebaseFunctions';
@@ -117,24 +117,35 @@ const CurrentDay = ({ userId }) => {
       return;
     }
     
-    // Get the current user's document ID
-    const userId = auth.currentUser.uid;
-  
-    // Get the current mesocycle document ID
-    const mesocycleId = currentMesocycleId; // Use the currentMesocycleId from the state
-  
-    // Create a reference to the mesocycle document
-    const mesocycleRef = doc(collection(db, 'users', userId, 'mesocycles'), mesocycleId);
-  
-    // Update the document
-    await setDoc(mesocycleRef, {
-      [`days.${dayIndex}.exercises.${exerciseIndex}.sets.${setIndex}`]: {
-        completed: true,
-        weight: setData.weight,
-        reps: setData.reps,
-      },
-    }, { merge: true });
+    try {
+      const userId = auth.currentUser.uid;
+      const mesocycleId = currentMesocycleId;
+      const mesocycleRef = doc(db, 'users', userId, 'mesocycles', mesocycleId);
+
+      // Create the new set data
+      const newSetData = {
+          completed: true,
+          weight: setData.weight,
+          reps: setData.reps,
+      };
+
+      // Fetch the current mesocycle document
+      const mesocycleDoc = await getDoc(mesocycleRef);
+      const mesocycleData = mesocycleDoc.data();
+
+      // Update the sets array in the mesocycle data
+      if (!mesocycleData.days[dayIndex].exercises[exerciseIndex].sets) {
+          mesocycleData.days[dayIndex].exercises[exerciseIndex].sets = [];
+      }
+      mesocycleData.days[dayIndex].exercises[exerciseIndex].sets[setIndex] = newSetData;
+
+      // Write the entire mesocycle data back to Firestore
+      await setDoc(mesocycleRef, mesocycleData);
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
   };
+
 
   return (
     <div className={styles.CurrentDay}>
