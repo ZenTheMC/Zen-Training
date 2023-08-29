@@ -38,6 +38,15 @@ const CurrentDay = ({ userId }) => {
 
         setCurrentMesocycleId(mesocycles[0].id); // Store the id of the current mesocycle
         setMesocycle(mesocycles[0]);  // Fetch the first mesocycle based on sorted conditions
+        
+        // Fetch the existing sets data for the current day
+        const currentDayExercises = mesocycles[0].days.find(day => day.dayOfWeek === currentDay);
+        const initialSets = {};
+        currentDayExercises.exercises.forEach((exercise, exerciseIndex) => {
+        initialSets[exercise.name] = exercise.sets || Array.from({ length: 2 }, () => ({ weight: "", reps: "" }));
+        });
+        setExerciseSets(initialSets);
+
       } else {
         console.log("No mesocycles found for the user!");
       }
@@ -103,8 +112,8 @@ const CurrentDay = ({ userId }) => {
   useEffect(() => {
     if (currentDayExercises) {
       const initialSets = {};
-      currentDayExercises.exercises.forEach(exercise => {
-        initialSets[exercise.name] = Array.from({ length: 2 }, () => ({ weight: "", reps: "" }));
+      currentDayExercises.exercises.forEach((exercise, exerciseIndex) => {
+        initialSets[exercise.name] = exercise.sets || Array.from({ length: 2 }, () => ({ weight: "", reps: "" }));
       });
       setExerciseSets(initialSets);
     }
