@@ -16,24 +16,20 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
             return;
         }
     
-        // Prepare meso name and meso length in the meso data
-        const mesocycle = {
-            name: mesoName,
-            weeks: mesoWeeks,
-            ...meso,
-        };
-    
-        // Submit meso data to Firebase
-        await addMesocycle(userId, mesocycle);
-    
-        // Clear the form fields
-        setMesoName("");
-        setMesoWeeks("");
-    
-        // Reset the meso state in the CreateMeso component
-        setMeso({
-            days: [],
-        });
+        if (mesoName && mesoWeeks) {
+            const replicatedDays = Array.from({ length: Number(mesoWeeks) }, () => meso.days).flat();
+            const mesocycle = {
+                name: mesoName,
+                weeks: mesoWeeks,
+                days: replicatedDays,
+            };
+            addMesocycle(userId, mesocycle);
+            setMeso({ days: [] });
+            setMesoName("");
+            setMesoWeeks("");
+        } else {
+            alert("Please enter a mesocycle name and length");
+        }
     };
 
     return (
