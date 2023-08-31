@@ -13,15 +13,15 @@ const Calendar = ({ weeks, days, onSelectDay }) => {
           </tr>
         </thead>
         <tbody>
-          {days.map((day, dayIndex) => (
+          {Array.from({ length: days[0].length }, (_, dayIndex) => (
             <tr key={dayIndex}>
               {Array.from({ length: weeks }, (_, weekIndex) => (
                 <td
                   className={styles.Table}
                   key={weekIndex}
-                  onClick={() => onSelectDay(weekIndex + 1, day.dayOfWeek)}
+                  onClick={() => onSelectDay(weekIndex + 1, days[weekIndex][dayIndex]?.dayOfWeek)}
                 >
-                  {day.dayOfWeek}
+                  {days[weekIndex][dayIndex]?.dayOfWeek}
                 </td>
               ))}
             </tr>
