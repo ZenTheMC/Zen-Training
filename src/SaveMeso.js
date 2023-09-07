@@ -8,6 +8,8 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
 
+    const deepCopy = (object) => JSON.parse(JSON.stringify(object));
+
     const handleSaveMeso = async (event) => {
         event.preventDefault();
     
@@ -17,12 +19,21 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
         }
     
         if (mesoName && mesoWeeks) {
-            const replicatedDays = Array.from({ length: Number(mesoWeeks) }, () => meso.days).flat();
+            // Add week property to each day
+            const replicatedDays = [];
+            for (let week = 1; week <= Number(mesoWeeks); week++) {
+                meso.days.forEach(day => {
+                    const deepCopiedDay = deepCopy(day); // Use deepCopy here
+                    replicatedDays.push({ ...deepCopiedDay, week }); // Add week property here
+                });
+            }
+    
             const mesocycle = {
                 name: mesoName,
                 weeks: mesoWeeks,
                 days: replicatedDays,
             };
+    
             addMesocycle(userId, mesocycle);
             setMeso({ days: [] });
             setMesoName("");

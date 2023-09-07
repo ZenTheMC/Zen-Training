@@ -19,7 +19,7 @@ const Calendar = ({ weeks, days, onSelectDay }) => {
                 <td
                   className={styles.Table}
                   key={weekIndex}
-                  onClick={() => onSelectDay(weekIndex + 1, days[weekIndex][dayIndex]?.dayOfWeek)}
+                  onClick={() => onSelectDay(weekIndex + 1, days[weekIndex][dayIndex])}
                 >
                   {days[weekIndex][dayIndex]?.dayOfWeek}
                 </td>

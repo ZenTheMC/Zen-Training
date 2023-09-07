@@ -3,11 +3,21 @@ import { collection, doc, addDoc, getDocs, updateDoc, serverTimestamp } from "fi
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
+        // Loop through each day and add default sets to each exercise
+        mesocycle.days.forEach(day => {
+            day.exercises.forEach(exercise => {
+                if (!exercise.sets) {
+                    exercise.sets = Array.from({ length: 2 }, () => ({ weight: "", reps: "", completed: false })); // Default 2 sets
+                }
+            });
+        });
+
         const mesocycleWithTimestamp = {
             ...mesocycle,
             createdAt: serverTimestamp(),
-            completed: false // Assuming all new mesocycles are initially incompleted
+            completed: false // Assuming all new mesocycles are initially incomplete
         };
+
         const docRef = await addDoc(collection(doc(db, 'users', userId), 'mesocycles'), mesocycleWithTimestamp);
         console.log("Document written with ID: ", docRef.id);
     } catch (error) {

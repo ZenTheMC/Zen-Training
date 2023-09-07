@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { db, auth } from "./Firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import Calendar from './Calendar';
@@ -19,21 +19,35 @@ const CurrentDay = ({ userId }) => {
     days: [[]],
   });
 
-  const handleSelectDay = (week, dayOfWeek) => {
-    console.log('handleSelectDay called:', week, dayOfWeek);
+  const handleSelectDay = async (week, day) => {
     setCurrentWeek(week);
-    setCurrentDay(dayOfWeek);
-  
-    const selectedDayExercises = mesocycle.days.flat().find(day => day.dayOfWeek === dayOfWeek);
+    setCurrentDay(day.dayOfWeek);
+
+    // Get the exercises for the selected day
+    console.log('Logging mesocycle.days:', mesocycle.days);
+    console.log('Logging week and day.dayOfWeek:', week, day.dayOfWeek);
+
+    mesocycle.days.flat().forEach(d => {
+        console.log(`Week: ${d.week}, Day: ${d.dayOfWeek}`);
+    });
+
+    const selectedDayExercises = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week);
+    console.log("Selected day exercises:", selectedDayExercises);
+    const initialSets = {};
+
     if (selectedDayExercises) {
-      const initialSets = {};
       selectedDayExercises.exercises.forEach((exercise) => {
-        initialSets[exercise.name] = exercise.sets || Array.from({ length: 2 }, () => ({ weight: "", reps: "" }));
+        initialSets[exercise.name] = exercise.sets && exercise.sets.length > 0 ? exercise.sets : [ { weight: "", reps: "" }, { weight: "", reps: "" } ];
+        console.log("Inspecting exercise:", exercise);
       });
-      setExerciseSets(initialSets);
-      console.log('selectedDayExercises updated:', selectedDayExercises);
     }
+    console.log('Initial exerciseSets after selecting day:', initialSets);
+    setExerciseSets(initialSets);
   };
+
+  useEffect(() => {
+    setExerciseSets({});
+  }, [mesocycle]);  
 
   // Fetch mesocycle data from Firebase
   const fetchMesocycleData = async () => {
@@ -47,11 +61,19 @@ const CurrentDay = ({ userId }) => {
           return b.createdAt.seconds - a.createdAt.seconds;  // Most recent comes first
         });
 
-        // Convert the days array to a 2D array
+        // Convert the days array to a 2D array with unique exercises
         const daysPerWeek = mesocycles[0].days.length / mesocycles[0].weeks;
-        const days2D = Array.from({ length: mesocycles[0].weeks }, (_, i) => mesocycles[0].days.slice(i * daysPerWeek, (i + 1) * daysPerWeek));
+        const days2D = Array.from({ length: mesocycles[0].weeks }, (_, i) => {
+          const daysOfWeek = mesocycles[0].days.slice(i * daysPerWeek, (i + 1) * daysPerWeek);
+          return daysOfWeek.map(day => ({
+            ...day,
+            exercises: day.exercises.map(exercise => ({
+              ...exercise,
+            })),
+          }));
+        });
         console.log('Original days array:', mesocycles[0].days);
-        console.log(days2D);
+        console.log('Fetched days array:', days2D);
 
         setCurrentMesocycleId(mesocycles[0].id);
         setMesocycle({ ...mesocycles[0], days: days2D });
@@ -87,41 +109,36 @@ const CurrentDay = ({ userId }) => {
   };
 
   const addSet = (exerciseName) => {
-    console.log('addSet is called');
+    console.log('addSet is called for exercise:', exerciseName);
+    console.log('exerciseSets before adding:', exerciseSets);
     const newSet = { weight: "", reps: "" };
-    const updatedSets = exerciseSets[exerciseName] ? [...exerciseSets[exerciseName], newSet] : [newSet];
-    setExerciseSets({ ...exerciseSets, [exerciseName]: updatedSets });
-    console.log("Updated sets:", updatedSets);
-  
-    // Update the sets property of the currentDayExercises object
-    if (currentDayExercises) {
-      const exerciseIndex = currentDayExercises.exercises.findIndex(exercise => exercise.name === exerciseName);
-      if (exerciseIndex !== -1) {
-        if (!currentDayExercises.exercises[exerciseIndex].sets) {
-          currentDayExercises.exercises[exerciseIndex].sets = [];
-        }
-        currentDayExercises.exercises[exerciseIndex].sets.push(newSet);
-      }
-    }
+
+    setExerciseSets(prevSets => {
+        const updatedSets = prevSets[exerciseName] ? [...prevSets[exerciseName], newSet] : [newSet];
+        console.log("Updated sets:", updatedSets);
+        return { ...prevSets, [exerciseName]: updatedSets };
+    });
   };
-  
+
   const removeSet = (exerciseName) => {
-    console.log('removeSet is called');
-    const updatedSets = exerciseSets[exerciseName] ? exerciseSets[exerciseName].slice(0, -1) : [];
-    setExerciseSets({ ...exerciseSets, [exerciseName]: updatedSets });
-    console.log("Updated sets after removal:", updatedSets);
-  
-    // Update the sets property of the currentDayExercises object
-    if (currentDayExercises) {
-      const exerciseIndex = currentDayExercises.exercises.findIndex(exercise => exercise.name === exerciseName);
-      if (exerciseIndex !== -1) {
-        currentDayExercises.exercises[exerciseIndex].sets.pop();
-      }
-    }
+    console.log('removeSet is called for exercise:', exerciseName);
+    console.log('exerciseSets before removing:', exerciseSets);
+
+    setExerciseSets(prevSets => {
+        const updatedSets = prevSets[exerciseName] ? prevSets[exerciseName].slice(0, -1) : [];
+        console.log("Updated sets after removal:", updatedSets);
+        return { ...prevSets, [exerciseName]: updatedSets };
+    });
   };
 
   const handleSetChange = (exerciseName, setIndex, field, value) => {
     setExerciseSets(prevState => {
+      if (!prevState[exerciseName]) {
+        console.error(`Exercise "${exerciseName}" not found in exerciseSets.`);
+        return prevState;  // Return the previous state unchanged.
+      }
+      console.log(`handleSetChange called for exercise: ${exerciseName}, setIndex: ${setIndex}, field: ${field}, value: ${value}`);
+      console.log('Current exerciseSets state:', prevState);
       const updatedSets = [...prevState[exerciseName]];
       updatedSets[setIndex][field] = value;
       return {
@@ -135,13 +152,15 @@ const CurrentDay = ({ userId }) => {
     console.log("exerciseSets has changed:", exerciseSets);
   }, [exerciseSets]);
 
-  const currentDayExercises = mesocycle.days.flat().find(day => day.dayOfWeek === currentDay);
+  const currentDayExercises = useMemo(() => {
+    return mesocycle.days.flat().find(day => day.dayOfWeek === currentDay);
+  }, [mesocycle.days, currentDay]);
   const currentDayIndex = mesocycle.days.length > 0 ? mesocycle.days[currentWeek - 1].findIndex(day => day.dayOfWeek === currentDay) : -1;
 
   const logSet = async (weekIndex, dayIndex, exerciseIndex, setIndex, setData) => {
     
     // Calculate the index of the day in the flattened days array
-    const flatDayIndex = weekIndex * mesocycle.days[0].length + dayIndex;
+    const flatDayIndex = mesocycle.days.flat().findIndex(day => day.week === currentWeek && day.dayOfWeek === currentDay);
 
     if (flatDayIndex === -1) {
       console.error("Current day not found in mesocycle.days array");
@@ -178,6 +197,7 @@ const CurrentDay = ({ userId }) => {
         }
         currentDayExercises.exercises[exerciseIndex].sets[setIndex] = newSetData;
       }
+      console.log('Updated currentDayExercises:', currentDayExercises);
 
       // Update the exerciseSets state
       setExerciseSets(prevState => {
