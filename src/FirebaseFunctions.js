@@ -35,13 +35,3 @@ export const getMesocycles = async (userId) => {
     }));
     return mesocycles;
 };
-
-export const updateMesocycleCompletionStatus = async (userId, mesocycleId) => {
-    try {
-        const mesocycleRef = doc(db, 'users', userId, 'mesocycles', mesocycleId);
-        await updateDoc(mesocycleRef, { completed: true });
-        console.log("Mesocycle completion status updated.");
-    } catch (error) {
-        console.error("Error updating mesocycle completion status: ", error);
-    }
-};

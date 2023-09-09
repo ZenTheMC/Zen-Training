@@ -3,7 +3,7 @@ import { db, auth } from "./Firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
-import { getMesocycles, updateMesocycleCompletionStatus } from './FirebaseFunctions';
+import { getMesocycles } from './FirebaseFunctions';
 import styles from './CurrentDay.module.css';
 
 const CurrentDay = ({ userId }) => {
@@ -91,18 +91,6 @@ const CurrentDay = ({ userId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO!!!!!
-  // const handleWorkoutCompletion = (userId, mesocycleId) => {
-    // Update workout data, etc.
-
-    // Check if it's the last day of the last week
-    // if (currentWeek === mesocycle.weeks && currentDay === mesocycle.days[mesocycle.days.length - 1].dayOfWeek) {
-    //   updateMesocycleCompletionStatus(userId, mesocycleId);  // This function will update the status in Firebase
-    // } else {
-      // Logic to proceed to the next day or week
-    // }
-  // };
-
   const calculateRIR = (week, totalWeeks) => {
     if (week === totalWeeks) return 8;
     return totalWeeks - week;
@@ -157,7 +145,7 @@ const CurrentDay = ({ userId }) => {
   }, [mesocycle.days, currentDay]);
   const currentDayIndex = mesocycle.days.length > 0 ? mesocycle.days[currentWeek - 1].findIndex(day => day.dayOfWeek === currentDay) : -1;
 
-  const logSet = async (weekIndex, dayIndex, exerciseIndex, setIndex, setData) => {
+  const logSet = async (exerciseIndex, setIndex, setData) => {
     
     // Calculate the index of the day in the flattened days array
     const flatDayIndex = mesocycle.days.flat().findIndex(day => day.week === currentWeek && day.dayOfWeek === currentDay);
@@ -208,6 +196,20 @@ const CurrentDay = ({ userId }) => {
           [currentDayExercises.exercises[exerciseIndex].name]: updatedSets
         };
       });
+
+      // Check if all sets for the day are completed
+      const allSetsForTheDayAreCompleted = mesocycleData.days[flatDayIndex].exercises.every(exercise => 
+        exercise.sets.every(set => set.completed)
+      );
+
+      if (allSetsForTheDayAreCompleted) {
+        mesocycleData.days[flatDayIndex].completed = true;
+      }
+
+      // Check if all days in the mesocycle are completed
+      if (mesocycleData.days.every(day => day.completed)) {
+        mesocycleData.completed = true;
+      }
 
       // Write the entire mesocycle data back to Firestore
       await setDoc(mesocycleRef, mesocycleData);
