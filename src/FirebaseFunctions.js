@@ -1,5 +1,5 @@
 import { db } from './Firebase';
-import { collection, doc, addDoc, getDocs, updateDoc, serverTimestamp } from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
