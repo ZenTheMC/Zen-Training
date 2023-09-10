@@ -167,15 +167,24 @@ const CurrentDay = ({ userId }) => {
           reps: setData.reps,
       };
 
+      // Log the new set data for inspection
+      console.log('New set data:', newSetData);
+
       // Fetch the current mesocycle document
       const mesocycleDoc = await getDoc(mesocycleRef);
       const mesocycleData = mesocycleDoc.data();
+
+      // Log the fetched mesocycle data
+      console.log('Fetched mesocycle data before any changes:', JSON.parse(JSON.stringify(mesocycleData)));
 
       // Update the sets array in the mesocycle data
       if (!mesocycleData.days[flatDayIndex].exercises[exerciseIndex].sets) {
           mesocycleData.days[flatDayIndex].exercises[exerciseIndex].sets = [];
       }
       mesocycleData.days[flatDayIndex].exercises[exerciseIndex].sets[setIndex] = newSetData;
+
+      // Log the mesocycle data after updating the sets
+      console.log('Updated mesocycle data after modifying sets:', JSON.parse(JSON.stringify(mesocycleData)));
 
       // Update the sets property of the currentDayExercises object
       const currentDayExercises = mesocycle.days.flat()[flatDayIndex];
@@ -210,6 +219,9 @@ const CurrentDay = ({ userId }) => {
       if (mesocycleData.days.every(day => day.completed)) {
         mesocycleData.completed = true;
       }
+
+      // Log the mesocycle data right before writing to Firestore
+      console.log('Final mesocycle data to be written to Firestore:', JSON.parse(JSON.stringify(mesocycleData)));
 
       // Write the entire mesocycle data back to Firestore
       await setDoc(mesocycleRef, mesocycleData);
