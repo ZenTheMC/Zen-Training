@@ -259,7 +259,7 @@ const CurrentDay = ({ userId }) => {
             <div key={setIndex}>
               <input placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
               <input placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
-              <button onClick={() => logSet(currentWeek - 1, currentDayIndex, exerciseIndex, setIndex, set)}>Log Set</button>
+              <button onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
             </div>
           ))}
           {/* Add a button or mechanism to save this data */}
