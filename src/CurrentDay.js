@@ -143,8 +143,7 @@ const CurrentDay = ({ userId }) => {
   const currentDayExercises = useMemo(() => {
     return mesocycle.days.flat().find(day => day.dayOfWeek === currentDay);
   }, [mesocycle.days, currentDay]);
-  const currentDayIndex = mesocycle.days.length > 0 ? mesocycle.days[currentWeek - 1].findIndex(day => day.dayOfWeek === currentDay) : -1;
-
+  
   const logSet = async (exerciseIndex, setIndex, setData) => {
     
     // Calculate the index of the day in the flattened days array
