@@ -259,12 +259,11 @@ const CurrentDay = ({ userId }) => {
               <input placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
               <input placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
               <button onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
+              {set.completed && <span> ✓</span>}
             </div>
           ))}
-          {/* Add a button or mechanism to save this data */}
         </div>
       ))}
-      {/* TODO: Add other components such as ExerciseList and ExerciseCards */}
     </div>
   );
 };
