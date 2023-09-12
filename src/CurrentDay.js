@@ -234,7 +234,11 @@ const CurrentDay = ({ userId }) => {
   return (
     <div className={styles.CurrentDay}>
       {console.log('exerciseSets in render:', exerciseSets)}
-      <MesoInfo name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')} currentWeek={currentWeek} currentDay={currentDay} />
+      <MesoInfo
+      name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')}
+      currentWeek={currentWeek}
+      currentDay={`${currentDay}${currentDayExercises && currentDayExercises.completed ? ' ✓' : ''}`}
+      />
       {mesocycle.days.length > 0 && mesocycle.days[0].length > 0 && (
         <Calendar
           weeks={mesocycle.weeks}
