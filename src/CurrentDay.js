@@ -144,6 +144,11 @@ const CurrentDay = ({ userId }) => {
     return mesocycle.days.flat().find(day => day.dayOfWeek === currentDay);
   }, [mesocycle.days, currentDay]);
   
+  const isCurrentWeekCompleted = useMemo(() => {
+    const daysInCurrentWeek = mesocycle.days.flat().filter(day => day.week === currentWeek);
+    return daysInCurrentWeek.every(day => day.completed);
+}, [mesocycle.days, currentWeek]);
+
   const logSet = async (exerciseIndex, setIndex, setData) => {
     
     // Calculate the index of the day in the flattened days array
@@ -236,7 +241,7 @@ const CurrentDay = ({ userId }) => {
       {console.log('exerciseSets in render:', exerciseSets)}
       <MesoInfo
       name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')}
-      currentWeek={currentWeek}
+      currentWeek={`${currentWeek}${isCurrentWeekCompleted ? ' ✓' : ''}`}
       currentDay={`${currentDay}${currentDayExercises && currentDayExercises.completed ? ' ✓' : ''}`}
       />
       {mesocycle.days.length > 0 && mesocycle.days[0].length > 0 && (
