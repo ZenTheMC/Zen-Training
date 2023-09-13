@@ -58,7 +58,7 @@ const CurrentDay = ({ userId }) => {
         mesocycles.sort((a, b) => {
           if (a.completed && !b.completed) return 1;
           if (!a.completed && b.completed) return -1;
-          return b.createdAt.seconds - a.createdAt.seconds;  // Most recent comes first
+          return a.createdAt.seconds - b.createdAt.seconds;  // Oldest incomplete meso rendered
         });
 
         // Convert the days array to a 2D array with unique exercises
