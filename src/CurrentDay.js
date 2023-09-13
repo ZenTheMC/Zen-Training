@@ -141,8 +141,8 @@ const CurrentDay = ({ userId }) => {
   }, [exerciseSets]);
 
   const currentDayExercises = useMemo(() => {
-    return mesocycle.days.flat().find(day => day.dayOfWeek === currentDay);
-  }, [mesocycle.days, currentDay]);
+    return mesocycle.days.flat().find(day => day.dayOfWeek === currentDay && day.week === currentWeek);
+  }, [mesocycle.days, currentDay, currentWeek]);
   
   const isCurrentWeekCompleted = useMemo(() => {
     const daysInCurrentWeek = mesocycle.days.flat().filter(day => day.week === currentWeek);
