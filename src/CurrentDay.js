@@ -227,8 +227,15 @@ const CurrentDay = ({ userId }) => {
       }
 
       // Check if all days in the mesocycle are completed
-      if (mesocycleData.days.every(day => day.completed)) {
+      const allDaysCompleted = mesocycleData.days.every(day => day.completed);
+
+      if (allDaysCompleted) {
         mesocycleData.completed = true;
+        // Update local state
+        setMesocycle(prevMeso => ({
+          ...prevMeso,
+          completed: true
+        }));
       }
 
       // Log the mesocycle data right before writing to Firestore
