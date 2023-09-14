@@ -234,6 +234,35 @@ const CurrentDay = ({ userId }) => {
     }
   };
 
+  const endMesocycleEarly = async () => {
+    console.log("End Mesocycle Early button clicked!");
+    
+    const userConfirmation = window.confirm("Are you sure you want to end this mesocycle early? This action cannot be undone.");
+  
+    if (!userConfirmation) return;
+
+    console.log("User confirmed to end mesocycle early.");
+
+    try {
+      const userId = auth.currentUser.uid;
+      const mesocycleRef = doc(db, 'users', userId, 'mesocycles', currentMesocycleId);
+
+      console.log("Attempting to set mesocycle completed status to true...");
+
+      // Flatten the mesocycle.days array before sending it to Firestore
+      const flattenedDays = mesocycle.days.flat();
+
+      // Update the completed property of the mesocycle to true
+      await setDoc(mesocycleRef, { ...mesocycle, days: flattenedDays, completed: true }, { merge: true });
+
+      console.log("Mesocycle status set to completed!");
+
+      fetchMesocycleData();
+    } catch (error) {
+        console.error("Error ending mesocycle early:", error);
+      }
+  };
+
   console.log('currentDayExercises:', currentDayExercises);
 
   return (
@@ -251,6 +280,7 @@ const CurrentDay = ({ userId }) => {
           onSelectDay={handleSelectDay}
         />
       )}
+      <button onClick={endMesocycleEarly}>End Mesocycle Early</button>
       <h2 className={styles.Title}>Training Session</h2>
       {currentDayExercises && currentDayExercises.exercises.map((exercise, exerciseIndex) => (
         <div className={styles.Exercise} key={exerciseIndex}>
