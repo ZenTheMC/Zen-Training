@@ -45,10 +45,6 @@ const CurrentDay = ({ userId }) => {
     setExerciseSets(initialSets);
   };
 
-  useEffect(() => {
-    setExerciseSets({});
-  }, [mesocycle]);  
-
   // Fetch mesocycle data from Firebase
   const fetchMesocycleData = async () => {
     try {
@@ -217,6 +213,17 @@ const CurrentDay = ({ userId }) => {
 
       if (allSetsForTheDayAreCompleted) {
         mesocycleData.days[flatDayIndex].completed = true;
+
+        // Reflect the change in the local state
+        const updatedDays = [...mesocycle.days];
+        const flatDay = updatedDays.flat()[flatDayIndex];
+        if (flatDay) {
+          flatDay.completed = true;
+          setMesocycle(prevMeso => ({
+            ...prevMeso,
+            days: updatedDays
+          }));
+        }
       }
 
       // Check if all days in the mesocycle are completed
