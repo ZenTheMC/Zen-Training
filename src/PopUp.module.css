@@ -1,0 +1,52 @@
+.PopUpOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.PopUp {
+    background: rgb(205, 205, 205);
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.Link, .DismissButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.DismissButton {
+    background-color: #f57575;
+}
+
+.DismissButton:hover {
+    background-color: #a86565;
+}
+
+.Link {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.Link:hover {
+    background-color: #0056b3;
+}

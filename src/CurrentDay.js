@@ -5,6 +5,7 @@ import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
 import { getMesocycles } from './FirebaseFunctions';
 import styles from './CurrentDay.module.css';
+import PopUp from './PopUp';
 
 const CurrentDay = ({ userId }) => {
 
@@ -12,6 +13,7 @@ const CurrentDay = ({ userId }) => {
   const [currentDay, setCurrentDay] = useState("");
   const [exerciseSets, setExerciseSets] = useState({});
   const [currentMesocycleId, setCurrentMesocycleId] = useState(null);
+  const [showNoMesoPopup, setShowNoMesoPopup] = useState(false);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -57,6 +59,11 @@ const CurrentDay = ({ userId }) => {
           return a.createdAt.seconds - b.createdAt.seconds;  // Oldest incomplete meso rendered
         });
 
+        // Check if the first mesocycle in the sorted list is completed, show the popup
+        if (mesocycles[0].completed) {
+        setShowNoMesoPopup(true);
+        }
+
         // Convert the days array to a 2D array with unique exercises
         const daysPerWeek = mesocycles[0].days.length / mesocycles[0].weeks;
         const days2D = Array.from({ length: mesocycles[0].weeks }, (_, i) => {
@@ -76,6 +83,7 @@ const CurrentDay = ({ userId }) => {
 
       } else {
         console.log("No mesocycles found for the user!");
+        setShowNoMesoPopup(true);  // Also show the popup if no mesocycles are found at all
       }
     } catch (error) {
       console.error("Error fetching mesocycle data:", error);
@@ -290,6 +298,7 @@ const CurrentDay = ({ userId }) => {
           onSelectDay={handleSelectDay}
         />
       )}
+      {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}
       <MesoInfo
       name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')}
       currentWeek={`${currentWeek}${isCurrentWeekCompleted ? ' ✓' : ''}`}

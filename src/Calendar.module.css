@@ -12,3 +12,7 @@
     background-color: rgb(224, 199, 233);
     text-align: center;
 }
+
+.Table:hover {
+    background-color: rgb(174, 153, 182);
+}
