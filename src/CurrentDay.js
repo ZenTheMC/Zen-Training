@@ -282,11 +282,7 @@ const CurrentDay = ({ userId }) => {
   return (
     <div className={styles.CurrentDay}>
       {console.log('exerciseSets in render:', exerciseSets)}
-      <MesoInfo
-      name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')}
-      currentWeek={`${currentWeek}${isCurrentWeekCompleted ? ' ✓' : ''}`}
-      currentDay={`${currentDay}${currentDayExercises && currentDayExercises.completed ? ' ✓' : ''}`}
-      />
+      <button className={styles.EndMesoEarly} onClick={endMesocycleEarly}>End Mesocycle Early</button>
       {mesocycle.days.length > 0 && mesocycle.days[0].length > 0 && (
         <Calendar
           weeks={mesocycle.weeks}
@@ -294,24 +290,27 @@ const CurrentDay = ({ userId }) => {
           onSelectDay={handleSelectDay}
         />
       )}
-      <button onClick={endMesocycleEarly}>End Mesocycle Early</button>
-      <h2 className={styles.Title}>Training Session</h2>
+      <MesoInfo
+      name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')}
+      currentWeek={`${currentWeek}${isCurrentWeekCompleted ? ' ✓' : ''}`}
+      currentDay={`${currentDay}${currentDayExercises && currentDayExercises.completed ? ' ✓' : ''}`}
+      />
       {currentDayExercises && currentDayExercises.exercises.map((exercise, exerciseIndex) => (
         <div className={styles.Exercise} key={exerciseIndex}>
           <div className={styles.ExerciseNameContainer}>
             <span className={styles.ExerciseName}>{exercise.name}</span>
             <div className={styles.Buttons}>
-              <button onClick={() => addSet(exercise.name)}>+</button>
-              <button onClick={() => removeSet(exercise.name)}>-</button>
+              <button className={styles.AddSet} onClick={() => addSet(exercise.name)}>Add Set</button>
+              <button className={styles.RemoveSet} onClick={() => removeSet(exercise.name)}>Remove Set</button>
             </div>
           </div>
           <p className={styles.MuscleGroup}>{exercise.muscleGroup}</p>
           <p className={styles.Rir}>RIR {calculateRIR(currentWeek, mesocycle.weeks)}</p>
           {(exerciseSets[exercise.name] || Array(2).fill({ weight: "", reps: "" })).map((set, setIndex) => (
             <div key={setIndex}>
-              <input placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
-              <input placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
-              <button onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
+              <input className={styles.Weight} placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
+              <input className={styles.Reps} placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
+              <button className={styles.LogSet} onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
               {set.completed && <span> ✓</span>}
             </div>
           ))}
