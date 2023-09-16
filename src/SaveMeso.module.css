@@ -5,4 +5,10 @@
 .SubmitButton {
     background-color: rgb(242, 161, 192);
     border: solid black 1px;
+    cursor: pointer;
+}
+
+.SubmitButton:hover {
+    background-color: rgb(236, 97, 150);
+    box-shadow: 1px 1px 1px 1px;
 }

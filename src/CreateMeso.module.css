@@ -29,4 +29,10 @@
 .AddDayButton {
     background-color: rgb(245, 193, 163);
     border: black 1px;
+    cursor: pointer;
+}
+
+.AddDayButton:hover {
+    background-color: rgb(244, 136, 74);
+    box-shadow: 1px 1px 1px 1px;
 }

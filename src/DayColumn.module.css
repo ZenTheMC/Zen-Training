@@ -25,4 +25,21 @@
     width: 50%;
     background-color: rgb(237, 239, 172);
     border: solid black 1px;
+    cursor: pointer;
+}
+
+.AddMuscleButton:hover {
+    box-shadow: 1px 1px 1px 1px;
+    background-color: rgb(236, 222, 62);
+}
+
+.Delete {
+    background-color: rgb(255, 108, 108);
+    border: black solid 1px;
+    cursor: pointer;
+}
+
+.Delete:hover {
+    background-color: red;
+    box-shadow: 1px 1px 1px 1px;
 }
