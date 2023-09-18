@@ -66,7 +66,7 @@ const CreateMeso = () => {
     };
 
     const validateForm = useCallback(() => {
-        if (!mesoName || !mesoWeeks) {
+        if (!mesoName || !mesoWeeks || meso.days.length === 0) {
             return false;
         }
     
