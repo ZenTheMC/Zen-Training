@@ -85,6 +85,10 @@ const CreateMeso = () => {
         return true;
     };
 
+    useEffect(() => {
+        setFormIsValid(validateForm());
+    }, [meso, mesoName, mesoWeeks]);
+
     return (
         <div className={styles.CreateMeso}>
             <h1>Create A Custom Program</h1>
