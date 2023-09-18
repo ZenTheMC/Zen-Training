@@ -46,6 +46,7 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
     return (
         <div className={styles.SaveMeso}>
             <form onSubmit={handleSaveMeso}>
+                {!formIsValid && <p className={styles.ValidationMessage}>Please fill out all required fields.</p>}
                 <button className={styles.SubmitButton} type="submit" disabled={!formIsValid}>Save Mesocycle</button>
             </form>
         </div>
