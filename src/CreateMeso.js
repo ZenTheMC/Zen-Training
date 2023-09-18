@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import DayColumn from "./DayColumn";
 import SaveMeso from "./SaveMeso";
 import styles from "./CreateMeso.module.css";
@@ -65,7 +65,7 @@ const CreateMeso = () => {
         setMeso(prevMeso => ({ ...prevMeso, days: prevMeso.days.filter((day, index) => index !== dayIndex) }));
     };
 
-    const validateForm = () => {
+    const validateForm = useCallback(() => {
         if (!mesoName || !mesoWeeks) {
             return false;
         }
@@ -83,11 +83,11 @@ const CreateMeso = () => {
         }
     
         return true;
-    };
+    }, [meso, mesoName, mesoWeeks]);
 
     useEffect(() => {
         setFormIsValid(validateForm());
-    }, [meso, mesoName, mesoWeeks]);
+    }, [meso, mesoName, mesoWeeks, validateForm]);
 
     return (
         <div className={styles.CreateMeso}>
