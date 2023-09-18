@@ -117,6 +117,7 @@ const CreateMeso = () => {
                     setMesoName={setMesoName} 
                     mesoWeeks={mesoWeeks} 
                     setMesoWeeks={setMesoWeeks}
+                    formIsValid={formIsValid}
                 />
             </div>
         </div>
