@@ -43,3 +43,7 @@
     background-color: red;
     box-shadow: 1px 1px 1px 1px;
 }
+
+.InvalidInput {
+    border: 2px solid red;
+}

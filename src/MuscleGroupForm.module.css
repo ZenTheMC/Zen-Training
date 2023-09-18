@@ -14,3 +14,7 @@
     margin-right: 8px;
     margin-top: 8px;
 }
+
+.InvalidInput {
+    border: 2px solid red;
+}

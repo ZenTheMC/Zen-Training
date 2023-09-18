@@ -2,7 +2,7 @@ import React from "react";
 import MuscleGroupForm from "./MuscleGroupForm";
 import styles from "./DayColumn.module.css";
 
-const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises }) => {
+const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attemptedSubmit }) => {
     const handleDelete = () => {
         deleteDay(dayIndex);
     };
@@ -21,6 +21,7 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises }) => 
                 <label>
                     Day of the week:
                     <select
+                        className={`${attemptedSubmit && !day.dayOfWeek ? styles.InvalidInput : ''}`}
                         value={day.dayOfWeek}
                         onChange={(event) => handleDayDetailsChange({ dayOfWeek: event.target.value })}
                         required>
@@ -43,6 +44,7 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises }) => 
                         exercise={exercise}
                         handleExerciseChange={(value) => handleDayDetailsChange({ exercises: day.exercises.map((ex, i) => i === exerciseIndex ? { ...ex, ...value } : ex) })}
                         exercises={exercises}
+                        attemptedSubmit={attemptedSubmit}
                     />
                 ))}
                 <button className={styles.AddMuscleButton} onClick={addExercise}>Add Another Muscle</button>

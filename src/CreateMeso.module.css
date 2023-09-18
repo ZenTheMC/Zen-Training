@@ -36,3 +36,7 @@
     background-color: rgb(244, 136, 74);
     box-shadow: 1px 1px 1px 1px;
 }
+
+.InvalidInput {
+    border: 2px solid red;
+}

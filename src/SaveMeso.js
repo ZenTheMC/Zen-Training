@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 import styles from "./SaveMeso.module.css";
 
-const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeeks, formIsValid }) => {
+const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeeks, formIsValid, setAttemptedSubmit }) => {
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
 
@@ -12,9 +12,14 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
 
     const handleSaveMeso = async (event) => {
         event.preventDefault();
+        setAttemptedSubmit(true);
     
         if (userId === null) {
             alert("Please sign in to save a mesocycle.");
+            return;
+        }
+
+        if (!formIsValid) {
             return;
         }
     
@@ -46,8 +51,8 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
     return (
         <div className={styles.SaveMeso}>
             <form onSubmit={handleSaveMeso}>
-                {!formIsValid && <p className={styles.ValidationMessage}>Please fill out all required fields.</p>}
-                <button className={styles.SubmitButton} type="submit" disabled={!formIsValid}>Save Mesocycle</button>
+                {!formIsValid && <p className={styles.ValidationMessage}>Please fill out all the data before saving!</p>}
+                <button className={`${styles.SubmitButton} ${!formIsValid ? styles.SubmitButtonDisabled : ''}`} type="submit">Save Mesocycle</button>
             </form>
         </div>
     );

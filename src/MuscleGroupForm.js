@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MuscleGroupForm.module.css";
 
-const MuscleGroupForm = ({ exercise, handleExerciseChange, exercises }) => {
+const MuscleGroupForm = ({ exercise, handleExerciseChange, exercises, attemptedSubmit }) => {
     const filteredExercises = exercises.filter(ex => ex.muscleGroup === exercise.muscleGroup);
 
     return (
@@ -9,6 +9,7 @@ const MuscleGroupForm = ({ exercise, handleExerciseChange, exercises }) => {
             <label className={styles.MuscleGroupLabel}>
                 Muscle group:
                 <select
+                    className={`${attemptedSubmit && !exercise.muscleGroup ? styles.InvalidInput : ''}`}
                     value={exercise.muscleGroup}
                     onChange={(event) => handleExerciseChange({ muscleGroup: event.target.value })}
                     required>
@@ -33,6 +34,7 @@ const MuscleGroupForm = ({ exercise, handleExerciseChange, exercises }) => {
             <label className={styles.ExerciseNameLabel}>
                 Exercise name:
                 <select
+                    className={`${attemptedSubmit && !exercise.name ? styles.InvalidInput : ''}`}
                     value={exercise.name}
                     onChange={(event) => handleExerciseChange({ name: event.target.value })}
                     required>

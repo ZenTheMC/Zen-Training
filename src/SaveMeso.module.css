@@ -13,8 +13,20 @@
     box-shadow: 1px 1px 1px 1px;
 }
 
+.SubmitButtonDisabled {
+    background-color: #f2f2f2;
+    color: #a0a0a0;
+    border-color: #d4d4d4;
+    cursor: not-allowed;
+}
+
+.SubmitButtonDisabled:hover {
+    background-color: #a62828;
+    color: rgb(249, 249, 249);
+}
+
 .ValidationMessage {
-    color: red;
-    font-weight: bold;
+    color: rgb(199, 0, 0);
     margin-bottom: 10px;
+    font-size: .85em;
 }

@@ -13,6 +13,7 @@ const CreateMeso = () => {
     const [mesoWeeks, setMesoWeeks] = useState("");
     const [exercises, setExercises] = useState([]);
     const [formIsValid, setFormIsValid] = useState(false);
+    const [attemptedSubmit, setAttemptedSubmit] = useState(false);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
 
@@ -91,10 +92,26 @@ const CreateMeso = () => {
 
     return (
         <div className={styles.CreateMeso}>
-            <h1>Create A Custom Program</h1>
+            <h1>Create A Mesocycle</h1>
             <div className={styles.Inputs}>
-                <input className={styles.Input} type="text" name="name" value={mesoName} onChange={handleMesoNameChange} placeholder="Meso Name" required />
-                <input className={styles.Input} type="number" name="weeks" value={mesoWeeks} onChange={handleMesoWeeksChange} placeholder="Meso Length (Weeks)" required />
+                <input
+                    className={`${styles.Input} ${attemptedSubmit && !mesoName ? styles.InvalidInput : ''}`}
+                    type="text"
+                    name="name"
+                    value={mesoName}
+                    onChange={handleMesoNameChange}
+                    placeholder="Meso Name"
+                    required
+                />
+                <input
+                    className={`${styles.Input} ${attemptedSubmit && !mesoWeeks ? styles.InvalidInput : ''}`}
+                    type="number"
+                    name="weeks"
+                    value={mesoWeeks}
+                    onChange={handleMesoWeeksChange}
+                    placeholder="Meso Length (Weeks)"
+                    required
+                />
             </div>
             <div className={styles.Days}>
                 {meso.days.map((day, dayIndex) => (
@@ -105,6 +122,7 @@ const CreateMeso = () => {
                         deleteDay={deleteDay}
                         handleDayChange={handleDayChange}
                         exercises={exercises}
+                        attemptedSubmit={attemptedSubmit}
                     />
                 ))}
                 <button className={styles.AddDayButton} onClick={addDay}>Add Day</button>
@@ -118,6 +136,7 @@ const CreateMeso = () => {
                     mesoWeeks={mesoWeeks} 
                     setMesoWeeks={setMesoWeeks}
                     formIsValid={formIsValid}
+                    setAttemptedSubmit={setAttemptedSubmit}
                 />
             </div>
         </div>
