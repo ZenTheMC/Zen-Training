@@ -65,6 +65,26 @@ const CreateMeso = () => {
         setMeso(prevMeso => ({ ...prevMeso, days: prevMeso.days.filter((day, index) => index !== dayIndex) }));
     };
 
+    const validateForm = () => {
+        if (!mesoName || !mesoWeeks) {
+            return false;
+        }
+    
+        for (const day of meso.days) {
+            if (!day.dayOfWeek) {
+                return false;
+            }
+    
+            for (const exercise of day.exercises) {
+                if (!exercise.muscleGroup || !exercise.name) {
+                    return false;
+                }
+            }
+        }
+    
+        return true;
+    };
+
     return (
         <div className={styles.CreateMeso}>
             <h1>Create A Custom Program</h1>
