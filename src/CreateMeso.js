@@ -12,6 +12,7 @@ const CreateMeso = () => {
     const [mesoName, setMesoName] = useState("");
     const [mesoWeeks, setMesoWeeks] = useState("");
     const [exercises, setExercises] = useState([]);
+    const [formIsValid, setFormIsValid] = useState(false);
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
 
