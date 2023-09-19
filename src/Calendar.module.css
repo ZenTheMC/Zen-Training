@@ -1,18 +1,32 @@
 .Calendar {
     border: 5px solid;
-    padding: 1px;
-    margin-bottom: 50px;
-    background-color: rgb(233, 209, 235);
-}
-
-.Table {
-    border: 2px solid;
-    cursor: pointer;
     padding: 3px;
-    background-color: rgb(224, 199, 233);
-    text-align: center;
+    margin-bottom: 50px;
+    background-color: rgb(174, 201, 245);
 }
 
-.Table:hover {
-    background-color: rgb(174, 153, 182);
+.Completed {
+    background-color: rgb(174, 201, 245);
+    text-align: center;
+    border: 2px solid;
+    padding: 3px;
+}
+
+.Incomplete {
+    background-color: rgb(174, 201, 245);
+    text-align: center;
+    border: 2px solid;
+    padding: 3px;
+}
+
+.Completed:hover {
+    box-shadow: 0.5px 0.5px 0.5px 0.5px;
+    cursor: pointer;
+    background-color: rgb(179, 230, 104);
+}
+
+.Incomplete:hover {
+    box-shadow: 0.5px 0.5px 0.5px 0.5px;
+    cursor: pointer;
+    background-color: rgb(215, 125, 125);
 }

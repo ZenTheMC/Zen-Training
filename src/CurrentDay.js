@@ -301,6 +301,7 @@ const CurrentDay = ({ userId }) => {
           weeks={mesocycle.weeks}
           days={mesocycle.days}
           onSelectDay={handleSelectDay}
+          dayCompletionStatus={mesocycle.days.flat().map(day => day.completed)}
         />
       )}
       {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}

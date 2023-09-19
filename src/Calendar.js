@@ -17,7 +17,7 @@ const Calendar = ({ weeks, days, onSelectDay }) => {
             <tr key={dayIndex}>
               {Array.from({ length: weeks }, (_, weekIndex) => (
                 <td
-                  className={styles.Table}
+                  className={days[weekIndex][dayIndex].completed ? styles.Completed : styles.Incomplete}
                   key={weekIndex}
                   onClick={() => onSelectDay(weekIndex + 1, days[weekIndex][dayIndex])}
                 >
