@@ -117,9 +117,14 @@ const CurrentDay = ({ userId }) => {
     console.log('exerciseSets before removing:', exerciseSets);
 
     setExerciseSets(prevSets => {
-        const updatedSets = prevSets[exerciseName] ? prevSets[exerciseName].slice(0, -1) : [];
-        console.log("Updated sets after removal:", updatedSets);
-        return { ...prevSets, [exerciseName]: updatedSets };
+      if (prevSets[exerciseName] && prevSets[exerciseName].length <= 2) {
+        alert("Minimum of 2 sets per exercise! If you insist, log 2nd set as 0 weight, 0 reps.");
+        return prevSets; // Do not change the sets
+      }
+
+      const updatedSets = prevSets[exerciseName] ? prevSets[exerciseName].slice(0, -1) : [];
+      console.log("Updated sets after removal:", updatedSets);
+      return { ...prevSets, [exerciseName]: updatedSets };
     });
   };
 
