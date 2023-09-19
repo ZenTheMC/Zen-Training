@@ -7,6 +7,7 @@ import { getMesocycles } from './FirebaseFunctions';
 import styles from './CurrentDay.module.css';
 import PopUp from './PopUp';
 import MinSetWarn from "./MinSetWarn";
+import EndMesoModal from "./EndMesoModal";
 
 const CurrentDay = ({ userId }) => {
 
@@ -16,6 +17,7 @@ const CurrentDay = ({ userId }) => {
   const [currentMesocycleId, setCurrentMesocycleId] = useState(null);
   const [showNoMesoPopup, setShowNoMesoPopup] = useState(false);
   const [showMinSetsWarning, setShowMinSetsWarning] = useState(false);
+  const [showEndMesoModal, setShowEndMesoModal] = useState(false);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -263,34 +265,37 @@ const CurrentDay = ({ userId }) => {
     }
   };
 
-  const endMesocycleEarly = async () => {
+  const endMesocycleEarly = () => {
     console.log("End Mesocycle Early button clicked!");
-    
-    const userConfirmation = window.confirm("Are you sure you want to end this mesocycle early? This action cannot be undone.");
-  
-    if (!userConfirmation) return;
+    setShowEndMesoModal(true); // Show the modal
+  };
 
+  const confirmEndMesocycle = async () => {
     console.log("User confirmed to end mesocycle early.");
 
     try {
-      const userId = auth.currentUser.uid;
-      const mesocycleRef = doc(db, 'users', userId, 'mesocycles', currentMesocycleId);
+        const userId = auth.currentUser.uid;
+        const mesocycleRef = doc(db, 'users', userId, 'mesocycles', currentMesocycleId);
 
-      console.log("Attempting to set mesocycle completed status to true...");
+        console.log("Attempting to set mesocycle completed status to true...");
 
-      // Flatten the mesocycle.days array before sending it to Firestore
-      const flattenedDays = mesocycle.days.flat();
+        // Flatten the mesocycle.days array before sending it to Firestore
+        const flattenedDays = mesocycle.days.flat();
 
-      // Update the completed property of the mesocycle to true
-      await setDoc(mesocycleRef, { ...mesocycle, days: flattenedDays, completed: true }, { merge: true });
+        // Update the completed property of the mesocycle to true
+        await setDoc(mesocycleRef, { ...mesocycle, days: flattenedDays, completed: true }, { merge: true });
 
-      console.log("Mesocycle status set to completed!");
+        console.log("Mesocycle status set to completed!");
 
-      fetchMesocycleData();
+        fetchMesocycleData();
     } catch (error) {
         console.error("Error ending mesocycle early:", error);
-      }
+    }
+
+    // Hide the modal
+    setShowEndMesoModal(false);
   };
+
 
   console.log('currentDayExercises:', currentDayExercises);
 
@@ -306,6 +311,11 @@ const CurrentDay = ({ userId }) => {
           dayCompletionStatus={mesocycle.days.flat().map(day => day.completed)}
         />
       )}
+      <EndMesoModal
+      show={showEndMesoModal}
+      onConfirm={confirmEndMesocycle}
+      onCancel={() => setShowEndMesoModal(false)}
+      />
       {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}
       {showMinSetsWarning && <MinSetWarn onClose={() => setShowMinSetsWarning(false)} />}
       <MesoInfo
