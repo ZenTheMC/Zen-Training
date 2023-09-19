@@ -6,6 +6,7 @@ import MesoInfo from './MesoInfo';
 import { getMesocycles } from './FirebaseFunctions';
 import styles from './CurrentDay.module.css';
 import PopUp from './PopUp';
+import MinSetWarn from "./MinSetWarn";
 
 const CurrentDay = ({ userId }) => {
 
@@ -14,6 +15,7 @@ const CurrentDay = ({ userId }) => {
   const [exerciseSets, setExerciseSets] = useState({});
   const [currentMesocycleId, setCurrentMesocycleId] = useState(null);
   const [showNoMesoPopup, setShowNoMesoPopup] = useState(false);
+  const [showMinSetsWarning, setShowMinSetsWarning] = useState(false);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -118,7 +120,7 @@ const CurrentDay = ({ userId }) => {
 
     setExerciseSets(prevSets => {
       if (prevSets[exerciseName] && prevSets[exerciseName].length <= 2) {
-        alert("Minimum of 2 sets per exercise! If you insist, log 2nd set as 0 weight, 0 reps.");
+        setShowMinSetsWarning(true);
         return prevSets; // Do not change the sets
       }
 
@@ -305,6 +307,7 @@ const CurrentDay = ({ userId }) => {
         />
       )}
       {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}
+      {showMinSetsWarning && <MinSetWarn onClose={() => setShowMinSetsWarning(false)} />}
       <MesoInfo
       name={mesocycle.name + (mesocycle.completed ? ' ✓' : '')}
       currentWeek={`${currentWeek}${isCurrentWeekCompleted ? ' ✓' : ''}`}
