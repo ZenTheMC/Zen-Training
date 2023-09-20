@@ -35,3 +35,7 @@ export const getMesocycles = async (userId) => {
     }));
     return mesocycles;
 };
+
+export const deleteMesocycle = async ( /* userId and mesocycle? */) => {
+    // implement logic for deleting a mesocycle
+}

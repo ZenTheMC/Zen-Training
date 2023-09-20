@@ -27,6 +27,21 @@ const MesoList = ({ userId }) => {
     return '';
   };
 
+  const handleSaveNote = () => {
+    // Display a text-area for notes and a button to save the notes for each meso
+  }
+
+  const handleDeleteMeso = () => {
+    // handle the deletion process
+    // display a delete button next to each meso
+  }
+
+  // Implement a sorting mechanism to sort mesos by name or creation date
+  // Add buttons to trigger sorting
+
+  // Implement a modal to show detailed info about a meso
+  // Display a Details button for each meso to open the modal
+
   return (
     <div className={styles.MesoList}>
       {mesocycles.map(meso => (
