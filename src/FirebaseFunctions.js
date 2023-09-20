@@ -1,5 +1,5 @@
 import { db } from './Firebase';
-import { collection, doc, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
@@ -36,6 +36,12 @@ export const getMesocycles = async (userId) => {
     return mesocycles;
 };
 
-export const deleteMesocycle = async ( /* userId and mesocycle? */) => {
-    // implement logic for deleting a mesocycle
+export const deleteMesocycle = async ( userId, mesocycleId) => {
+    const mesocycleRef = doc(db, "users", userId, "mesocycles", mesocycleId);
+    await deleteDoc(mesocycleRef);
+}
+
+export const updateMesocycleNote = async (userId, mesocycleId, note) => {
+    const mesocycleRef = doc(db, "users", userId, "mesocycles", mesocycleId);
+    await updateDoc(mesocycleRef, { note });
 }
