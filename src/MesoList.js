@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { deleteMesocycle, getMesocycles, updateMesocycleNote } from './FirebaseFunctions';
 import styles from './MesoList.module.css';
 import MesoListModal from "./MesoListModal";
@@ -71,6 +71,19 @@ const MesoList = ({ userId }) => {
     setTargetMesoId(null);
   };
 
+  const textAreaRefs = useRef({});
+
+  const adjustTextAreaHeight = (id) => {
+    if (textAreaRefs.current[id]) {
+      textAreaRefs.current[id].style.height = "auto";
+      textAreaRefs.current[id].style.height = `${textAreaRefs.current[id].scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    mesocycles.forEach(meso => adjustTextAreaHeight(meso.id));
+  }, [notes, mesocycles]);
+
   // Implement a sorting mechanism to sort mesos by name or creation date
   // Add buttons to trigger sorting
 
@@ -87,7 +100,14 @@ const MesoList = ({ userId }) => {
             <span className={styles.CreatedAt}>{formatDate(meso.createdAt)}</span>
           </div>
           <div className={styles.MesoControls}>
-            <textarea value={notes[meso.id] || meso.note || ""} onChange={(e) => setNotes({ ...notes, [meso.id]: e.target.value })} />
+            <textarea
+              ref={ref => textAreaRefs.current[meso.id] = ref}
+              value={notes[meso.id] || meso.note || ""}
+              onChange={(e) => {
+                setNotes({ ...notes, [meso.id]: e.target.value });
+                adjustTextAreaHeight(meso.id);
+              }}
+            />
             <button className={styles.SaveNote} onClick={() => handleSaveNote(meso.id)}>Save Note</button>
             <button className={styles.Delete} onClick={() => handleDeleteMesoPrompt(meso.id)}>Delete</button>
           </div>
