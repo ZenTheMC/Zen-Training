@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './SearchSort.module.css';
 
-const SearchSort = ({ onSearch, onSort }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchSort = ({ searchTerm, onSearch, onSort }) => {
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
     onSearch(event.target.value);
   };
 
@@ -23,9 +21,9 @@ const SearchSort = ({ onSearch, onSort }) => {
         className={styles.SearchInput}
       />
       <select onChange={(e) => handleSortChange(e.target.value)} className={styles.SortDropdown}>
-        <option value="default">Sort by...</option>
-        <option value="date">Creation Date</option>
-        <option value="status">Completion Status</option>
+        <option value="default">Default Sort</option>
+        <option value="date">Newest Mesos First</option>
+        <option value="status">Incomplete Mesos First</option>
       </select>
     </div>
   );

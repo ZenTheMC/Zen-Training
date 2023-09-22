@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { deleteMesocycle, getMesocycles, updateMesocycleNote } from './FirebaseFunctions';
 import styles from './MesoList.module.css';
 import MesoListModal from "./MesoListModal";
+import SearchSort from "./SearchSort";
 
 const MesoList = ({ userId }) => {
   const [mesocycles, setMesocycles] = useState([]);
@@ -9,6 +10,9 @@ const MesoList = ({ userId }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalMessage, setModalMessage] = useState();
   const [targetMesoId, setTargetMesoId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("default");
+
 
   useEffect(() => {
     const fetchMesocycles = async () => {
@@ -71,6 +75,14 @@ const MesoList = ({ userId }) => {
     setTargetMesoId(null);
   };
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+  
+  const handleSort = (option) => {
+    setSortOption(option);
+  };  
+
   const textAreaRefs = useRef({});
 
   const adjustTextAreaHeight = (id) => {
@@ -84,15 +96,29 @@ const MesoList = ({ userId }) => {
     mesocycles.forEach(meso => adjustTextAreaHeight(meso.id));
   }, [notes, mesocycles]);
 
-  // Implement a sorting mechanism to sort mesos by name or creation date
-  // Add buttons to trigger sorting
+  let displayedMesocycles = mesocycles;
+
+  if (searchTerm) {
+    displayedMesocycles = displayedMesocycles.filter(meso => meso.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
+
+  if (sortOption === 'date') {
+    displayedMesocycles = displayedMesocycles.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
+  } else if (sortOption === 'status') {
+    displayedMesocycles = displayedMesocycles.sort((a, b) => (a.completed === b.completed) ? 0 : a.completed ? 1 : -1);
+  }
+  
+  useEffect(() => {
+    displayedMesocycles.forEach(meso => adjustTextAreaHeight(meso.id));
+  }, [displayedMesocycles]);
 
   // Implement a modal to show detailed info about a meso
   // Display a Details button for each meso to open the modal
 
   return (
     <div className={styles.MesoList}>
-      {mesocycles.map(meso => (
+      <SearchSort onSearch={handleSearch} onSort={handleSort} />
+      {displayedMesocycles.map(meso => (
         <div key={meso.id} className={styles.MesoItem}>
           <div className={styles.MesoText}>
             <span className={styles.MesoName}><strong>{meso.name}</strong> -- <em>({meso.weeks} wks)</em> -- </span>
@@ -101,6 +127,7 @@ const MesoList = ({ userId }) => {
           </div>
           <div className={styles.MesoControls}>
             <textarea
+              key={meso.id}
               ref={ref => textAreaRefs.current[meso.id] = ref}
               value={notes[meso.id] || meso.note || ""}
               onChange={(e) => {
