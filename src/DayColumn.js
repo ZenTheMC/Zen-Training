@@ -25,7 +25,7 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attem
                         value={day.dayOfWeek}
                         onChange={(event) => handleDayDetailsChange({ dayOfWeek: event.target.value })}
                         required>
-                        <option value="">Select a day</option>
+                        <option value="">Day of the Week</option>
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>

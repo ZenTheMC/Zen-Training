@@ -3,6 +3,7 @@ import { deleteMesocycle, getMesocycles, updateMesocycleNote } from './FirebaseF
 import styles from './MesoList.module.css';
 import MesoListModal from "./MesoListModal";
 import SearchSort from "./SearchSort";
+import MesoDetailsModal from "./MesoDetailsModal";
 
 const MesoList = ({ userId }) => {
   const [mesocycles, setMesocycles] = useState([]);
@@ -12,7 +13,7 @@ const MesoList = ({ userId }) => {
   const [targetMesoId, setTargetMesoId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("default");
-
+  const [selectedMeso, setSelectedMeso] = useState(null);
 
   useEffect(() => {
     const fetchMesocycles = async () => {
@@ -138,6 +139,7 @@ const MesoList = ({ userId }) => {
             <button className={styles.SaveNote} onClick={() => handleSaveNote(meso.id)}>Save Note</button>
             <button className={styles.Delete} onClick={() => handleDeleteMesoPrompt(meso.id)}>Delete</button>
           </div>
+          <button className={styles.Details} onClick={() => setSelectedMeso(meso)}>View Details</button>
         </div>
       ))}
       <MesoListModal
@@ -152,6 +154,7 @@ const MesoList = ({ userId }) => {
         }}
         onCancel={handleModalCancel}
       />
+      <MesoDetailsModal meso={selectedMeso} onClose={() => setSelectedMeso(null)} />
     </div>
   );
 };

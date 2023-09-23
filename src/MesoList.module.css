@@ -87,3 +87,15 @@ textarea {
     box-shadow: 2px 2px 2px 2px;
     color: black;
 }
+
+.Details {
+    background-color: rgb(222, 193, 252);
+    border: solid black 1px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.Details:hover {
+    box-shadow: 1px 1px 1px 1px;
+    background-color: rgb(197, 142, 255);
+}
