@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import DayColumn from "./DayColumn";
 import SaveMeso from "./SaveMeso";
 import styles from "./CreateMeso.module.css";
@@ -15,6 +16,7 @@ const CreateMeso = () => {
     const [formIsValid, setFormIsValid] = useState(false);
     const [attemptedSubmit, setAttemptedSubmit] = useState(false);
     const [user] = useAuthState(auth);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const userId = user ? user.uid : null;
 
     useEffect(() => {
@@ -129,16 +131,29 @@ const CreateMeso = () => {
             </div>
             <div className={styles.Completion}>
                 <SaveMeso 
-                    meso={meso} 
-                    setMeso={setMeso} 
-                    mesoName={mesoName} 
-                    setMesoName={setMesoName} 
-                    mesoWeeks={mesoWeeks} 
+                    meso={meso}
+                    setMeso={setMeso}
+                    mesoName={mesoName}
+                    setMesoName={setMesoName}
+                    mesoWeeks={mesoWeeks}
                     setMesoWeeks={setMesoWeeks}
                     formIsValid={formIsValid}
                     setAttemptedSubmit={setAttemptedSubmit}
+                    onSuccessfulSave={() => setShowSuccessModal(true)}
                 />
             </div>
+            {showSuccessModal && (
+                <div className={styles.SuccessModalOverlay}>
+                    <div className={styles.SuccessModal}>
+                        <h2 className={styles.Message}>Mesocycle Created Successfully!</h2>
+                        <div className={styles.Links}>
+                            <Link className={styles.Link} to="/mesocycles">View Mesocycles</Link>
+                            <Link className={styles.Link} to="/today">Run Mesocycle</Link>
+                        </div>
+                        <button className={styles.Close} onClick={() => setShowSuccessModal(false)}>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

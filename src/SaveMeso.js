@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 import styles from "./SaveMeso.module.css";
 
-const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeeks, formIsValid, setAttemptedSubmit }) => {
+const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeeks, formIsValid, setAttemptedSubmit, onSuccessfulSave }) => {
     const [user] = useAuthState(auth);
     const userId = user ? user.uid : null;
 
@@ -24,7 +24,6 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
         }
     
         if (mesoName && mesoWeeks) {
-            // Add week property to each day
             const replicatedDays = [];
             for (let week = 1; week <= Number(mesoWeeks); week++) {
                 meso.days.forEach(day => {
@@ -43,6 +42,8 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
             setMeso({ days: [] });
             setMesoName("");
             setMesoWeeks("");
+            setAttemptedSubmit(false);
+            onSuccessfulSave();
         } else {
             alert("Please enter a mesocycle name and length");
         }
