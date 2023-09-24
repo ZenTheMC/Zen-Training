@@ -1,0 +1,35 @@
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.Menu {
+    background-color: #cbf0f7;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.Button {
+    margin-top: 1em;
+    padding: 0.7em;
+    background-color: #ff5050;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.Button:hover {
+    background-color: #87c25a;
+    color: black;
+}

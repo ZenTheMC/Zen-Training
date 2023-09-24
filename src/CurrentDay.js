@@ -8,6 +8,7 @@ import styles from './CurrentDay.module.css';
 import PopUp from './PopUp';
 import MinSetWarn from "./MinSetWarn";
 import EndMesoModal from "./EndMesoModal";
+import LogSetVal from "./LogSetVal";
 
 const CurrentDay = ({ userId }) => {
 
@@ -18,6 +19,7 @@ const CurrentDay = ({ userId }) => {
   const [showNoMesoPopup, setShowNoMesoPopup] = useState(false);
   const [showMinSetsWarning, setShowMinSetsWarning] = useState(false);
   const [showEndMesoModal, setShowEndMesoModal] = useState(false);
+  const [showValidationPopup, setShowValidationPopup] = useState(false);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -164,6 +166,12 @@ const CurrentDay = ({ userId }) => {
 
   const logSet = async (exerciseIndex, setIndex, setData) => {
     
+    // Validate the weight and reps fields
+    if (!setData.weight || !setData.reps) {
+      setShowValidationPopup(true);
+      return;
+    }
+
     // Calculate the index of the day in the flattened days array
     const flatDayIndex = mesocycle.days.flat().findIndex(day => day.week === currentWeek && day.dayOfWeek === currentDay);
 
@@ -316,6 +324,7 @@ const CurrentDay = ({ userId }) => {
       onConfirm={confirmEndMesocycle}
       onCancel={() => setShowEndMesoModal(false)}
       />
+      {showValidationPopup && <LogSetVal onClose={() => setShowValidationPopup(false)} />}
       {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}
       {showMinSetsWarning && <MinSetWarn onClose={() => setShowMinSetsWarning(false)} />}
       <MesoInfo
