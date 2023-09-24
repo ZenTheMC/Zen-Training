@@ -1,0 +1,70 @@
+.HelpMenu {
+    position: fixed;
+    top: 10%;
+    left: 43%;
+    transform: translateX(-50%);
+    width: 60%;
+    max-width: 500px;
+    background-color: #abcdef;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 1000;
+    margin-left: 15%;
+    border: black solid 1px;
+}
+
+.Tabs {
+    background-color: rgb(250, 230, 204);
+    padding: 10px;
+    border: solid black 1px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.Tabs:hover {
+    box-shadow: 1px 1px 1px 1px;
+    background-color: rgb(251, 255, 0);
+}
+
+.TabMenu {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.TabContent {
+    background-color: #e1d7fa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.Close {
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgb(204, 179, 255);
+    border: solid black 1px;
+    color: black;
+}
+
+.Close:hover {
+    box-shadow: 1px 1px 1px 1px;
+    background-color: rgb(196, 93, 255);
+}
+
+.Instructions {
+    font-size: .9em;
+    margin: 2em;
+}
+
+.Subnotes {
+    font-size: .8em;
+}
+
+.ListItem {
+    margin-bottom: 0.2em;
+    margin-top: 0.5em;
+}
