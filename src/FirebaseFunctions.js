@@ -7,7 +7,7 @@ export const addMesocycle = async (userId, mesocycle) => {
         mesocycle.days.forEach(day => {
             day.exercises.forEach(exercise => {
                 if (!exercise.sets) {
-                    exercise.sets = Array.from({ length: 2 }, () => ({ weight: "", reps: "", completed: false })); // Default 2 sets
+                    exercise.sets = Array.from({ length: 2 }, () => ({ weight: "", reps: "", completed: false }));
                 }
             });
         });

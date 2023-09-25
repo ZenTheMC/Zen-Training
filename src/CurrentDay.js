@@ -185,11 +185,15 @@ const CurrentDay = ({ userId }) => {
       const mesocycleId = currentMesocycleId;
       const mesocycleRef = doc(db, 'users', userId, 'mesocycles', mesocycleId);
 
+      // Convert the weight and reps fields to numbers
+      const convertedWeight = Number(setData.weight);
+      const convertedReps = Number(setData.reps);
+
       // Create the new set data
       const newSetData = {
           completed: true,
-          weight: setData.weight,
-          reps: setData.reps,
+          weight: convertedWeight,
+          reps: convertedReps,
       };
 
       // Log the new set data for inspection
