@@ -345,8 +345,8 @@ const CurrentDay = ({ userId }) => {
           <p className={styles.Rir}>RIR {calculateRIR(currentWeek, mesocycle.weeks)}</p>
           {(exerciseSets[exercise.name] || Array(2).fill({ weight: "", reps: "" })).map((set, setIndex) => (
             <div key={setIndex}>
-              <input className={styles.Weight} placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
-              <input className={styles.Reps} placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
+              <input className={styles.Weight} type="number" placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
+              <input className={styles.Reps} type="number" placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
               <button className={styles.LogSet} onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
               {set.completed && <span> ✓</span>}
             </div>

@@ -23,7 +23,6 @@ const Sidebar = () => {
             <Link className={styles.Link} to="/today">Run Mesocycle</Link>
             <Link className={styles.Link} to="/newmeso">Create Mesocycle</Link>
             <Link className={styles.Link} to="/mesocycles">Your Mesocycles</Link>
-            <Link className={styles.Link} to="/workout">Temp Page(DELETE)</Link>
             <button className={styles.SignOutButton} type="button" onClick={handleSignOut}>Sign Out</button>
         </div>
     );

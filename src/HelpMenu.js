@@ -13,7 +13,7 @@ const HelpMenu = ({ onClose }) => {
             </div>
             <div className={styles.TabContent}>
                 {activeTab === 'Run Mesocycle' &&
-                    <p className={styles.Instructions}>
+                    <div className={styles.Instructions}>
                         <strong>For working out!</strong>
                         <ul>
                             <li className={styles.ListItem}>Go to the day using the calendar</li>
@@ -28,9 +28,9 @@ const HelpMenu = ({ onClose }) => {
                             <li className={styles.ListItem}>You can end your mesocycle early but <strong>you can't undo this</strong></li>
                             <li className={styles.Subnotes}><em>Only do this if you are sure you want to discontinue this program</em></li>
                         </ul>
-                    </p>}
+                    </div>}
                 {activeTab === 'Create Mesocycle' &&
-                    <p className={styles.Instructions}>
+                    <div className={styles.Instructions}>
                         <strong>For creating a program!</strong>
                         <ul>
                             <li className={styles.ListItem}>You give your program a name at the top</li>
@@ -48,9 +48,9 @@ const HelpMenu = ({ onClose }) => {
                             <li className={styles.ListItem}>When you are satisfied, click the Save Mesocycle button</li>
                             <li className={styles.Subnotes}><em>You will be unable to save if you haven't filled out everything!</em></li>
                         </ul>
-                    </p>}
+                    </div>}
                 {activeTab === 'Your Mesocycles' &&
-                    <p className={styles.Instructions}>
+                    <div className={styles.Instructions}>
                         <strong>Viewing your programs!</strong>
                         <ul>
                             <li className={styles.ListItem}>You'll see a list of all of your mesos</li>
@@ -63,7 +63,7 @@ const HelpMenu = ({ onClose }) => {
                             <li className={styles.ListItem}>You can also delete a meso but <strong>you can't undo this</strong></li>
                             <li className={styles.Subnotes}><em>Only do this if you are sure you want to discontinue this program</em></li>
                         </ul>
-                    </p>}
+                    </div>}
             </div>
             <button className={styles.Close} onClick={onClose}>Got it</button>
         </div>

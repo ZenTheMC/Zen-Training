@@ -85,4 +85,15 @@
     border: solid black 1px;
     text-align: center;
     margin: 1px;
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+.Weight::-webkit-inner-spin-button,
+.Reps::-webkit-inner-spin-button,
+.Weight::-webkit-outer-spin-button,
+.Reps::-webkit-outer-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
 }

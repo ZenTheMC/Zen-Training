@@ -99,3 +99,14 @@
 .Close:hover {
     background-color: #ffc6c6;
 }
+
+.Input[type="number"]::-webkit-inner-spin-button,
+.Input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.Input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+}
