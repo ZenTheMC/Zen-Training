@@ -27,6 +27,7 @@ const HelpMenu = ({ onClose }) => {
                             <li className={styles.ListItem}>Once all your sets are logged, the day is completed</li>
                             <li className={styles.ListItem}>You can end your mesocycle early but <strong>you can't undo this</strong></li>
                             <li className={styles.Subnotes}><em>Only do this if you are sure you want to discontinue this program</em></li>
+                            <li className={styles.ListItem}>You will also be given suggestions of weight and reps for progressive overload in consecutive weeks!</li>
                         </ul>
                     </div>}
                 {activeTab === 'Create Mesocycle' &&

@@ -40,6 +40,27 @@ const CurrentDay = ({ userId }) => {
     });
 
     const selectedDayExercises = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week);
+    
+    if (week > 1) {
+      const previousWeekExercises = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week - 1);
+      
+      // Loop through the exercises of the current week
+      selectedDayExercises.exercises.forEach((exercise) => {
+          const prevExercise = previousWeekExercises ? previousWeekExercises.exercises.find(e => e.name === exercise.name) : null;
+          
+          if (prevExercise) {
+              exercise.sets.forEach((set, setIndex) => {
+                  const prevSet = prevExercise.sets[setIndex];
+                  if (prevSet) {
+                      // Calculate the progressive overload for each set based on the corresponding set of the previous week
+                      set.suggestedWeight = prevSet.weight + 5;
+                      set.suggestedReps = prevSet.reps + 1; 
+                  }
+              });
+          }
+      });
+    }
+    
     console.log("Selected day exercises:", selectedDayExercises);
     const initialSets = {};
 
@@ -349,8 +370,8 @@ const CurrentDay = ({ userId }) => {
           <p className={styles.Rir}>RIR {calculateRIR(currentWeek, mesocycle.weeks)}</p>
           {(exerciseSets[exercise.name] || Array(2).fill({ weight: "", reps: "" })).map((set, setIndex) => (
             <div key={setIndex}>
-              <input className={styles.Weight} type="number" placeholder="Weight" value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
-              <input className={styles.Reps} type="number" placeholder="Reps" value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
+              <input className={styles.Weight} type="number" placeholder={set.suggestedWeight || "Weight"} value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
+              <input className={styles.Reps} type="number" placeholder={set.suggestedReps || "Reps"} value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
               <button className={styles.LogSet} onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
               {set.completed && <span> ✓</span>}
             </div>
