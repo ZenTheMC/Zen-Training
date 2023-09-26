@@ -45,3 +45,12 @@ export const updateMesocycleNote = async (userId, mesocycleId, note) => {
     const mesocycleRef = doc(db, "users", userId, "mesocycles", mesocycleId);
     await updateDoc(mesocycleRef, { note });
 }
+
+export const updateMesocycle = async (userId, mesocycleId, mesocycle) => {
+    const mesocycleRef = doc(db, "users", userId, "mesocycles", mesocycleId);
+    try {
+        await updateDoc(mesocycleRef, mesocycle);
+    } catch (error) {
+        console.error("Error updating mesocycle:", error);
+    }
+}

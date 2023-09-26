@@ -3,7 +3,7 @@ import { db, auth } from "./Firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import Calendar from './Calendar';
 import MesoInfo from './MesoInfo';
-import { getMesocycles } from './FirebaseFunctions';
+import { getMesocycles, updateMesocycle } from './FirebaseFunctions';
 import styles from './CurrentDay.module.css';
 import PopUp from './PopUp';
 import MinSetWarn from "./MinSetWarn";
@@ -27,13 +27,14 @@ const CurrentDay = ({ userId }) => {
     days: [[]],
   });
 
+  useEffect(() => {
+    console.log("CurrentDay component rerendered");
+  }, []);
+
+
   const handleSelectDay = async (week, day) => {
     setCurrentWeek(week);
     setCurrentDay(day.dayOfWeek);
-
-    // Get the exercises for the selected day
-    console.log('Logging mesocycle.days:', mesocycle.days);
-    console.log('Logging week and day.dayOfWeek:', week, day.dayOfWeek);
 
     mesocycle.days.flat().forEach(d => {
         console.log(`Week: ${d.week}, Day: ${d.dayOfWeek}`);
@@ -61,16 +62,13 @@ const CurrentDay = ({ userId }) => {
       });
     }
     
-    console.log("Selected day exercises:", selectedDayExercises);
     const initialSets = {};
 
     if (selectedDayExercises) {
       selectedDayExercises.exercises.forEach((exercise) => {
         initialSets[exercise.name] = exercise.sets && exercise.sets.length > 0 ? exercise.sets : [ { weight: "", reps: "" }, { weight: "", reps: "" } ];
-        console.log("Inspecting exercise:", exercise);
       });
     }
-    console.log('Initial exerciseSets after selecting day:', initialSets);
     setExerciseSets(initialSets);
   };
 
@@ -102,14 +100,11 @@ const CurrentDay = ({ userId }) => {
             })),
           }));
         });
-        console.log('Original days array:', mesocycles[0].days);
-        console.log('Fetched days array:', days2D);
 
         setCurrentMesocycleId(mesocycles[0].id);
         setMesocycle({ ...mesocycles[0], days: days2D });
 
       } else {
-        console.log("No mesocycles found for the user!");
         setShowNoMesoPopup(true);  // Also show the popup if no mesocycles are found at all
       }
     } catch (error) {
@@ -127,32 +122,83 @@ const CurrentDay = ({ userId }) => {
     return totalWeeks - week;
   };
 
-  const addSet = (exerciseName) => {
-    console.log('addSet is called for exercise:', exerciseName);
-    console.log('exerciseSets before adding:', exerciseSets);
-    const newSet = { weight: "", reps: "" };
+  const addSet = async (exerciseName) => {
+    const newSet = { weight: "", reps: "", completed: false };
 
+    // 1. Updating local state for exercise sets
     setExerciseSets(prevSets => {
         const updatedSets = prevSets[exerciseName] ? [...prevSets[exerciseName], newSet] : [newSet];
-        console.log("Updated sets:", updatedSets);
+        console.log("Updated exercise sets:", updatedSets);
         return { ...prevSets, [exerciseName]: updatedSets };
     });
+
+    // 2. Updating local state for mesocycle days
+    setMesocycle(prevMeso => {
+      const updatedDays = prevMeso.days.map(weekDays => weekDays.map(day => {
+          const targetExercise = day.exercises.find(e => e.name === exerciseName);
+          if (targetExercise) {
+              targetExercise.sets.push({ ...newSet });
+          }
+
+          // Progressive overload calculations for future weeks
+          if (day.week > currentWeek && day.dayOfWeek === currentDay) {
+              if (targetExercise && day.week > 1) {
+                  const previousWeekExercise = prevMeso.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === day.week - 1).exercises.find(e => e.name === exerciseName);
+                  if (previousWeekExercise) {
+                      targetExercise.suggestedWeight = previousWeekExercise.sets[0].weight + 5;
+                      targetExercise.suggestedReps = previousWeekExercise.sets[0].reps + 1;
+                  }
+              }
+          }
+          return day;
+      }));
+      console.log("Updated mesocycle days:", updatedDays);
+      return { ...prevMeso, days: updatedDays };
+    });
+
+    // Wait for state updates to complete
+    setTimeout(async () => {
+      console.log("Current mesocycle state before Firestore update:", mesocycle);
+      // 3. Updating Firestore for the mesocycle
+      const updatedMesocycle = { ...mesocycle, days: mesocycle.days.flat() };
+      delete updatedMesocycle.id;  // Remove the id field
+      await updateMesocycle(userId, currentMesocycleId, updatedMesocycle);
+    }, 1000);
   };
 
-  const removeSet = (exerciseName) => {
-    console.log('removeSet is called for exercise:', exerciseName);
-    console.log('exerciseSets before removing:', exerciseSets);
-
-    setExerciseSets(prevSets => {
-      if (prevSets[exerciseName] && prevSets[exerciseName].length <= 2) {
+  const removeSet = async (exerciseName) => {
+    // 1. Check if removing the set would bring the total sets below 2. If so, show warning and exit.
+    if (exerciseSets[exerciseName] && exerciseSets[exerciseName].length <= 2) {
         setShowMinSetsWarning(true);
-        return prevSets; // Do not change the sets
-      }
+        return;
+    }
 
-      const updatedSets = prevSets[exerciseName] ? prevSets[exerciseName].slice(0, -1) : [];
-      console.log("Updated sets after removal:", updatedSets);
-      return { ...prevSets, [exerciseName]: updatedSets };
+    // 2. Updating local state for exercise sets
+    setExerciseSets(prevSets => {
+        const updatedSets = prevSets[exerciseName] ? prevSets[exerciseName].slice(0, -1) : [];
+        return { ...prevSets, [exerciseName]: updatedSets };
     });
+
+    // 3. Updating local state for mesocycle days
+    setMesocycle(prevMeso => {
+        const updatedDays = prevMeso.days.map(weekDays => weekDays.map(day => {
+            const targetExercise = day.exercises.find(e => e.name === exerciseName);
+            if (targetExercise && targetExercise.sets.length > 2) {
+                targetExercise.sets.pop();
+            }
+            return day;
+        }));
+        return { ...prevMeso, days: updatedDays };
+    });
+
+    // Wait for state updates to complete
+    setTimeout(async () => {
+        console.log("Current mesocycle state before Firestore update:", mesocycle);
+        // 4. Updating Firestore for the mesocycle
+        const updatedMesocycle = { ...mesocycle, days: mesocycle.days.flat() };
+        delete updatedMesocycle.id;  // Remove the id field
+        await updateMesocycle(userId, currentMesocycleId, updatedMesocycle);
+    }, 1000);
   };
 
   const handleSetChange = (exerciseName, setIndex, field, value) => {
@@ -161,8 +207,6 @@ const CurrentDay = ({ userId }) => {
         console.error(`Exercise "${exerciseName}" not found in exerciseSets.`);
         return prevState;  // Return the previous state unchanged.
       }
-      console.log(`handleSetChange called for exercise: ${exerciseName}, setIndex: ${setIndex}, field: ${field}, value: ${value}`);
-      console.log('Current exerciseSets state:', prevState);
       const updatedSets = [...prevState[exerciseName]];
       updatedSets[setIndex][field] = value;
       return {
@@ -244,7 +288,6 @@ const CurrentDay = ({ userId }) => {
         }
         currentDayExercises.exercises[exerciseIndex].sets[setIndex] = newSetData;
       }
-      console.log('Updated currentDayExercises:', currentDayExercises);
 
       // Update the exerciseSets state
       setExerciseSets(prevState => {
@@ -288,6 +331,16 @@ const CurrentDay = ({ userId }) => {
         }));
       }
 
+      // *** INSERT CLEANUP CODE HERE ***
+      mesocycleData.days.forEach(day => {
+        day.exercises.forEach(exercise => {
+          exercise.sets.forEach(set => {
+            delete set.suggestedWeight;
+            delete set.suggestedReps;
+          });
+        });
+      });
+
       // Log the mesocycle data right before writing to Firestore
       console.log('Final mesocycle data to be written to Firestore:', JSON.parse(JSON.stringify(mesocycleData)));
 
@@ -299,18 +352,14 @@ const CurrentDay = ({ userId }) => {
   };
 
   const endMesocycleEarly = () => {
-    console.log("End Mesocycle Early button clicked!");
     setShowEndMesoModal(true); // Show the modal
   };
 
   const confirmEndMesocycle = async () => {
-    console.log("User confirmed to end mesocycle early.");
 
     try {
         const userId = auth.currentUser.uid;
         const mesocycleRef = doc(db, 'users', userId, 'mesocycles', currentMesocycleId);
-
-        console.log("Attempting to set mesocycle completed status to true...");
 
         // Flatten the mesocycle.days array before sending it to Firestore
         const flattenedDays = mesocycle.days.flat();
@@ -329,12 +378,8 @@ const CurrentDay = ({ userId }) => {
     setShowEndMesoModal(false);
   };
 
-
-  console.log('currentDayExercises:', currentDayExercises);
-
   return (
     <div className={styles.CurrentDay}>
-      {console.log('exerciseSets in render:', exerciseSets)}
       <button className={styles.EndMesoEarly} onClick={endMesocycleEarly}>End Mesocycle Early</button>
       {mesocycle.days.length > 0 && mesocycle.days[0].length > 0 && (
         <Calendar
