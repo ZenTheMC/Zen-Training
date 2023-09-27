@@ -227,7 +227,7 @@ const CurrentDay = ({ userId }) => {
   const isCurrentWeekCompleted = useMemo(() => {
     const daysInCurrentWeek = mesocycle.days.flat().filter(day => day.week === currentWeek);
     return daysInCurrentWeek.every(day => day.completed);
-}, [mesocycle.days, currentWeek]);
+  }, [mesocycle.days, currentWeek]);
 
   const logSet = async (exerciseIndex, setIndex, setData) => {
     
