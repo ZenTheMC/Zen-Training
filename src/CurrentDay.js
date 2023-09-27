@@ -220,18 +220,6 @@ const CurrentDay = ({ userId }) => {
     return daysInCurrentWeek.every(day => day.completed);
   }, [mesocycle.days, currentWeek]);
 
-  const cleanExerciseSetsForFirestore = (daysArray) => {
-    daysArray.forEach(day => {
-        day.exercises.forEach(exercise => {
-            exercise.sets.forEach(set => {
-                delete set.suggestedWeight;
-                delete set.suggestedReps;
-            });
-        });
-    });
-    return daysArray;
-  }
-
   const logSet = async (exerciseIndex, setIndex, setData) => {
     
     // Validate the weight and reps fields
@@ -333,12 +321,6 @@ const CurrentDay = ({ userId }) => {
           completed: true
         }));
       }
-
-      // *** INSERT CLEANUP CODE HERE ***
-
-      // Call the cleaning function to remove unwanted fields
-      const cleanedDays = cleanExerciseSetsForFirestore([...mesocycleData.days]);
-      mesocycleData.days = cleanedDays;
 
       // Log the mesocycle data right before writing to Firestore
       console.log('Final mesocycle data to be written to Firestore:', JSON.parse(JSON.stringify(mesocycleData)));
