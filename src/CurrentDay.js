@@ -40,8 +40,11 @@ const CurrentDay = ({ userId }) => {
         console.log(`Week: ${d.week}, Day: ${d.dayOfWeek}`);
     });
 
-    const selectedDayExercises = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week);
-    
+    const selectedDayExercisesOriginal = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week);
+
+    // Create a deep copy
+    const selectedDayExercises = JSON.parse(JSON.stringify(selectedDayExercisesOriginal));
+
     if (week > 1) {
       const previousWeekExercises = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week - 1);
       
@@ -61,9 +64,8 @@ const CurrentDay = ({ userId }) => {
           }
       });
     }
-    
-    const initialSets = {};
 
+    const initialSets = {};
     if (selectedDayExercises) {
       selectedDayExercises.exercises.forEach((exercise) => {
         initialSets[exercise.name] = exercise.sets && exercise.sets.length > 0 ? exercise.sets : [ { weight: "", reps: "" }, { weight: "", reps: "" } ];
@@ -71,6 +73,7 @@ const CurrentDay = ({ userId }) => {
     }
     setExerciseSets(initialSets);
   };
+
 
   // Fetch mesocycle data from Firebase
   const fetchMesocycleData = async () => {
@@ -137,22 +140,10 @@ const CurrentDay = ({ userId }) => {
       const updatedDays = prevMeso.days.map(weekDays => weekDays.map(day => {
           const targetExercise = day.exercises.find(e => e.name === exerciseName);
           if (targetExercise) {
-              targetExercise.sets.push({ ...newSet });
-          }
-
-          // Progressive overload calculations for future weeks
-          if (day.week > currentWeek && day.dayOfWeek === currentDay) {
-              if (targetExercise && day.week > 1) {
-                  const previousWeekExercise = prevMeso.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === day.week - 1).exercises.find(e => e.name === exerciseName);
-                  if (previousWeekExercise) {
-                      targetExercise.suggestedWeight = previousWeekExercise.sets[0].weight + 5;
-                      targetExercise.suggestedReps = previousWeekExercise.sets[0].reps + 1;
-                  }
-              }
+              targetExercise.sets.push({ ...newSet }); // This will add the set without suggested values
           }
           return day;
       }));
-      console.log("Updated mesocycle days:", updatedDays);
       return { ...prevMeso, days: updatedDays };
     });
 
@@ -228,6 +219,18 @@ const CurrentDay = ({ userId }) => {
     const daysInCurrentWeek = mesocycle.days.flat().filter(day => day.week === currentWeek);
     return daysInCurrentWeek.every(day => day.completed);
   }, [mesocycle.days, currentWeek]);
+
+  const cleanExerciseSetsForFirestore = (daysArray) => {
+    daysArray.forEach(day => {
+        day.exercises.forEach(exercise => {
+            exercise.sets.forEach(set => {
+                delete set.suggestedWeight;
+                delete set.suggestedReps;
+            });
+        });
+    });
+    return daysArray;
+  }
 
   const logSet = async (exerciseIndex, setIndex, setData) => {
     
@@ -332,14 +335,10 @@ const CurrentDay = ({ userId }) => {
       }
 
       // *** INSERT CLEANUP CODE HERE ***
-      mesocycleData.days.forEach(day => {
-        day.exercises.forEach(exercise => {
-          exercise.sets.forEach(set => {
-            delete set.suggestedWeight;
-            delete set.suggestedReps;
-          });
-        });
-      });
+
+      // Call the cleaning function to remove unwanted fields
+      const cleanedDays = cleanExerciseSetsForFirestore([...mesocycleData.days]);
+      mesocycleData.days = cleanedDays;
 
       // Log the mesocycle data right before writing to Firestore
       console.log('Final mesocycle data to be written to Firestore:', JSON.parse(JSON.stringify(mesocycleData)));
@@ -413,14 +412,22 @@ const CurrentDay = ({ userId }) => {
           </div>
           <p className={styles.MuscleGroup}>{exercise.muscleGroup}</p>
           <p className={styles.Rir}>RIR {calculateRIR(currentWeek, mesocycle.weeks)}</p>
-          {(exerciseSets[exercise.name] || Array(2).fill({ weight: "", reps: "" })).map((set, setIndex) => (
-            <div key={setIndex}>
-              <input className={styles.Weight} type="number" placeholder={set.suggestedWeight || "Weight"} value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
-              <input className={styles.Reps} type="number" placeholder={set.suggestedReps || "Reps"} value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
-              <button className={styles.LogSet} onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
-              {set.completed && <span> ✓</span>}
-            </div>
-          ))}
+          {(exerciseSets[exercise.name] || Array(2).fill({ weight: "", reps: "" })).map((set, setIndex) => {
+            const previousWeekExercise = currentWeek > 1 && mesocycle.days.flat().find(d => d.dayOfWeek === currentDay && d.week === currentWeek - 1)?.exercises.find(e => e.name === exercise.name);
+            const previousSet = previousWeekExercise && previousWeekExercise.sets ? previousWeekExercise.sets[setIndex] : null;
+    
+            const suggestedWeight = previousSet ? previousSet.weight + 5 : "";
+            const suggestedReps = previousSet ? previousSet.reps + 1 : "";
+    
+            return (
+              <div key={setIndex}>
+                <input className={styles.Weight} type="number" placeholder={suggestedWeight || "Weight"} value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
+                <input className={styles.Reps} type="number" placeholder={suggestedReps || "Reps"} value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
+                <button className={styles.LogSet} onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>
+                {set.completed && <span> ✓</span>}
+              </div>
+            );
+          })}
         </div>
       ))}
     </div>
