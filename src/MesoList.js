@@ -46,6 +46,20 @@ const MesoList = ({ userId }) => {
   const handleSaveNoteConfirm = async () => {
     try {
         await updateMesocycleNote(userId, targetMesoId, notes[targetMesoId]);
+        
+        // Update the mesocycles state with the new note
+        setMesocycles(prevMesocycles => {
+          return prevMesocycles.map(meso => {
+            if (meso.id === targetMesoId) {
+              return {
+                ...meso,
+                note: notes[targetMesoId]
+              };
+            }
+            return meso;
+          });
+        });
+        
         setShowConfirmModal(false);
         setTargetMesoId(null);
     } catch (error) {
