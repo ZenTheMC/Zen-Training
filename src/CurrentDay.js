@@ -27,18 +27,9 @@ const CurrentDay = ({ userId }) => {
     days: [[]],
   });
 
-  useEffect(() => {
-    console.log("CurrentDay component rerendered");
-  }, []);
-
-
   const handleSelectDay = async (week, day) => {
     setCurrentWeek(week);
     setCurrentDay(day.dayOfWeek);
-
-    mesocycle.days.flat().forEach(d => {
-        console.log(`Week: ${d.week}, Day: ${d.dayOfWeek}`);
-    });
 
     const selectedDayExercisesOriginal = mesocycle.days.flat().find(d => d.dayOfWeek === day.dayOfWeek && d.week === week);
 
@@ -131,7 +122,6 @@ const CurrentDay = ({ userId }) => {
     // 1. Updating local state for exercise sets
     setExerciseSets(prevSets => {
         const updatedSets = prevSets[exerciseName] ? [...prevSets[exerciseName], newSet] : [newSet];
-        console.log("Updated exercise sets:", updatedSets);
         return { ...prevSets, [exerciseName]: updatedSets };
     });
 
@@ -149,7 +139,6 @@ const CurrentDay = ({ userId }) => {
 
     // Wait for state updates to complete
     setTimeout(async () => {
-      console.log("Current mesocycle state before Firestore update:", mesocycle);
       // 3. Updating Firestore for the mesocycle
       const updatedMesocycle = { ...mesocycle, days: mesocycle.days.flat() };
       delete updatedMesocycle.id;  // Remove the id field
@@ -184,7 +173,6 @@ const CurrentDay = ({ userId }) => {
 
     // Wait for state updates to complete
     setTimeout(async () => {
-        console.log("Current mesocycle state before Firestore update:", mesocycle);
         // 4. Updating Firestore for the mesocycle
         const updatedMesocycle = { ...mesocycle, days: mesocycle.days.flat() };
         delete updatedMesocycle.id;  // Remove the id field
@@ -206,10 +194,6 @@ const CurrentDay = ({ userId }) => {
       };
     });
   };
-
-  useEffect(() => {
-    console.log("exerciseSets has changed:", exerciseSets);
-  }, [exerciseSets]);
 
   const currentDayExercises = useMemo(() => {
     return mesocycle.days.flat().find(day => day.dayOfWeek === currentDay && day.week === currentWeek);
@@ -252,24 +236,15 @@ const CurrentDay = ({ userId }) => {
           reps: convertedReps,
       };
 
-      // Log the new set data for inspection
-      console.log('New set data:', newSetData);
-
       // Fetch the current mesocycle document
       const mesocycleDoc = await getDoc(mesocycleRef);
       const mesocycleData = mesocycleDoc.data();
-
-      // Log the fetched mesocycle data
-      console.log('Fetched mesocycle data before any changes:', JSON.parse(JSON.stringify(mesocycleData)));
 
       // Update the sets array in the mesocycle data
       if (!mesocycleData.days[flatDayIndex].exercises[exerciseIndex].sets) {
           mesocycleData.days[flatDayIndex].exercises[exerciseIndex].sets = [];
       }
       mesocycleData.days[flatDayIndex].exercises[exerciseIndex].sets[setIndex] = newSetData;
-
-      // Log the mesocycle data after updating the sets
-      console.log('Updated mesocycle data after modifying sets:', JSON.parse(JSON.stringify(mesocycleData)));
 
       // Update the sets property of the currentDayExercises object
       const currentDayExercises = mesocycle.days.flat()[flatDayIndex];
@@ -322,9 +297,6 @@ const CurrentDay = ({ userId }) => {
         }));
       }
 
-      // Log the mesocycle data right before writing to Firestore
-      console.log('Final mesocycle data to be written to Firestore:', JSON.parse(JSON.stringify(mesocycleData)));
-
       // Write the entire mesocycle data back to Firestore
       await setDoc(mesocycleRef, mesocycleData);
     } catch (error) {
@@ -347,8 +319,6 @@ const CurrentDay = ({ userId }) => {
 
         // Update the completed property of the mesocycle to true
         await setDoc(mesocycleRef, { ...mesocycle, days: flattenedDays, completed: true }, { merge: true });
-
-        console.log("Mesocycle status set to completed!");
 
         fetchMesocycleData();
     } catch (error) {
