@@ -1,9 +1,9 @@
 .Sidebar {
-    width: 15%;
+    width: 15vw;
     height: 100vh;
     position: fixed;
     background-color: #abcdef;
-    padding: 20px;
+    padding: 2vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -13,50 +13,76 @@
     text-decoration: none;
     color: black;
     background-color: rgb(250, 230, 204);
-    padding: 10px;
-    border: solid black 1px;
+    padding: 1.2em;
+    border: solid black 0.1em;
     cursor: pointer;
+    text-align: center;
+    font-size: 1.2em;
 }
 
 .Link:hover {
-    box-shadow: 1px 1px 1px 1px;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
     background-color: rgb(251, 255, 0);
 }
 
 .SignOutButton {
-    padding: 10px;
+    padding: 1em;
     border-radius: 50%;
     cursor: pointer;
     background-color: rgb(224, 156, 156);
-    border: solid black 1px;
+    border: solid black 0.1em;
     color: black;
     font-weight: bold;
     align-self: center;
     height: 8em;
     width: 8em;
+    font-size: 1em;
 }
 
 .SignOutButton:hover {
     background-color: rgb(248, 88, 88);
-    box-shadow: black 1px 1px 1px 1px;
+    box-shadow: black 0.1em 0.1em 0.1em 0.1em;
     color: white;
 }
 
 .Help {
-    padding: 10px;
+    padding: 1em;
     border-radius: 50%;
     cursor: pointer;
     background-color: rgb(207, 183, 255);
-    border: solid black 1px;
+    border: solid black 0.1em;
     color: black;
     font-weight: bold;
     align-self: center;
     height: 5em;
     width: 5em;
+    font-size: 1em;
 }
 
 .Help:hover {
     background-color: rgb(141, 88, 248);
-    box-shadow: black 1px 1px 1px 1px;
+    box-shadow: black 0.1em 0.1em 0.1em 0.1em;
     color: white;
+}
+
+/* Media Query for Mobile Screens */
+@media only screen and (max-width: 576px) {
+    .Sidebar {
+        width: 100vw;
+        flex-direction: row;
+        justify-content: space-around;
+        height: auto;
+        bottom: 0;
+        padding: 1vw 2vw;
+    }
+    
+    .Link, .SignOutButton, .Help {
+        font-size: 0.8em;
+        padding: 0.5em;
+    }
+
+    .SignOutButton, .Help {
+        height: 4em; /* Adjust size */
+        width: 4em;  /* Adjust size */
+    }
 }

@@ -4,41 +4,40 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(165, 161, 161);
-    margin-left: 15%;
+    margin-left: 15vw;
 }
 
 .Inputs {
-    margin-bottom: 50px;
+    margin-bottom: 2em;
     background-color: rgb(199, 235, 154);
 }
 
 .Input {
-    margin: 12px;
+    margin: 1em;
 }
 
 .Days {
     display: flex;
-    border: solid black 1px;
-    margin: 5px;
+    border: solid black 0.1em;
 }
 
 .Completion {
-    margin-bottom: 50px;
+    margin-bottom: 3em;
 }
 
 .AddDayButton {
     background-color: rgb(245, 193, 163);
-    border: black 1px;
+    border: black 0.1em;
     cursor: pointer;
 }
 
 .AddDayButton:hover {
     background-color: rgb(244, 136, 74);
-    box-shadow: 1px 1px 1px 1px;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
 }
 
 .InvalidInput {
-    border: 2px solid red;
+    border: 0.2em solid red;
 }
 
 .SuccessModalOverlay {
@@ -58,10 +57,10 @@
     flex-direction: column;
     justify-content: center;
     background: rgb(205, 205, 205);
-    padding: 20px;
-    border-radius: 8px;
+    padding: 1em;
+    border-radius: 0.8em;
     width: 80%;
-    max-width: 400px;
+    max-width: 22em;
 }
 
 .Message {
@@ -78,9 +77,9 @@
     color: black;
     text-decoration: none;
     display: inline-block;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
+    padding: 0.7em;
+    margin-top: 0.6em;
+    border-radius: 0.5em;
 }
 
 .Link:hover {
@@ -91,9 +90,9 @@
     background-color: #c3c3c3;
     color: black;
     text-decoration: none;
-    margin-top: 20px;
+    margin-top: 0.8em;
     cursor: pointer;
-    padding: 5px;
+    padding: 0.5em;
 }
 
 .Close:hover {
@@ -109,4 +108,29 @@
 .Input[type="number"] {
     appearance: none;
     -moz-appearance: textfield;
+}
+
+@media only screen and (max-width: 576px) {
+    .CreateMeso {
+        margin-left: 0;
+    }
+
+    .Days {
+        flex-direction: column;
+    }
+
+    .Inputs {
+        display: flex;
+        margin-bottom: 0.3em;
+        background-color: rgb(165, 161, 161);
+    }
+
+    .Input {
+        margin: 0.3em;
+    }
+
+    .Link {
+        background: rgb(205, 205, 205);
+        text-align: center;
+    }
 }

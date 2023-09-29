@@ -18,3 +18,13 @@
 .InvalidInput {
     border: 2px solid red;
 }
+
+/* Media Query for Mobile Screens */
+@media only screen and (max-width: 576px) {
+    .MuscleGroupForm {
+        flex-direction: column;  /* Stack elements vertically on smaller screens */
+    }
+    .MuscleGroupLabel, .ExerciseNameLabel {
+        margin: 0.2em;  /* Adjust margin for better spacing */
+    }
+}
