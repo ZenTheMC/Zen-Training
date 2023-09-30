@@ -57,3 +57,15 @@
     color: white;
     border: solid black 1px;
 }
+
+@media only screen and (max-width: 576px) {
+    .container {
+        margin-left: 0;
+        width: 100%;
+        padding: 1em;
+    }
+    
+    .form {
+        width: 90%;
+    }
+}

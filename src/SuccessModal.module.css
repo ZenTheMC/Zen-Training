@@ -17,3 +17,14 @@
     width: 300px;
     text-align: center;
 }
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+@media only screen and (max-width: 576px) {
+    .modal {
+        width: 80%;
+    }
+}
