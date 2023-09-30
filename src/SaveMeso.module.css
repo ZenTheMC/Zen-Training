@@ -1,16 +1,16 @@
 .SaveMeso {
-    margin-top: 50px;
+    margin-top: 4em;
 }
 
 .SubmitButton {
     background-color: rgb(242, 161, 192);
-    border: solid black 1px;
+    border: solid black 0.1em;
     cursor: pointer;
 }
 
 .SubmitButton:hover {
     background-color: rgb(236, 97, 150);
-    box-shadow: 1px 1px 1px 1px;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
 }
 
 .SubmitButtonDisabled {
@@ -27,7 +27,7 @@
 
 .ValidationMessage {
     color: rgb(199, 0, 0);
-    margin-bottom: 10px;
+    margin-bottom: 1em;
     font-size: .85em;
 }
 

@@ -1,22 +1,22 @@
 .MuscleGroupForm {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 20px;
-    margin-left: 10px;
+    margin-bottom: 2em;
+    margin-left: 1em;
 }
 
 .MuscleGroupLabel {
-    margin-right: 8px;
-    margin-top: 8px;
+    margin-right: 0.8em;
+    margin-top: 0.8em;
 }
 
 .ExerciseNameLabel {
-    margin-right: 8px;
-    margin-top: 8px;
+    margin-right: 0.8em;
+    margin-top: 0.8em;
 }
 
 .InvalidInput {
-    border: 2px solid red;
+    border: 0.2em solid red;
 }
 
 /* Media Query for Mobile Screens */
