@@ -20,6 +20,7 @@ const Calendar = ({ weeks, days, onSelectDay }) => {
                   className={days[weekIndex][dayIndex].completed ? styles.Completed : styles.Incomplete}
                   key={weekIndex}
                   onClick={() => onSelectDay(weekIndex + 1, days[weekIndex][dayIndex])}
+                  data-day={days[weekIndex][dayIndex]?.dayOfWeek}
                 >
                   {days[weekIndex][dayIndex]?.dayOfWeek}
                 </td>

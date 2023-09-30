@@ -30,3 +30,39 @@
     cursor: pointer;
     background-color: rgb(215, 125, 125);
 }
+
+/* Media query for mobile resolutions */
+@media only screen and (max-width: 576px) {
+    .Calendar {
+        transform: scale(0.9);
+        transform-origin: center;
+    }
+
+    .Calendar td[data-day="Monday"]::before {
+        content: "Mon";
+    }
+    .Calendar td[data-day="Tuesday"]::before {
+        content: "Tue";
+    }
+    .Calendar td[data-day="Wednesday"]::before {
+        content: "Wed";
+    }
+    .Calendar td[data-day="Thursday"]::before {
+        content: "Thu";
+    }
+    .Calendar td[data-day="Friday"]::before {
+        content: "Fri";
+    }
+    .Calendar td[data-day="Saturday"]::before {
+        content: "Sat";
+    }
+    .Calendar td[data-day="Sunday"]::before {
+        content: "Sun";
+    }
+    .Calendar td {
+        font-size: 0;
+    }
+    .Calendar td::before {
+        font-size: 16px;
+    }
+}

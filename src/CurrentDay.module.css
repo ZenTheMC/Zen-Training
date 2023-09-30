@@ -5,6 +5,7 @@
     align-items: center;
     background-color: rgb(165, 161, 161);
     margin-left: 15%;
+    width: 85%;
 }
 
 .Exercise {
@@ -96,4 +97,18 @@
     appearance: none;
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* Media query for mobile resolutions */
+@media only screen and (max-width: 576px) {
+    .CurrentDay {
+        margin-left: 0;
+        width: 100%;
+        padding: 1em;
+    }
+    
+    .Exercise {
+        margin-bottom: 50px;
+        width: 90%;
+    }
 }
