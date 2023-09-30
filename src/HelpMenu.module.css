@@ -68,3 +68,28 @@
     margin-bottom: 0.2em;
     margin-top: 0.5em;
 }
+
+@media only screen and (max-width: 576px) {
+    .HelpMenu {
+        top: 10%;
+        left: 50%;
+        width: 90%;
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .Tabs {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+
+    .Close {
+        padding: 12px;
+        font-size: 1em;
+    }
+
+    .Instructions {
+        font-size: 0.8em;
+        margin: 1em;
+    }
+}

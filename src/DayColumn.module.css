@@ -49,10 +49,3 @@
 .InvalidInput {
     border: 0.2em solid red;
 }
-
-/* Media Query for Mobile Screens */
-@media only screen and (max-width: 576px) {
-    /* .DayColumn {
-        
-    } */
-}
