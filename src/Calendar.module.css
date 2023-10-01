@@ -33,8 +33,16 @@
 
 /* Media query for mobile resolutions */
 @media only screen and (max-width: 576px) {
+    
     .Calendar {
-        transform: scale(0.9);
-        transform-origin: center;
+        font-size: 0.9em;
+        border-width: 0.27em;
+        padding: 0.09em;
+        margin-bottom: 0.45em;
+    }
+    
+    .Completed, .Incomplete {
+        border-width: 0.15em;
+        padding: 0.09em;
     }
 }

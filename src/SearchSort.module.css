@@ -25,3 +25,20 @@
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
+
+/* Media query for mobile resolutions */
+@media only screen and (max-width: 576px) {
+    .SearchSortContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .SearchInput, .SortDropdown {
+        width: 100%;
+        margin: 0.5em 0;
+    }
+
+    .SearchInput {
+        margin-right: 0;
+    }
+}
