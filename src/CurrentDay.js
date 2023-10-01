@@ -372,7 +372,7 @@ const CurrentDay = ({ userId }) => {
             const suggestedReps = previousSet ? previousSet.reps + 1 : "";
     
             return (
-              <div key={setIndex}>
+              <div className={styles.SetContainer} key={setIndex}>
                 <input className={styles.Weight} type="number" placeholder={suggestedWeight || "Weight"} value={set.weight} onChange={(e) => handleSetChange(exercise.name, setIndex, "weight", e.target.value)} />
                 <input className={styles.Reps} type="number" placeholder={suggestedReps || "Reps"} value={set.reps} onChange={(e) => handleSetChange(exercise.name, setIndex, "reps", e.target.value)} />
                 <button className={styles.LogSet} onClick={() => logSet(exerciseIndex, setIndex, set)}>Log Set</button>

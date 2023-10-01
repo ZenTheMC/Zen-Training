@@ -50,3 +50,11 @@
 .Link:hover {
     background-color: #0056b3;
 }
+
+/* Media query for mobile resolutions */
+@media only screen and (max-width: 576px) {
+    .Link {
+        font-size: 0.88em;
+        margin: 0.1em;
+    }
+}

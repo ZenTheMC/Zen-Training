@@ -111,4 +111,21 @@
         margin-bottom: 4em;
         width: 90%;
     }
+
+    .SetContainer {
+        display: flex;
+        align-items: center;
+    }
+
+    .Weight, .Reps {
+        max-width: calc(40% - 10px);
+    }
+
+    .RemoveSet {
+        margin-left: 0.2em;
+    }
+
+    .AddSet {
+        margin-right: 0.2em;
+    }
 }
