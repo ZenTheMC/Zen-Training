@@ -3,7 +3,6 @@ import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
-        // Loop through each day and add default sets to each exercise
         mesocycle.days.forEach(day => {
             day.exercises.forEach(exercise => {
                 if (!exercise.sets) {
@@ -15,7 +14,7 @@ export const addMesocycle = async (userId, mesocycle) => {
         const mesocycleWithTimestamp = {
             ...mesocycle,
             createdAt: serverTimestamp(),
-            completed: false // Assuming all new mesocycles are initially incomplete
+            completed: false
         };
 
         const docRef = await addDoc(collection(doc(db, 'users', userId), 'mesocycles'), mesocycleWithTimestamp);
