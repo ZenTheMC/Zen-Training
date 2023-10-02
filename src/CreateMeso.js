@@ -9,7 +9,11 @@ import { auth } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 const CreateMeso = () => {
-    const [meso, setMeso] = useState({ days: [] });  // Updated here
+    const [meso, setMeso] = useState({
+        days: [
+            { dayOfWeek: "", exercises: [{ muscleGroup: "", name: "" }] }
+        ]
+    });
     const [mesoName, setMesoName] = useState("");
     const [mesoWeeks, setMesoWeeks] = useState("");
     const [exercises, setExercises] = useState([]);
@@ -52,10 +56,12 @@ const CreateMeso = () => {
     };
 
     const addDay = () => {
-        setMeso(prevMeso => ({
-            ...prevMeso,
-            days: [...prevMeso.days, { dayOfWeek: "", exercises: [{ muscleGroup: "", name: "" }] }]
-        }));
+        if (meso.days.length < 6) {
+            setMeso(prevMeso => ({
+                ...prevMeso,
+                days: [...prevMeso.days, { dayOfWeek: "", exercises: [{ muscleGroup: "", name: "" }] }]
+            }));
+        }
     };
 
     const handleDayChange = (dayIndex, value) => {
@@ -102,7 +108,7 @@ const CreateMeso = () => {
                     name="name"
                     value={mesoName}
                     onChange={handleMesoNameChange}
-                    placeholder="Meso Name"
+                    placeholder="Enter Meso Name"
                     required
                 />
                 <input
@@ -111,8 +117,10 @@ const CreateMeso = () => {
                     name="weeks"
                     value={mesoWeeks}
                     onChange={handleMesoWeeksChange}
-                    placeholder="Meso Length (Weeks)"
+                    placeholder="Choose 4-6 weeks"
                     required
+                    max="6"
+                    min="4"
                 />
             </div>
             <div className={styles.Days}>
