@@ -71,7 +71,9 @@ const CreateMeso = () => {
     };
 
     const deleteDay = (dayIndex) => {
-        setMeso(prevMeso => ({ ...prevMeso, days: prevMeso.days.filter((day, index) => index !== dayIndex) }));
+        if (meso.days.length > 1) {
+            setMeso(prevMeso => ({ ...prevMeso, days: prevMeso.days.filter((day, index) => index !== dayIndex) }));
+        }
     };
 
     const validateForm = useCallback(() => {
