@@ -27,8 +27,8 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
             const replicatedDays = [];
             for (let week = 1; week <= Number(mesoWeeks); week++) {
                 meso.days.forEach(day => {
-                    const deepCopiedDay = deepCopy(day); // Use deepCopy here
-                    replicatedDays.push({ ...deepCopiedDay, week, completed: false });; // Add week and completed property here
+                    const deepCopiedDay = deepCopy(day);
+                    replicatedDays.push({ ...deepCopiedDay, week, completed: false });;
                 });
             }
     
@@ -52,7 +52,7 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
     return (
         <div className={styles.SaveMeso}>
             <form onSubmit={handleSaveMeso}>
-                {!formIsValid && <p className={styles.ValidationMessage}>Please fill out all the data before saving!</p>}
+                {!formIsValid && <p className={styles.ValidationMessage}>Fill out all fields and ensure 4-6 weeks!</p>}
                 <button className={`${styles.SubmitButton} ${!formIsValid ? styles.SubmitButtonDisabled : ''}`} type="submit">Save Mesocycle</button>
             </form>
         </div>

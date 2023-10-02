@@ -82,7 +82,7 @@
     }
 
     .SignOutButton, .Help {
-        height: 4em; /* Adjust size */
-        width: 4em;  /* Adjust size */
+        height: 4em;
+        width: 4em;
     }
 }

@@ -4,10 +4,8 @@ import styles from './MesoDetailsModal.module.css';
 const MesoDetailsModal = ({ meso, onClose }) => {
   if (!meso) return null;
 
-  // Extract unique exercise names
   const uniqueExercises = [...new Set(meso.days.flatMap(day => day.exercises).map(exercise => exercise.name))];
 
-  // Extract unique days of the week for training
   const daysOfWeek = Array.from(new Set(meso.days.map(day => day.dayOfWeek)));
 
   return (

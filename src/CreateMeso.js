@@ -75,7 +75,8 @@ const CreateMeso = () => {
     };
 
     const validateForm = useCallback(() => {
-        if (!mesoName || !mesoWeeks || meso.days.length === 0) {
+        const weeks = parseInt(mesoWeeks, 10);
+        if (!mesoName || !mesoWeeks || weeks < 4 || weeks > 6 || meso.days.length === 0) {
             return false;
         }
     
@@ -112,15 +113,15 @@ const CreateMeso = () => {
                     required
                 />
                 <input
-                    className={`${styles.Input} ${attemptedSubmit && !mesoWeeks ? styles.InvalidInput : ''}`}
+                    className={`${styles.Input} ${attemptedSubmit && (!mesoWeeks || mesoWeeks < 4 || mesoWeeks > 6) ? styles.InvalidInput : ''}`}
                     type="number"
                     name="weeks"
                     value={mesoWeeks}
                     onChange={handleMesoWeeksChange}
                     placeholder="Choose 4-6 weeks"
-                    required
                     max="6"
                     min="4"
+                    required
                 />
             </div>
             <div className={styles.Days}>
