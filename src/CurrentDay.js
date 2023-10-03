@@ -9,6 +9,7 @@ import PopUp from './PopUp';
 import MinSetWarn from "./MinSetWarn";
 import EndMesoModal from "./EndMesoModal";
 import LogSetVal from "./LogSetVal";
+import CompletionModal from "./CompletionModal";
 
 const CurrentDay = ({ userId }) => {
 
@@ -20,6 +21,7 @@ const CurrentDay = ({ userId }) => {
   const [showMinSetsWarning, setShowMinSetsWarning] = useState(false);
   const [showEndMesoModal, setShowEndMesoModal] = useState(false);
   const [showValidationPopup, setShowValidationPopup] = useState(false);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
 
   const [mesocycle, setMesocycle] = useState({
     name: "",
@@ -278,7 +280,7 @@ const CurrentDay = ({ userId }) => {
           completed: true
         }));
 
-        fetchMesocycleData();
+        setShowCompletionModal(true);
       }
 
       await setDoc(mesocycleRef, mesocycleData);
@@ -309,6 +311,15 @@ const CurrentDay = ({ userId }) => {
     setShowEndMesoModal(false);
   };
 
+  const handleStay = () => {
+    setShowCompletionModal(false);
+  }
+
+  const handleMoveOn = () => {
+    setShowCompletionModal(false);
+    fetchMesocycleData();
+  }
+
   return (
     <div className={styles.CurrentDay}>
       <button className={styles.EndMesoEarly} onClick={endMesocycleEarly}>End Mesocycle Early</button>
@@ -325,6 +336,7 @@ const CurrentDay = ({ userId }) => {
       onConfirm={confirmEndMesocycle}
       onCancel={() => setShowEndMesoModal(false)}
       />
+      {showCompletionModal && <CompletionModal handleStay={handleStay} handleMoveOn={handleMoveOn} />}
       {showValidationPopup && <LogSetVal onClose={() => setShowValidationPopup(false)} />}
       {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}
       {showMinSetsWarning && <MinSetWarn onClose={() => setShowMinSetsWarning(false)} />}
