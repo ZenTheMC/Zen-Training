@@ -277,6 +277,8 @@ const CurrentDay = ({ userId }) => {
           ...prevMeso,
           completed: true
         }));
+
+        fetchMesocycleData();
       }
 
       await setDoc(mesocycleRef, mesocycleData);
