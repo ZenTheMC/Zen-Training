@@ -104,9 +104,10 @@ const CurrentDay = ({ userId }) => {
   }, []);
 
   const calculateRIR = (week, totalWeeks) => {
-    if (week === totalWeeks) return 8;
-    return totalWeeks - week;
+    let rir = totalWeeks - week;
+    return Math.min(rir, 3);
   };
+
 
   const addSet = async (exerciseName) => {
     const newSet = { weight: "", reps: "", completed: false };
