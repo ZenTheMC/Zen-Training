@@ -117,14 +117,19 @@ const CurrentDay = ({ userId }) => {
     });
 
     setMesocycle(prevMeso => {
-      const updatedDays = prevMeso.days.map(weekDays => weekDays.map(day => {
-          const targetExercise = day.exercises.find(e => e.name === exerciseName);
-          if (targetExercise) {
-              targetExercise.sets.push({ ...newSet });
-          }
-          return day;
-      }));
-      return { ...prevMeso, days: updatedDays };
+        const updatedDays = prevMeso.days.map((weekDays, weekIndex) => {
+            if (weekIndex + 1 >= currentWeek) {
+                weekDays.map(day => {
+                    const targetExercise = day.exercises.find(e => e.name === exerciseName);
+                    if (targetExercise) {
+                        targetExercise.sets.push({ ...newSet });
+                    }
+                    return day;
+                });
+            }
+            return weekDays;
+        });
+        return { ...prevMeso, days: updatedDays };
     });
 
     setTimeout(async () => {
@@ -146,13 +151,18 @@ const CurrentDay = ({ userId }) => {
     });
 
     setMesocycle(prevMeso => {
-        const updatedDays = prevMeso.days.map(weekDays => weekDays.map(day => {
-            const targetExercise = day.exercises.find(e => e.name === exerciseName);
-            if (targetExercise && targetExercise.sets.length > 2) {
-                targetExercise.sets.pop();
+        const updatedDays = prevMeso.days.map((weekDays, weekIndex) => {
+            if (weekIndex + 1 >= currentWeek) {
+                weekDays.map(day => {
+                    const targetExercise = day.exercises.find(e => e.name === exerciseName);
+                    if (targetExercise && targetExercise.sets.length > 2) {
+                        targetExercise.sets.pop();
+                    }
+                    return day;
+                });
             }
-            return day;
-        }));
+            return weekDays;
+        });
         return { ...prevMeso, days: updatedDays };
     });
 
