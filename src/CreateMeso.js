@@ -7,6 +7,8 @@ import { db } from "./Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CreateMeso = () => {
     const [meso, setMeso] = useState({
@@ -24,7 +26,6 @@ const CreateMeso = () => {
     const userId = user ? user.uid : null;
 
     useEffect(() => {
-        // Fetch exercises from firebase
         const fetchExercises = async () => {
             const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
             const globalExercises = globalExercisesCollection.docs.map(doc => ({
@@ -138,7 +139,7 @@ const CreateMeso = () => {
                         attemptedSubmit={attemptedSubmit}
                     />
                 ))}
-                <button className={styles.AddDayButton} onClick={addDay}>Add Day</button>
+                <button className={styles.AddDayButton} onClick={addDay}><FontAwesomeIcon icon={faCalendarPlus}/> Day</button>
             </div>
             <div className={styles.Completion}>
                 <SaveMeso 

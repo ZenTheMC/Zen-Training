@@ -1,6 +1,8 @@
 import React from "react";
 import MuscleGroupForm from "./MuscleGroupForm";
 import styles from "./DayColumn.module.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAdd, faTrashAlt, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attemptedSubmit }) => {
     const handleDelete = () => {
@@ -14,6 +16,13 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attem
     const addExercise = () => {
         handleDayChange(dayIndex, { exercises: [...day.exercises, { muscleGroup: "", name: "" }] });
     };
+
+    const deleteExercise = (exerciseIndex) => {
+        const newExercises = [...day.exercises];
+        newExercises.splice(exerciseIndex, 1);
+        handleDayDetailsChange({ exercises: newExercises });
+    };
+    
 
     return (
         <div className={styles.DayColumn}>
@@ -35,7 +44,7 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attem
                         <option value="Sunday">Sunday</option>
                     </select>
                 </label>
-                <button className={styles.Delete} onClick={handleDelete}>Delete Day</button>
+                <button className={styles.Delete} onClick={handleDelete}><FontAwesomeIcon icon={faTrashAlt}/> Delete</button>
             </div>
             <div className={styles.Workout}>
                 {day.exercises.map((exercise, exerciseIndex) => (
@@ -45,9 +54,14 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attem
                         handleExerciseChange={(value) => handleDayDetailsChange({ exercises: day.exercises.map((ex, i) => i === exerciseIndex ? { ...ex, ...value } : ex) })}
                         exercises={exercises}
                         attemptedSubmit={attemptedSubmit}
+                        deleteExercise={deleteExercise}
+                        exerciseIndex={exerciseIndex}
                     />
                 ))}
-                <button className={styles.AddMuscleButton} onClick={addExercise}>Add Another Muscle</button>
+                {day.exercises.length > 1 && (
+                    <button className={styles.DeleteMuscleButton} onClick={() => deleteExercise(day.exercises.length - 1)}><FontAwesomeIcon icon={faMinus}/> Exercise</button>
+                )}
+                <button className={styles.AddMuscleButton} onClick={addExercise}><FontAwesomeIcon icon={faAdd}/> Exercise</button>
             </div>
         </div>
     );
