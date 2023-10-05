@@ -4,6 +4,8 @@ import styles from './MesoList.module.css';
 import MesoListModal from "./MesoListModal";
 import SearchSort from "./SearchSort";
 import MesoDetailsModal from "./MesoDetailsModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage, faNoteSticky, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const MesoList = ({ userId }) => {
   const [mesocycles, setMesocycles] = useState([]);
@@ -28,7 +30,6 @@ const MesoList = ({ userId }) => {
     fetchMesocycles();
   }, [userId]);
 
-  // Helper function to convert Firestore timestamp to readable date
   const formatDate = (timestamp) => {
     if (timestamp && timestamp.seconds) {
       const date = new Date(timestamp.seconds * 1000);
@@ -47,7 +48,6 @@ const MesoList = ({ userId }) => {
     try {
         await updateMesocycleNote(userId, targetMesoId, notes[targetMesoId]);
         
-        // Update the mesocycles state with the new note
         setMesocycles(prevMesocycles => {
           return prevMesocycles.map(meso => {
             if (meso.id === targetMesoId) {
@@ -127,9 +127,6 @@ const MesoList = ({ userId }) => {
     displayedMesocycles.forEach(meso => adjustTextAreaHeight(meso.id));
   }, [displayedMesocycles]);
 
-  // Implement a modal to show detailed info about a meso
-  // Display a Details button for each meso to open the modal
-
   return (
     <div className={styles.MesoList}>
       <SearchSort onSearch={handleSearch} onSort={handleSort} />
@@ -150,10 +147,10 @@ const MesoList = ({ userId }) => {
                 adjustTextAreaHeight(meso.id);
               }}
             />
-            <button className={styles.SaveNote} onClick={() => handleSaveNote(meso.id)}>Save Note</button>
-            <button className={styles.Delete} onClick={() => handleDeleteMesoPrompt(meso.id)}>Delete</button>
+            <button className={styles.SaveNote} onClick={() => handleSaveNote(meso.id)}><FontAwesomeIcon icon={faMessage}/> Save</button>
+            <button className={styles.Delete} onClick={() => handleDeleteMesoPrompt(meso.id)}><FontAwesomeIcon icon={faTrash}/></button>
           </div>
-          <button className={styles.Details} onClick={() => setSelectedMeso(meso)}>View Details</button>
+          <button className={styles.Details} onClick={() => setSelectedMeso(meso)}><FontAwesomeIcon icon={faNoteSticky}/> Details</button>
         </div>
       ))}
       <MesoListModal

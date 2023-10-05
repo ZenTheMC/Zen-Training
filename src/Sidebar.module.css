@@ -34,8 +34,8 @@
     color: black;
     font-weight: bold;
     align-self: center;
-    height: 8em;
-    width: 8em;
+    height: 3.5em;
+    width: 3.5em;
     font-size: 1em;
 }
 
@@ -54,8 +54,8 @@
     color: black;
     font-weight: bold;
     align-self: center;
-    height: 5em;
-    width: 5em;
+    height: 4em;
+    width: 4em;
     font-size: 1em;
 }
 
@@ -73,16 +73,27 @@
         justify-content: space-around;
         height: auto;
         bottom: 0;
-        padding: 1vw 2vw;
+        padding: 1vw;
     }
     
     .Link, .SignOutButton, .Help {
         font-size: 0.8em;
-        padding: 0.5em;
+        padding: 0.3em;
     }
 
-    .SignOutButton, .Help {
-        height: 4em;
-        width: 4em;
+    .Link {
+        margin-top: 0.4em;
+    }
+
+    .Help {
+        height: 3em;
+        width: 3em;
+        margin-right: 0.5em;
+    }
+
+    .SignOutButton {
+        height: 2em;
+        width: 2em;
+        margin-left: 0.5em;
     }
 }

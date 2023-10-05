@@ -10,6 +10,9 @@ import MinSetWarn from "./MinSetWarn";
 import EndMesoModal from "./EndMesoModal";
 import LogSetVal from "./LogSetVal";
 import CompletionModal from "./CompletionModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
+
 
 const CurrentDay = ({ userId }) => {
 
@@ -48,7 +51,7 @@ const CurrentDay = ({ userId }) => {
                   const prevSet = prevExercise.sets[setIndex];
                   if (prevSet) {
                       set.suggestedWeight = prevSet.weight + 5;
-                      set.suggestedReps = prevSet.reps + 1; 
+                      set.suggestedReps = prevSet.reps + 1;
                   }
               });
           }
@@ -350,8 +353,8 @@ const CurrentDay = ({ userId }) => {
           <div className={styles.ExerciseNameContainer}>
             <span className={styles.ExerciseName}>{exercise.name}</span>
             <div className={styles.Buttons}>
-              <button className={styles.AddSet} onClick={() => addSet(exercise.name)}>Add Set</button>
-              <button className={styles.RemoveSet} onClick={() => removeSet(exercise.name)}>Remove Set</button>
+              <button className={styles.AddSet} onClick={() => addSet(exercise.name)}><FontAwesomeIcon icon={faAdd}/> Set</button>
+              <button className={styles.RemoveSet} onClick={() => removeSet(exercise.name)}><FontAwesomeIcon icon={faMinus}/> Set</button>
             </div>
           </div>
           <p className={styles.MuscleGroup}>{exercise.muscleGroup}</p>

@@ -73,12 +73,12 @@ textarea {
 
 .Delete {
     margin-left: 0.5rem;
-    font-weight: bold;
     background-color: rgb(233, 108, 108);
     color: rgb(84, 0, 0);
     box-shadow: 1px 1px 1px 1px;
     cursor: pointer;
     border: solid black 1px;
+    margin-right: 1em;
 }
 
 .Delete:hover {
@@ -125,10 +125,20 @@ textarea {
         align-items: stretch;
     }
 
-    .SaveNote, .Delete, .Details {
+    .SaveNote, .Details {
         width: 100%;
         margin: 0.5em 0;
         text-align: center;
+        width: 7em;
+        align-self: center;
+    }
+
+    .Delete {
+        width: 100%;
+        margin: 0.4em 0;
+        text-align: center;
+        align-self: center;
+        width: 2em;
     }
 
     textarea {

@@ -11,19 +11,24 @@
     padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1em;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-right: 20px;
+    margin-right: 2em;
 }
 
 .SortDropdown {
     padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1em;
     background-color: white;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+}
+
+.SearchIcon {
+    margin-right: 0.5em;
+    font-size: 1.4em;
 }
 
 /* Media query for mobile resolutions */
@@ -40,5 +45,10 @@
 
     .SearchInput {
         margin-right: 0;
+    }
+
+    .SearchIcon {
+        margin-right: 90%;
+        font-size: 1.4em;
     }
 }

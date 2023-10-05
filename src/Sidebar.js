@@ -4,6 +4,8 @@ import HelpMenu from "./HelpMenu";
 import styles from "./Sidebar.module.css";
 import { auth } from "./Firebase";
 import { signOut } from "firebase/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook, faCalendarPlus, faDumbbell, faPowerOff, faUser} from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = () => {
     const [showHelp, setShowHelp] = useState(false);
@@ -18,12 +20,12 @@ const Sidebar = () => {
 
     return (
         <div className={styles.Sidebar}>
-            <button className={styles.Help} onClick={() => setShowHelp(!showHelp)}>User Guide</button>
+            <button className={styles.Help} onClick={() => setShowHelp(!showHelp)}><FontAwesomeIcon icon={faBook}/></button>
             {showHelp && <HelpMenu onClose={() => setShowHelp(false)} />}
-            <Link className={styles.Link} to="/today">Run Mesocycle</Link>
-            <Link className={styles.Link} to="/newmeso">Create Mesocycle</Link>
-            <Link className={styles.Link} to="/mesocycles">Your Mesocycles</Link>
-            <button className={styles.SignOutButton} type="button" onClick={handleSignOut}>Sign Out</button>
+            <Link className={styles.Link} to="/today"><FontAwesomeIcon icon={faDumbbell}/> Run Meso</Link>
+            <Link className={styles.Link} to="/newmeso"><FontAwesomeIcon icon={faCalendarPlus}/> Create Meso</Link>
+            <Link className={styles.Link} to="/mesocycles"><FontAwesomeIcon icon={faUser}/> Your Mesocycles</Link>
+            <button className={styles.SignOutButton} type="button" onClick={handleSignOut}><FontAwesomeIcon icon={faPowerOff}/></button>
         </div>
     );
 }
