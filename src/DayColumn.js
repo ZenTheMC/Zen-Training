@@ -44,7 +44,7 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attem
                         <option value="Sunday">Sunday</option>
                     </select>
                 </label>
-                <button className={styles.Delete} onClick={handleDelete}><FontAwesomeIcon icon={faTrashAlt}/> Delete</button>
+                <button className={styles.Delete} onClick={handleDelete}><FontAwesomeIcon icon={faTrashAlt}/> Day</button>
             </div>
             <div className={styles.Workout}>
                 {day.exercises.map((exercise, exerciseIndex) => (

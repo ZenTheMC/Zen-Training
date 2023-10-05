@@ -31,6 +31,23 @@
     font-size: 1.4em;
 }
 
+.FilterIcon {
+    margin-right: 0.5em;
+    font-size: 1.4em;
+}
+
+.SearchContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.FilterContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 /* Media query for mobile resolutions */
 @media only screen and (max-width: 576px) {
     .SearchSortContainer {
@@ -45,10 +62,21 @@
 
     .SearchInput {
         margin-right: 0;
+        flex: 1;
     }
 
     .SearchIcon {
-        margin-right: 90%;
+        margin-right: 0.5em;
+        font-size: 1.4em;
+    }
+
+    .SortDropdown {
+        margin-right: 0;
+        flex: 1;
+    }
+
+    .FilterIcon {
+        margin-right: 0.5em;
         font-size: 1.4em;
     }
 }
