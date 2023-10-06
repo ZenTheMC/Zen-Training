@@ -4,6 +4,7 @@ import { auth } from "./Firebase";
 import { Link } from "react-router-dom";
 import styles from "./SignUpForm.module.css";
 import SuccessModal from "./SuccessModal";
+import logo from "./Training-App-Logo.jpg";
 
 const SignUpForm = () => {
     const [email, setEmail] = useState('');
@@ -35,15 +36,20 @@ const SignUpForm = () => {
 
     return (
         <div className={styles.container}>
+            <h1>Welcome to Zen's Training App!</h1>
+            <h3><em>Start your adventure!</em></h3>
+            <img
+                src={logo}
+                alt="Zen's Training App Logo"
+                className={styles.Logo}
+            />
             <SuccessModal
                 show={showModal}
                 onClose={() => setShowModal(false)}
             >
                 {modalMessage}
             </SuccessModal>
-            <h1>Welcome to the Hypertrophy App!</h1>
-            <p>This app is for anyone wanting to maximize their muscle building potential</p>
-            <h2>Sign up Page</h2>
+            <h2>Sign up now!</h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     className={styles.input}

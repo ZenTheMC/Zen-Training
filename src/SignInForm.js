@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
 import { Link } from "react-router-dom";
 import styles from "./SignInForm.module.css"
+import logo from "./Training-App-Logo.jpg";
 
 const SignInForm = () => {
     const [email, setEmail] = useState('');
@@ -20,9 +21,14 @@ const SignInForm = () => {
 
     return (
         <div className={styles.container}>
-            <h1>Welcome to the Hypertrophy App!</h1>
-            <p>This app is for anyone wanting to maximize their muscle building potential</p>
-            <h2>Sign in Page</h2>
+            <h1>Welcome to Zen's Training App!</h1>
+            <h3><em>Become the main character you were always meant to be!</em></h3>
+            <img
+                src={logo}
+                alt="Zen's Training App Logo"
+                className={styles.Logo}
+            />
+            <h2>Get started!</h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     className={styles.input}

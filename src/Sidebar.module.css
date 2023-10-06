@@ -65,6 +65,15 @@
     color: white;
 }
 
+.Logo {
+    height: 8em;
+    width: 8em;
+    align-self: center;
+    border-radius: 0.8em 0.8em 0.8em 0.8em;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
+    border: black solid 0.1em;
+}
+
 /* Media Query for Mobile Screens */
 @media only screen and (max-width: 576px) {
     .Sidebar {
@@ -95,5 +104,11 @@
         height: 2em;
         width: 2em;
         margin-left: 0.5em;
+    }
+
+    .Logo {
+        height: 2em;
+        width: 2em;
+        margin-right: 0.5em;
     }
 }

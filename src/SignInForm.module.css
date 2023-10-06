@@ -58,6 +58,14 @@
     border: solid black 1px;
 }
 
+.Logo {
+    border-radius: 0.8em 0.8em 0.8em 0.8em;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
+    border: black solid 0.1em;
+    height: 18em;
+    width: 18em;
+}
+
 @media only screen and (max-width: 576px) {
     .container {
         margin-left: 0;
