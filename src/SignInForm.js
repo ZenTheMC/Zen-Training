@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
 import { Link } from "react-router-dom";
 import styles from "./SignInForm.module.css"
-import logo from "./Training-App-Logo.jpg";
+import logo from "./Training-App-Logo2.jpg";
 
 const SignInForm = () => {
     const [email, setEmail] = useState('');

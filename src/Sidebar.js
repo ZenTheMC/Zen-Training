@@ -6,7 +6,7 @@ import { auth } from "./Firebase";
 import { signOut } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faCalendarAlt, faDumbbell, faPowerOff, faUser} from "@fortawesome/free-solid-svg-icons";
-import logo from "./Training-App-Logo.jpg";
+import logo from "./Training-App-Logo3.jpg";
 
 const Sidebar = () => {
     const [showHelp, setShowHelp] = useState(false);

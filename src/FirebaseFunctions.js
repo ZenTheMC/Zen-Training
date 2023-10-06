@@ -1,5 +1,7 @@
 import { db } from './Firebase';
-import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
+import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp, getDoc } from "firebase/firestore";
+
+export const defaultLogo = "./Training-App-Logo2.jpg";
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
@@ -52,4 +54,18 @@ export const updateMesocycle = async (userId, mesocycleId, mesocycle) => {
     } catch (error) {
         console.error("Error updating mesocycle:", error);
     }
+}
+
+export const saveUserLogoPreference = async (userId, logoPreference) => {
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, { logoPreference });
+}
+
+export const getUserLogoPreference = async (userId) => {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+        return userSnap.data().logoPreference;
+    }
+    return defaultLogo;
 }

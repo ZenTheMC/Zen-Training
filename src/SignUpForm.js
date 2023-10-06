@@ -4,7 +4,7 @@ import { auth } from "./Firebase";
 import { Link } from "react-router-dom";
 import styles from "./SignUpForm.module.css";
 import SuccessModal from "./SuccessModal";
-import logo from "./Training-App-Logo.jpg";
+import logo from "./Training-App-Logo1.jpg";
 
 const SignUpForm = () => {
     const [email, setEmail] = useState('');
