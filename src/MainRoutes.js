@@ -9,12 +9,14 @@ import SignUpForm from "./SignUpForm";
 import CurrentDay from "./CurrentDay";
 import MesoList from "./MesoList";
 import { getUserLogoPreference, saveUserLogoPreference, defaultLogo } from './FirebaseFunctions';
+import LogoSelectModal from './LogoSelectModal';
 
 const MainRoutes = () => {
   const [user] = useAuthState(auth);
   const location = useLocation();
   const [selectedLogo, setSelectedLogo] = useState(defaultLogo);
   const shouldRenderSidebar = user && !["/signin", "/signup"].includes(location.pathname);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -30,12 +32,28 @@ const MainRoutes = () => {
         .catch(error => console.error("Error saving logo preference:", error));
   }
 
+  const handleLogoOpen = () => {
+    setIsModalOpen(true);
+  };
+  
+  const handleLogoClose = () => {
+    setIsModalOpen(false);
+  };
+  
+  const handleLogoSelect = (selectedLogo) => {
+    if (user) {
+      handleLogoSelection(selectedLogo, user.uid);
+    }
+    handleLogoClose();
+  };
+
   return (
     <>
-      {shouldRenderSidebar && <Sidebar logo={selectedLogo} onLogoClick={handleLogoSelection} />}
+      {shouldRenderSidebar && <Sidebar logo={selectedLogo} onLogoClick={handleLogoOpen} />}
+      <LogoSelectModal isOpen={isModalOpen} onSelect={handleLogoSelect} />
       <Routes>
-        <Route path="/signin" element={user ? <Navigate to="/mesocycles" /> : <SignInForm logo={selectedLogo} onLogoClick={handleLogoSelection} />} />
-        <Route path="/signup" element={<SignUpForm logo={selectedLogo} onLogoClick={handleLogoSelection} />} />
+        <Route path="/signin" element={user ? <Navigate to="/mesocycles" /> : <SignInForm logo={selectedLogo} onLogoClick={handleLogoOpen} />} />
+        <Route path="/signup" element={<SignUpForm logo={selectedLogo} onLogoClick={handleLogoOpen} />} />
         <Route path="/newmeso" element={user ? <CreateMeso /> : <Navigate to="/signin" />} />
         <Route path="/today" element={user ? <CurrentDay userId={user.uid} /> : <Navigate to="/signin" />} />
         <Route path="/mesocycles" element={user ? <MesoList userId={user.uid} /> : <Navigate to="/signin" />} />

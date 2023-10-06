@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import styles from "./SignInForm.module.css"
 import logo from "./Training-App-Logo2.jpg";
 
-const SignInForm = () => {
+const SignInForm = ({ onLogoClick }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -22,13 +22,13 @@ const SignInForm = () => {
     return (
         <div className={styles.container}>
             <h1>Welcome to Zen's Training App!</h1>
-            <h3><em>Become the main character you were always meant to be!</em></h3>
             <img
                 src={logo}
                 alt="Zen's Training App Logo"
                 className={styles.Logo}
+                onClick={onLogoClick}
             />
-            <h2>Get started!</h2>
+            <h2><em>Become the main character you were always meant to be!</em></h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     className={styles.input}
@@ -47,7 +47,7 @@ const SignInForm = () => {
                     required
                 />
                 <button className={styles.button} type="submit">Sign In</button>
-                <Link className={styles.link} to="/signup">Create an account</Link>
+                <Link className={styles.link} to="/signup">Create your account</Link>
                 {error && <p>{error}</p>}
             </form>
         </div>

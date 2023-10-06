@@ -6,7 +6,7 @@ import styles from "./SignUpForm.module.css";
 import SuccessModal from "./SuccessModal";
 import logo from "./Training-App-Logo1.jpg";
 
-const SignUpForm = () => {
+const SignUpForm = ({ onLogoClick }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -37,11 +37,11 @@ const SignUpForm = () => {
     return (
         <div className={styles.container}>
             <h1>Welcome to Zen's Training App!</h1>
-            <h3><em>Start your adventure!</em></h3>
             <img
                 src={logo}
                 alt="Zen's Training App Logo"
                 className={styles.Logo}
+                onClick={onLogoClick}
             />
             <SuccessModal
                 show={showModal}
@@ -49,7 +49,7 @@ const SignUpForm = () => {
             >
                 {modalMessage}
             </SuccessModal>
-            <h2>Sign up now!</h2>
+            <h2><em>Start your adventure!</em></h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     className={styles.input}
@@ -68,7 +68,7 @@ const SignUpForm = () => {
                     required
                 />
                 <button className={styles.button} type="submit">Sign Up</button>
-                <Link className={styles.link} to="/signin">Sign In with your account</Link>
+                <Link className={styles.link} to="/signin">Sign in with your account</Link>
                 {error && <p>{error}</p>}
             </form>
         </div>
