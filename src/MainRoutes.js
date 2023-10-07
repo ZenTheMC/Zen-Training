@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { auth } from "./Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -10,6 +10,7 @@ import CurrentDay from "./CurrentDay";
 import MesoList from "./MesoList";
 import { getUserLogoPreference, saveUserLogoPreference, defaultLogo } from './FirebaseFunctions';
 import LogoSelectModal from './LogoSelectModal';
+import { logoMapping } from "./LogoUtils";
 
 const MainRoutes = () => {
   const [user] = useAuthState(auth);
@@ -17,6 +18,7 @@ const MainRoutes = () => {
   const [selectedLogo, setSelectedLogo] = useState(defaultLogo);
   const shouldRenderSidebar = user && !["/signin", "/signup"].includes(location.pathname);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLogoKey, setSelectedLogoKey] = useState(localStorage.getItem('logoPreference') || 'logo2');
 
   useEffect(() => {
     if (user) {
@@ -24,7 +26,7 @@ const MainRoutes = () => {
             .then(logoPreference => setSelectedLogo(logoPreference))
             .catch(error => console.error("Error fetching logo preference:", error));
     }
-  }, [user]);
+  }, [user]);  
 
   const handleLogoSelection = (selectedLogo, userId) => {
     setSelectedLogo(selectedLogo);
@@ -40,20 +42,28 @@ const MainRoutes = () => {
     setIsModalOpen(false);
   };
   
-  const handleLogoSelect = (selectedLogo) => {
-    if (user) {
-      handleLogoSelection(selectedLogo, user.uid);
+  // Update the handleLogoSelect function
+  const handleLogoSelect = (selectedLogoKey = null) => {
+    if (selectedLogoKey) {
+      setSelectedLogoKey(selectedLogoKey); // Add this line
+      const selectedLogoPath = logoMapping[selectedLogoKey];
+      setSelectedLogo(selectedLogoPath);
+      if (user) {
+        handleLogoSelection(selectedLogoPath, user.uid);
+      } else {
+        localStorage.setItem('logoPreference', selectedLogoKey);
+      }
     }
     handleLogoClose();
   };
 
   return (
     <>
-      {shouldRenderSidebar && <Sidebar logo={selectedLogo} onLogoClick={handleLogoOpen} />}
+      {shouldRenderSidebar && <Sidebar logo={selectedLogo} onLogoClick={handleLogoOpen} onLogoSelect={handleLogoSelection} userId={user?.uid} />}
       <LogoSelectModal isOpen={isModalOpen} onSelect={handleLogoSelect} />
       <Routes>
-        <Route path="/signin" element={user ? <Navigate to="/mesocycles" /> : <SignInForm logo={selectedLogo} onLogoClick={handleLogoOpen} />} />
-        <Route path="/signup" element={<SignUpForm logo={selectedLogo} onLogoClick={handleLogoOpen} />} />
+        <Route path="/signin" element={user ? <Navigate to="/mesocycles" /> : <SignInForm selectedLogoKey={selectedLogoKey} onLogoClick={handleLogoOpen} />} />
+        <Route path="/signup" element={<SignUpForm selectedLogoKey={selectedLogoKey} onLogoClick={handleLogoOpen} />} />
         <Route path="/newmeso" element={user ? <CreateMeso /> : <Navigate to="/signin" />} />
         <Route path="/today" element={user ? <CurrentDay userId={user.uid} /> : <Navigate to="/signin" />} />
         <Route path="/mesocycles" element={user ? <MesoList userId={user.uid} /> : <Navigate to="/signin" />} />

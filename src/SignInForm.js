@@ -3,12 +3,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
 import { Link } from "react-router-dom";
 import styles from "./SignInForm.module.css"
-import logo from "./Training-App-Logo2.jpg";
+import { logoMapping } from "./LogoUtils";
 
-const SignInForm = ({ onLogoClick }) => {
+const SignInForm = ({ onLogoClick, selectedLogoKey }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+
+    const selectedLogo = logoMapping[selectedLogoKey]; // This line is required to determine the logo path
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -19,14 +21,16 @@ const SignInForm = ({ onLogoClick }) => {
         }
     };
 
+    console.log("Selected Logo Key:", selectedLogoKey);
+    console.log("Selected Logo:", selectedLogo);
     return (
         <div className={styles.container}>
             <h1 className={styles.Title}>Welcome to Zen's Training App!</h1>
             <img
-                src={logo}
+                src={selectedLogo}
                 alt="Zen's Training App Logo"
                 className={styles.Logo}
-                onClick={onLogoClick}
+                onClick= {onLogoClick}
             />
             <p className={styles.Hint}>*Try clicking the logo*</p>
             <h2><em>Become the main character you were always meant to be!</em></h2>

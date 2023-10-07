@@ -6,9 +6,8 @@ import { auth } from "./Firebase";
 import { signOut } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faCalendarAlt, faDumbbell, faPowerOff, faUser} from "@fortawesome/free-solid-svg-icons";
-import logo from "./Training-App-Logo3.jpg";
 
-const Sidebar = () => {
+const Sidebar = ({ logo, onLogoClick, onLogoSelect, userId }) => {
     const [showHelp, setShowHelp] = useState(false);
 
     const handleSignOut = async () => {
@@ -25,6 +24,7 @@ const Sidebar = () => {
                 src={logo}
                 alt="Zen's Training App Logo"
                 className={styles.Logo}
+                onClick={() => onLogoClick()}
             />
             <button className={styles.Help} onClick={() => setShowHelp(!showHelp)}><FontAwesomeIcon icon={faBook}/></button>
             {showHelp && <HelpMenu onClose={() => setShowHelp(false)} />}

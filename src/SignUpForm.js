@@ -4,9 +4,9 @@ import { auth } from "./Firebase";
 import { Link } from "react-router-dom";
 import styles from "./SignUpForm.module.css";
 import SuccessModal from "./SuccessModal";
-import logo from "./Training-App-Logo1.jpg";
+import { logoMapping } from './LogoUtils';
 
-const SignUpForm = ({ onLogoClick }) => {
+const SignUpForm = ({ onLogoClick, selectedLogoKey }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -14,6 +14,7 @@ const SignUpForm = ({ onLogoClick }) => {
     const [modalMessage, setModalMessage] = useState('');
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const selectedLogo = logoMapping[selectedLogoKey]; // Determine the logo path
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -38,7 +39,7 @@ const SignUpForm = ({ onLogoClick }) => {
         <div className={styles.container}>
             <h1>Welcome to Zen's Training App!</h1>
             <img
-                src={logo}
+                src={selectedLogo}
                 alt="Zen's Training App Logo"
                 className={styles.Logo}
                 onClick={onLogoClick}
