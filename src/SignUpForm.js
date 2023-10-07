@@ -49,6 +49,7 @@ const SignUpForm = ({ onLogoClick }) => {
             >
                 {modalMessage}
             </SuccessModal>
+            <p className={styles.Hint}>*Try clicking the logo*</p>
             <h2><em>Start your adventure!</em></h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input

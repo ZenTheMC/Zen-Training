@@ -7,6 +7,10 @@
     background-color: #abefd7;
 }
 
+.Title {
+    margin-top: 1em;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -16,6 +20,7 @@
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     background-color: #ffffff9d;
+    margin-bottom: 2em;
 }
 
 .input {
@@ -64,6 +69,10 @@
     border: black solid 0.1em;
     height: 18em;
     width: 18em;
+}
+
+.Hint {
+    font-size: 0.8em;
 }
 
 @media only screen and (max-width: 576px) {

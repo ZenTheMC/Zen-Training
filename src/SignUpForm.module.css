@@ -66,6 +66,10 @@
     width: 18em;
 }
 
+.Hint {
+    font-size: 0.8em;
+}
+
 @media only screen and (max-width: 576px) {
     .container {
         margin-left: 0;

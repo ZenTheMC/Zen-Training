@@ -21,13 +21,14 @@ const SignInForm = ({ onLogoClick }) => {
 
     return (
         <div className={styles.container}>
-            <h1>Welcome to Zen's Training App!</h1>
+            <h1 className={styles.Title}>Welcome to Zen's Training App!</h1>
             <img
                 src={logo}
                 alt="Zen's Training App Logo"
                 className={styles.Logo}
                 onClick={onLogoClick}
             />
+            <p className={styles.Hint}>*Try clicking the logo*</p>
             <h2><em>Become the main character you were always meant to be!</em></h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
