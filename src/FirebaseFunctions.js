@@ -1,5 +1,5 @@
 import { db } from './Firebase';
-import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp, getDoc } from "firebase/firestore";
+import { collection, doc, addDoc, setDoc, getDocs, updateDoc, deleteDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import logo2 from './Training-App-Logo2.jpg';
 
 export const defaultLogo = logo2;
@@ -59,7 +59,12 @@ export const updateMesocycle = async (userId, mesocycleId, mesocycle) => {
 
 export const saveUserLogoPreference = async (userId, logoPreference) => {
     const userRef = doc(db, "users", userId);
-    await updateDoc(userRef, { logoPreference });
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+        await updateDoc(userRef, { logoPreference });
+    } else {
+        await setDoc(userRef, { logoPreference });
+    }
 }
 
 export const getUserLogoPreference = async (userId) => {
