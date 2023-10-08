@@ -10,16 +10,16 @@ const LogoSelectionModal = ({ isOpen, onSelect }) => {
 
   const handleLogoClick = (logoKey) => {
     console.log("Logo clicked:", logoMapping[logoKey]);
-    onSelect(logoKey);  // Pass the logo key, not the path
+    onSelect(logoKey);
   };
 
 
   return (
-    <div className={styles.logoModalOverlay}>
-      <div className="logoModalContent">
-        <img src={logo1} onClick={() => handleLogoClick('logo1')} alt="Logo 1" />
-        <img src={logo2} onClick={() => handleLogoClick('logo2')} alt="Logo 2" />
-        <img src={logo3} onClick={() => handleLogoClick('logo3')} alt="Logo 3" />
+    <div className={styles.LogoModalOverlay}>
+      <div className={styles.LogoModalContent}>
+        <img className={styles.Logos} src={logo1} onClick={() => handleLogoClick('logo1')} alt="Logo 1" />
+        <img className={styles.Logos} src={logo2} onClick={() => handleLogoClick('logo2')} alt="Logo 2" />
+        <img className={styles.Logos} src={logo3} onClick={() => handleLogoClick('logo3')} alt="Logo 3" />
       </div>
     </div>
   );
