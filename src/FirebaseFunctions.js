@@ -1,7 +1,8 @@
 import { db } from './Firebase';
 import { collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp, getDoc } from "firebase/firestore";
+import logo2 from './Training-App-Logo2.jpg';
 
-export const defaultLogo = "./Training-App-Logo2.jpg";
+export const defaultLogo = logo2;
 
 export const addMesocycle = async (userId, mesocycle) => {
     try {
