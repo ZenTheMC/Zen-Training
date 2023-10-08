@@ -14,12 +14,11 @@ const SignUpForm = ({ onLogoClick, selectedLogoKey }) => {
     const [modalMessage, setModalMessage] = useState('');
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const selectedLogo = logoMapping[selectedLogoKey]; // Determine the logo path
+    const selectedLogo = logoMapping[selectedLogoKey];
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check for valid email using regex
         if (!emailRegex.test(email)) {
             setModalMessage("Please enter a valid email address.");
             setShowModal(true);

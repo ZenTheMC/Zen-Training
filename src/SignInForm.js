@@ -10,7 +10,7 @@ const SignInForm = ({ onLogoClick, selectedLogoKey }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
 
-    const selectedLogo = logoMapping[selectedLogoKey]; // This line is required to determine the logo path
+    const selectedLogo = logoMapping[selectedLogoKey];
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -20,9 +20,7 @@ const SignInForm = ({ onLogoClick, selectedLogoKey }) => {
             setError(error.message);
         }
     };
-
-    console.log("Selected Logo Key:", selectedLogoKey);
-    console.log("Selected Logo:", selectedLogo);
+    
     return (
         <div className={styles.container}>
             <h1 className={styles.Title}>Welcome to Zen's Training App!</h1>

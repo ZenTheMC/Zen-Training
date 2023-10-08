@@ -42,10 +42,9 @@ const MainRoutes = () => {
     setIsModalOpen(false);
   };
   
-  // Update the handleLogoSelect function
   const handleLogoSelect = (selectedLogoKey = null) => {
     if (selectedLogoKey) {
-      setSelectedLogoKey(selectedLogoKey); // Add this line
+      setSelectedLogoKey(selectedLogoKey);
       const selectedLogoPath = logoMapping[selectedLogoKey];
       setSelectedLogo(selectedLogoPath);
       if (user) {

@@ -297,15 +297,17 @@ const CurrentDay = ({ userId }) => {
   };
 
   const confirmEndMesocycle = async () => {
-
     try {
         const userId = auth.currentUser.uid;
         const mesocycleRef = doc(db, 'users', userId, 'mesocycles', currentMesocycleId);
-
+  
         const flattenedDays = mesocycle.days.flat();
-
-        await setDoc(mesocycleRef, { ...mesocycle, days: flattenedDays, completed: true }, { merge: true });
-
+        
+        const mesoToUpdate = { ...mesocycle, days: flattenedDays, completed: true };
+        delete mesoToUpdate.id;
+  
+        await setDoc(mesocycleRef, mesoToUpdate, { merge: true });
+  
         fetchMesocycleData();
     } catch (error) {
         console.error("Error ending mesocycle early:", error);

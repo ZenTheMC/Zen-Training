@@ -45,6 +45,7 @@
     .Completed, .Incomplete {
         border-width: 0.15em;
         padding: 0.09em;
+        cursor: pointer;
     }
 
     .Completed {

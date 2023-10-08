@@ -3,13 +3,11 @@ import styles from './LogoSelectModal.module.css';
 import logo1 from './Training-App-Logo1.jpg';
 import logo2 from './Training-App-Logo2.jpg';
 import logo3 from './Training-App-Logo3.jpg';
-import { logoMapping } from './LogoUtils';
 
 const LogoSelectionModal = ({ isOpen, onSelect }) => {
   if (!isOpen) return null;
 
   const handleLogoClick = (logoKey) => {
-    console.log("Logo clicked:", logoMapping[logoKey]);
     onSelect(logoKey);
   };
 
