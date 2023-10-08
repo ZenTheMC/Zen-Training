@@ -7,7 +7,7 @@ import { signOut } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faCalendarAlt, faDumbbell, faPowerOff, faUser} from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = ({ logo, onLogoClick, onLogoSelect, userId }) => {
+const Sidebar = ({ logo, onLogoClick }) => {
     const [showHelp, setShowHelp] = useState(false);
 
     const handleSignOut = async () => {

@@ -66,8 +66,8 @@
 }
 
 .Logo {
-    height: 8em;
-    width: 8em;
+    height: 10em;
+    width: 10em;
     align-self: center;
     border-radius: 0.8em 0.8em 0.8em 0.8em;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
@@ -107,8 +107,8 @@
     }
 
     .Logo {
-        height: 2em;
-        width: 2em;
+        height: 3em;
+        width: 3em;
         margin-right: 0.5em;
     }
 }
