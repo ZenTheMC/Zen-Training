@@ -25,27 +25,27 @@ const CreateMeso = () => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const userId = user ? user.uid : null;
 
-    useEffect(() => {
-        const fetchExercises = async () => {
-            const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
-            const globalExercises = globalExercisesCollection.docs.map(doc => ({
+    const fetchExercises = async () => {
+        const globalExercisesCollection = await getDocs(collection(db, 'globalExercises'));
+        const globalExercises = globalExercisesCollection.docs.map(doc => ({
+            name: doc.data().exerciseName,
+            muscleGroup: doc.data().muscleGroup
+        }));
+
+        let userExercises = [];
+        if (userId) {
+            const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
+            userExercises = userExercisesCollection.docs.map(doc => ({
                 name: doc.data().exerciseName,
-                muscleGroup: doc.data().muscleGroup
+                 muscleGroup: doc.data().muscleGroup
             }));
+        }
+        setExercises([...globalExercises, ...userExercises]);
+    };
 
-            let userExercises = [];
-            if (userId) {
-                const userExercisesCollection = await getDocs(collection(db, 'users', userId, 'exercises'));
-                userExercises = userExercisesCollection.docs.map(doc => ({
-                    name: doc.data().exerciseName,
-                    muscleGroup: doc.data().muscleGroup
-                }));
-            }
-
-            setExercises([...globalExercises, ...userExercises]);
-        };
-
+    useEffect(() => {
         fetchExercises();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     const handleMesoNameChange = (event) => {
@@ -137,6 +137,7 @@ const CreateMeso = () => {
                         handleDayChange={handleDayChange}
                         exercises={exercises}
                         attemptedSubmit={attemptedSubmit}
+                        fetchExercises={fetchExercises}
                     />
                 ))}
                 <button className={styles.AddDayButton} onClick={addDay}><FontAwesomeIcon icon={faCalendarPlus}/> Day</button>

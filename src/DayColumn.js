@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import MuscleGroupForm from "./MuscleGroupForm";
 import styles from "./DayColumn.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faTrashAlt, faMinus } from "@fortawesome/free-solid-svg-icons";
+import CustomExercises from "./CustomExercises";
+import SuccessModal from "./SuccessModal";
 
-const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attemptedSubmit }) => {
+const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attemptedSubmit, fetchExercises }) => {
+    const [showCustomExerciseForm, setShowCustomExerciseForm] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+    const handleExerciseAdded = () => {
+        fetchExercises();
+        setShowSuccessModal(true);
+    };
+
     const handleDelete = () => {
         deleteDay(dayIndex);
     };
@@ -58,6 +68,16 @@ const DayColumn = ({ day, dayIndex, deleteDay, handleDayChange, exercises, attem
                         exerciseIndex={exerciseIndex}
                     />
                 ))}
+                <button className={styles.CustomExercise} onClick={() => setShowCustomExerciseForm(true)}>
+                    Add Custom Exercise
+                </button>
+                {showCustomExerciseForm && <CustomExercises onExerciseAdded={handleExerciseAdded} closeCustomExercise={() => setShowCustomExerciseForm(false)} />}
+                <SuccessModal
+                    show={showSuccessModal} 
+                    onClose={() => setShowSuccessModal(false)}
+                >
+                    <p className={styles.Message}>Exercise added successfully!</p>
+                </SuccessModal>
                 {day.exercises.length > 1 && (
                     <button className={styles.DeleteMuscleButton} onClick={() => deleteExercise(day.exercises.length - 1)}><FontAwesomeIcon icon={faMinus}/> Exercise</button>
                 )}

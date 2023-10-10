@@ -113,7 +113,6 @@ const CurrentDay = ({ userId }) => {
     return Math.min(rir, 3);
   };
 
-
   const addSet = async (exerciseName) => {
     const newSet = { weight: "", reps: "", completed: false };
 

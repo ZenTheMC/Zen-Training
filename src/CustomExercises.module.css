@@ -1,0 +1,58 @@
+.CustomExercisesBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.CustomExercises {
+    background: rgb(149, 206, 234);
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Save {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #73c3aa;
+}
+
+.Cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #c48e70;
+}
+
+.Save:hover {
+    background-color: #00b3a1;
+}
+
+.Cancel:hover {
+    background-color: #d07f50;
+}
+
+/* Media query for mobile resolutions */
+@media only screen and (max-width: 576px) {
+    .Save {
+        font-size: 0.88em;
+        margin: 0.1em;
+    }
+    .Cancel {
+        font-size: 0.88em;
+        margin: 0.1em;
+    }
+}

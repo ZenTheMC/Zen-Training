@@ -66,3 +66,18 @@
 .InvalidInput {
     border: 0.2em solid red;
 }
+
+.CustomExercise {
+    margin-bottom: 1em;
+    margin-top: 0.15em;
+    align-self: center;
+    width: 50%;
+    background-color: rgb(229, 216, 131);
+    border: solid black 0.1em;
+    cursor: pointer;
+}
+
+.CustomExercise:hover {
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
+    background-color: rgb(236, 198, 62);
+}
