@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './EndMesoModal.module.css';
 
-const EndMesoModal = ({ show, onConfirm, onCancel }) => {
+const EndMesoModal = ({ show, onConfirm, onCancel, onClose }) => {
     if (!show) return null;
 
     return (
-        <div className={styles.overlay}>
-            <div className={styles.modal}>
+        <div className={styles.overlay} onClick={onClose}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <h3>Are you sure you want to end this mesocycle early?</h3>
                 <p>This action <em>cannot be undone!</em></p>
                 <div className={styles.buttons}>

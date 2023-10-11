@@ -339,8 +339,9 @@ const CurrentDay = ({ userId }) => {
       show={showEndMesoModal}
       onConfirm={confirmEndMesocycle}
       onCancel={() => setShowEndMesoModal(false)}
+      onClose={() => setShowEndMesoModal(false)}
       />
-      {showCompletionModal && <CompletionModal handleStay={handleStay} handleMoveOn={handleMoveOn} />}
+      {showCompletionModal && <CompletionModal handleStay={handleStay} handleMoveOn={handleMoveOn} onClose={() => setShowCompletionModal(false)} />}
       {showValidationPopup && <LogSetVal onClose={() => setShowValidationPopup(false)} />}
       {showNoMesoPopup && <PopUp onClose={() => setShowNoMesoPopup(false)} />}
       {showMinSetsWarning && <MinSetWarn onClose={() => setShowMinSetsWarning(false)} />}

@@ -9,6 +9,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 const CustomExercises = ({ onExerciseAdded, closeCustomExercise }) => {
     const [muscleGroup, setMuscleGroup] = useState('');
     const [exerciseName, setExerciseName] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [user] = useAuthState(auth);
 
     const handleSubmit = async () => {
@@ -18,8 +19,9 @@ const CustomExercises = ({ onExerciseAdded, closeCustomExercise }) => {
                 exerciseName
             });
             onExerciseAdded();
+            setErrorMessage('');
         } else {
-            alert('Please fill in both fields before submitting.');
+            setErrorMessage('Please fill in both fields before submitting.');
         }
     };
 
@@ -56,6 +58,7 @@ const CustomExercises = ({ onExerciseAdded, closeCustomExercise }) => {
                         placeholder="Enter exercise name"
                     />
                 </label>
+                {errorMessage && <p className={styles.ErrorMessage}>{errorMessage}</p>}
                 <button className={styles.Save} onClick={handleSubmit}><FontAwesomeIcon icon={faSave}/> Save Exercise</button>
                 <button className={styles.Cancel} onClick={closeCustomExercise}>Close</button>
             </div>
