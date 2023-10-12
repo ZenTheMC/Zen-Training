@@ -12,7 +12,7 @@
 
 .modal {
     background-color: #ffd0d0;
-    padding: 2px;
+    padding: 10px;
     border-radius: 8px;
     width: 300px;
     text-align: center;
@@ -20,7 +20,16 @@
 
 .link {
     text-decoration: none;
-    color: black;
+    color: rgb(10, 155, 0);
+    font-weight: bold;
+    padding: 5px;
+    background-color: #ffe0e0;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.link:hover {
+    background-color: #ffcccc;
 }
 
 .Close {

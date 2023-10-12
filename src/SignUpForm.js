@@ -46,6 +46,7 @@ const SignUpForm = ({ onLogoClick, selectedLogoKey }) => {
             <SuccessModal
                 show={showModal}
                 onClose={() => setShowModal(false)}
+                showLink={true}
             >
                 {modalMessage}
             </SuccessModal>

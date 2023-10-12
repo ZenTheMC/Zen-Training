@@ -4,8 +4,8 @@ import styles from './PopUp.module.css';
 
 const PopUp = ({ onClose }) => {
     return (
-        <div className={styles.PopUpOverlay}>
-            <div className={styles.PopUp}>
+        <div className={styles.PopUpOverlay} onClick={onClose}>
+            <div className={styles.PopUp} onClick={(e) => e.stopPropagation()}>
                 <h2>No Incomplete Mesocycles</h2>
                 <p>It seems you've completed all your mesocycles! Would you like to create a new one?</p>
                 <div className={styles.ButtonContainer}>

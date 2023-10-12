@@ -156,8 +156,8 @@ const CreateMeso = () => {
                 />
             </div>
             {showSuccessModal && (
-                <div className={styles.SuccessModalOverlay}>
-                    <div className={styles.SuccessModal}>
+                <div className={styles.SuccessModalOverlay} onClick={() => setShowSuccessModal(false)}>
+                    <div className={styles.SuccessModal} onClick={(e) => e.stopPropagation()}>
                         <h2 className={styles.Message}>Mesocycle Created Successfully!</h2>
                         <div className={styles.Links}>
                             <Link className={styles.Link} to="/mesocycles">View Mesocycles</Link>

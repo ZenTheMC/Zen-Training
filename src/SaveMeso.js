@@ -39,7 +39,11 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
             };
     
             addMesocycle(userId, mesocycle);
-            setMeso({ days: [] });
+            setMeso({
+                days: [
+                    { dayOfWeek: "", exercises: [{ muscleGroup: "", name: "" }] }
+                ]
+            });
             setMesoName("");
             setMesoWeeks("");
             setAttemptedSubmit(false);
