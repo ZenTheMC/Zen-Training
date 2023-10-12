@@ -9,8 +9,8 @@ const MesoDetailsModal = ({ meso, onClose }) => {
   const daysOfWeek = Array.from(new Set(meso.days.map(day => day.dayOfWeek)));
 
   return (
-    <div className={styles.ModalBackdrop}>
-      <div className={styles.ModalContent}>
+    <div className={styles.ModalBackdrop} onClick={onClose}>
+      <div className={styles.ModalContent} onClick={(e) => e.stopPropagation()}>
         <h2>{meso.name}</h2>
         <p><strong>Status:</strong> {meso.completed ? "Completed ✓" : "Ongoing"}</p>
         <p><strong>Meso Length:</strong> {meso.weeks} Weeks</p>

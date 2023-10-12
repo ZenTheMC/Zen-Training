@@ -59,7 +59,7 @@ const MainRoutes = () => {
   return (
     <>
       {shouldRenderSidebar && <Sidebar logo={selectedLogo} onLogoClick={handleLogoOpen} onLogoSelect={handleLogoSelection} userId={user?.uid} />}
-      <LogoSelectModal isOpen={isModalOpen} onSelect={handleLogoSelect} />
+      <LogoSelectModal isOpen={isModalOpen} onSelect={handleLogoSelect} onClose={() => setIsModalOpen(false)}/>
       <Routes>
         <Route path="/signin" element={user ? <Navigate to="/mesocycles" /> : <SignInForm selectedLogoKey={selectedLogoKey} onLogoClick={handleLogoOpen} />} />
         <Route path="/signup" element={<SignUpForm selectedLogoKey={selectedLogoKey} onLogoClick={handleLogoOpen} />} />
