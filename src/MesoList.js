@@ -6,6 +6,7 @@ import SearchSort from "./SearchSort";
 import MesoDetailsModal from "./MesoDetailsModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faNoteSticky, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const MesoList = ({ userId }) => {
   const [mesocycles, setMesocycles] = useState([]);
@@ -130,29 +131,35 @@ const MesoList = ({ userId }) => {
   return (
     <div className={styles.MesoList}>
       <SearchSort onSearch={handleSearch} onSort={handleSort} />
-      {displayedMesocycles.map(meso => (
-        <div key={meso.id} className={styles.MesoItem}>
-          <div className={styles.MesoText}>
-            <span className={styles.MesoName}><strong>{meso.name}</strong> -- <em>({meso.weeks} wks)</em> -- </span>
-            {meso.completed && <span className={styles.Check}>✓</span>}
-            <span className={styles.CreatedAt}>{formatDate(meso.createdAt)}</span>
-          </div>
-          <div className={styles.MesoControls}>
-            <textarea
-              key={meso.id}
-              ref={ref => textAreaRefs.current[meso.id] = ref}
-              value={notes[meso.id] || meso.note || ""}
-              onChange={(e) => {
-                setNotes({ ...notes, [meso.id]: e.target.value });
-                adjustTextAreaHeight(meso.id);
-              }}
-            />
-            <button className={styles.SaveNote} onClick={() => handleSaveNote(meso.id)}><FontAwesomeIcon icon={faMessage}/> Save</button>
-            <button className={styles.Delete} onClick={() => handleDeleteMesoPrompt(meso.id)}><FontAwesomeIcon icon={faTrash}/></button>
-          </div>
-          <button className={styles.Details} onClick={() => setSelectedMeso(meso)}><FontAwesomeIcon icon={faNoteSticky}/> Details</button>
+      {displayedMesocycles.length === 0 ? (
+        <div className={styles.EmptyMessage}>
+          You have no created mesocycles! Go to the <Link className={styles.Link} to="/newmeso">Create Mesocycles Page</Link> to create one.
         </div>
-      ))}
+      ) : (
+        displayedMesocycles.map(meso => (
+          <div key={meso.id} className={styles.MesoItem}>
+            <div className={styles.MesoText}>
+              <span className={styles.MesoName}><strong>{meso.name}</strong> -- <em>({meso.weeks} wks)</em> -- </span>
+              {meso.completed && <span className={styles.Check}>✓</span>}
+              <span className={styles.CreatedAt}>{formatDate(meso.createdAt)}</span>
+            </div>
+            <div className={styles.MesoControls}>
+              <textarea
+                key={meso.id}
+                ref={ref => textAreaRefs.current[meso.id] = ref}
+                value={notes[meso.id] || meso.note || ""}
+                onChange={(e) => {
+                  setNotes({ ...notes, [meso.id]: e.target.value });
+                  adjustTextAreaHeight(meso.id);
+                }}
+              />
+              <button className={styles.SaveNote} onClick={() => handleSaveNote(meso.id)}><FontAwesomeIcon icon={faMessage}/> Save</button>
+              <button className={styles.Delete} onClick={() => handleDeleteMesoPrompt(meso.id)}><FontAwesomeIcon icon={faTrash}/></button>
+            </div>
+            <button className={styles.Details} onClick={() => setSelectedMeso(meso)}><FontAwesomeIcon icon={faNoteSticky}/> Details</button>
+          </div>
+        ))
+      )}
       <MesoListModal
         show={showConfirmModal}
         message={modalMessage}

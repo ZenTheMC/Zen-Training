@@ -27,6 +27,31 @@
   border-radius: 10px;
 }
 
+.Tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.TabButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.TabButton:hover {
+  background: #6c9cfa;
+}
+
+.ActiveTab {
+  background: #e6e6e6;
+}
+
 @media only screen and (max-width: 576px) {
   .LogoModalContent {
     flex-direction: column;
@@ -36,7 +61,28 @@
   }
   
   .Logos {
-    width: 10em;
-    height: 10em;
+    width: 8em;
+    height: 8em;
+  }
+
+  .Tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  
+  .TabButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin: 0;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  
+  .ActiveTab {
+    background: #05a1f6;
   }
 }

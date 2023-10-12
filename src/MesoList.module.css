@@ -99,6 +99,29 @@ textarea {
     background-color: rgb(197, 142, 255);
 }
 
+.EmptyMessage {
+    padding: 20px;
+    background-color: #ffebcd;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.Link {
+    text-decoration: none;
+    color: rgb(9, 128, 1);
+    font-weight: bold;
+    padding: 5px;
+    background-color: #ffe0e0;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.Link:hover {
+    background-color: #ffcccc;
+}
+
 /* Media query for mobile resolutions */
 @media only screen and (max-width: 576px) {
     .MesoList {
@@ -149,5 +172,9 @@ textarea {
     .MesoText > * {
         width: 100%; 
         margin: 0.2em 0;
+    }
+
+    .Link {
+        padding: 0;
     }
 }
