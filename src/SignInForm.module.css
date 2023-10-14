@@ -67,8 +67,8 @@
     border-radius: 0.8em 0.8em 0.8em 0.8em;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
     border: black solid 0.1em;
-    height: 18em;
-    width: 18em;
+    height: 17em;
+    width: 17em;
 }
 
 .Hint {
@@ -79,10 +79,18 @@
     .container {
         margin-left: 0;
         width: 100%;
-        padding: 1em;
+        padding: 1.5em;
     }
     
     .form {
         width: 90%;
+    }
+
+    .Title {
+        margin-top: 2em;
+    }
+
+    .Phrase {
+        font-size: 1.2em;
     }
 }

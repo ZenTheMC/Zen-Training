@@ -31,7 +31,7 @@ const SignInForm = ({ onLogoClick, selectedLogoKey }) => {
                 onClick= {onLogoClick}
             />
             <p className={styles.Hint}>*Try clicking the logo*</p>
-            <h2><em>Become the main character you were always meant to be!</em></h2>
+            <h2 className={styles.Phrase}><em>Become the main character you were always meant to be!</em></h2>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     className={styles.input}
