@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #abeaef;
+    background-color: #FFF2D8;
 }
 
 .form {
@@ -15,32 +15,32 @@
     border-radius: 5px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff9d;
+    background-color: #EAD7BB;
 }
 
 .input {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ced4da;
-    background-color: #abcaeb;
+    border: 1px solid #BCA37F;
+    background-color: #FFF2D8;
 }
 
 .button {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #0d6efd;
-    color: #fff;
+    background-color: #113946;
+    color: #FFF2D8;
     cursor: pointer;
 }
 
 .button:hover {
-    background-color: rgb(61, 61, 251);
+    background-color: #257f9d;
 }
 
 .button:disabled {
-    background-color: #adb5bd;
+    background-color: #BCA37F;
     cursor: not-allowed;
 }
 
@@ -49,25 +49,26 @@
     align-self: center;
     margin-top: 30px;
     padding: 5px;
-    color: black;
+    color: #113946;
 }
 
 .link:hover {
-    background-color: #669ae8;
-    color: white;
-    border: solid black 1px;
+    background-color: #BCA37F;
+    color: #FFF2D8;
+    border: solid #113946 1px;
 }
 
 .Logo {
     border-radius: 0.8em 0.8em 0.8em 0.8em;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
-    border: black solid 0.1em;
-    height: 18em;
-    width: 18em;
+    border: #113946 solid 0.1em;
+    height: 17em;
+    width: 17em;
 }
 
 .Hint {
     font-size: 0.8em;
+    color: #113946;
 }
 
 @media only screen and (max-width: 576px) {
