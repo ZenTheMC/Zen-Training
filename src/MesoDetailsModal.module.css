@@ -15,7 +15,7 @@
     width: 70%;
     max-width: 500px;
     padding: 20px;
-    background-color: rgb(165, 200, 243);
+    background-color: #EAD7BB;
     border: solid black 3px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
@@ -24,7 +24,8 @@
 
 .Close {
     margin-top: 20px;
-    background-color: rgb(192, 152, 241);
+    background-color: #113946;
+    color: #FFF2D8;
     border: solid black 1px;
     border-radius: 5px;
     padding: 5px 10px;
@@ -32,5 +33,5 @@
 }
 
 .Close:hover {
-    background-color: rgb(222, 196, 250);
+    background-color: #257f9d;
 }

@@ -12,7 +12,7 @@
 }
 
 .modal {
-    background-color: #f7cbcb;
+    background-color: #EAD7BB;
     padding: 20px;
     border-radius: 8px;
     width: 300px;
@@ -28,25 +28,25 @@
 .confirm {
     margin-top: 10px;
     font-weight: bold;
-    background-color: rgb(108, 233, 189);
-    color: rgb(84, 0, 0);
+    background-color: #113946;
+    color: #FFF2D8;
     box-shadow: 1px 1px 1px 1px;
     cursor: pointer;
     border: solid black 1px;
 }
 
 .confirm:hover {
-    background-color: rgb(0, 255, 251);
+    background-color: #257f9d;
     box-shadow: 2px 2px 2px 2px;
     color: black;
 }
 
 .cancel {
-    background-color: rgb(223, 232, 165);
+    background-color: #BCA37F;
     cursor: pointer;
     margin-top: 10px;
 }
 
 .cancel:hover {
-    background-color: rgb(202, 203, 189);
+    background-color: #EAD7BB;
 }

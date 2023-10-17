@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(165, 161, 161);
+    background-color: #FFF2D8;
     padding-bottom: 5vh;
 }
   
@@ -16,13 +16,13 @@
     margin: 20px;
     padding: 10px;
     max-width: 30%;
-    border: solid black 3px;
+    border: solid #113946 3px;
     box-shadow: 2px 2px 2px 2px;
-    background-color: rgb(165, 200, 243);
+    background-color: #EAD7BB;
 }
 
 .MesoItem:hover {
-    background-color: rgb(128, 216, 241);
+    background-color: #BCA37F;
 }
 
 .MesoText {
@@ -61,42 +61,44 @@ textarea {
 
 .SaveNote {
     margin-left: 0.5rem;
-    background-color: rgb(237, 239, 172);
-    border: solid black 1px;
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 1px;
     cursor: pointer;
 }
 
 .SaveNote:hover {
     box-shadow: 1px 1px 1px 1px;
-    background-color: rgb(236, 222, 62);
+    background-color: #257f9d;
 }
 
 .Delete {
     margin-left: 0.5rem;
-    background-color: rgb(233, 108, 108);
-    color: rgb(84, 0, 0);
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 1px;
     box-shadow: 1px 1px 1px 1px;
     cursor: pointer;
-    border: solid black 1px;
     margin-right: 1em;
 }
 
 .Delete:hover {
-    background-color: red;
+    background-color: #257f9d;
     box-shadow: 2px 2px 2px 2px;
     color: black;
 }
 
 .Details {
-    background-color: rgb(222, 193, 252);
-    border: solid black 1px;
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 1px;
     cursor: pointer;
     margin-top: 0.5rem;
 }
 
 .Details:hover {
     box-shadow: 1px 1px 1px 1px;
-    background-color: rgb(197, 142, 255);
+    background-color: #257f9d;
 }
 
 .EmptyMessage {
