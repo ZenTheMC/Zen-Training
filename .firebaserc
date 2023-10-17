@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "js-react-hypertrophy-app"
-  }
+    "default": "js-react-hypertrophy-app",
+    "production": "js-react-hypertrophy-app"
+  },
+  "targets": {},
+  "etags": {}
 }
