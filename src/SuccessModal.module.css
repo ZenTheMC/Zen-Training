@@ -11,7 +11,8 @@
 }
 
 .modal {
-    background-color: #ffd0d0;
+    background-color: #EAD7BB;
+    color: #113946;
     padding: 10px;
     border-radius: 8px;
     width: 300px;
@@ -20,7 +21,7 @@
 
 .link {
     text-decoration: none;
-    color: rgb(10, 155, 0);
+    color: #86B2A9;
     font-weight: bold;
     padding: 5px;
     background-color: #ffe0e0;
@@ -29,15 +30,20 @@
 }
 
 .link:hover {
-    background-color: #ffcccc;
+    background-color: #689B8C;
 }
 
 .Close {
-    background-color: rgb(238, 86, 111);
+    background-color: #689B8C;
+    color: white;
     cursor: pointer;
     border-radius: 8px;
     border: black solid 1px;
     margin-bottom: 10px;
+}
+
+.Close:hover {
+    background-color: #3f6056;
 }
 
 @media only screen and (max-width: 576px) {

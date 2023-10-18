@@ -11,7 +11,8 @@
 }
 
 .CustomExercises {
-    background: rgb(149, 206, 234);
+    background: #EAD7BB;
+    color: #113946;
     padding: 20px;
     border-radius: 8px;
     width: 80%;
@@ -26,7 +27,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #73c3aa;
+    background-color: #4a6d89;
+    color: white;
 }
 
 .Cancel {
@@ -34,19 +36,20 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #c48e70;
+    background-color: #86afb2;
 }
 
 .Save:hover {
-    background-color: #00b3a1;
+    background-color: #72b2da;
+    color: black;
 }
 
 .Cancel:hover {
-    background-color: #d07f50;
+    background-color: #689B8C;
 }
 
 .ErrorMessage {
-    color: red;
+    color: #B85C5C;
     font-size: 0.9rem;
     margin-top: 10px;
 }

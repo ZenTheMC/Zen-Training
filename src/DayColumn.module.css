@@ -1,14 +1,15 @@
 .DayColumn {
     display: flex;
     flex-direction: column;
-    border: solid black 0.1em;
-    background-color: rgb(231, 211, 249);
+    border: solid #113946 0.1em;
+    background-color: #EAD7BB;
 }
 
 .DayLabel {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(171, 251, 251);
+    background-color: #113946;
+    color: #FFF2D8;
     padding: 0.8em;
     margin-bottom: 1.5em;
     width: 100%;
@@ -25,8 +26,9 @@
     margin-top: 0.15em;
     align-self: center;
     width: 50%;
-    background-color: rgb(186, 229, 131);
-    border: solid black 0.1em;
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 0.1em;
     cursor: pointer;
 }
 
@@ -35,30 +37,32 @@
     margin-bottom: 0.15em;
     align-self: center;
     width: 50%;
-    background-color: rgb(239, 172, 175);
-    border: solid black 0.1em;
+    background-color: #257f9d;
+    color: #FFF2D8;
+    border: solid #257f9d 0.1em;
     cursor: pointer;
 }
 
 .AddMuscleButton:hover {
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
-    background-color: rgb(161, 236, 62);
+    background-color: #257f9d;
 }
 
 .DeleteMuscleButton:hover {
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
-    background-color: rgb(239, 136, 141);
+    background-color: #113946;
 }
 
 .Delete {
-    background-color: rgb(247, 84, 84);
-    border: black solid 0.1em;
+    background-color: #1e5e74;
+    color: #FFF2D8;
+    border: solid #1b4e5f 0.1em;
     cursor: pointer;
     padding: 0.74em;
 }
 
 .Delete:hover {
-    background-color: red;
+    background-color: #5cc5e8;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
     color: black;
 }
@@ -72,12 +76,20 @@
     margin-top: 0.15em;
     align-self: center;
     width: 50%;
-    background-color: rgb(229, 216, 131);
-    border: solid black 0.1em;
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 0.1em;
     cursor: pointer;
 }
 
 .CustomExercise:hover {
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
-    background-color: rgb(236, 198, 62);
+    background-color: #257f9d;
+}
+
+@media only screen and (max-width: 576px) {
+
+    .Delete {
+        margin-left: 1em;
+    }
 }

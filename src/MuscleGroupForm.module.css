@@ -3,16 +3,19 @@
     flex-wrap: wrap;
     margin-bottom: 2em;
     margin-left: 1em;
+    background-color: #EAD7BB;
 }
 
 .MuscleGroupLabel {
     margin-right: 0.8em;
     margin-top: 0.8em;
+    color: #113946;
 }
 
 .ExerciseNameLabel {
     margin-right: 0.8em;
     margin-top: 0.8em;
+    color: #113946;
 }
 
 .InvalidInput {

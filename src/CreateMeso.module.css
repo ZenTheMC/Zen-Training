@@ -3,13 +3,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(165, 161, 161);
+    background-color: #FFF2D8;
     margin-left: 15vw;
+    padding-bottom: 32vh;
 }
 
 .Inputs {
     margin-bottom: 2em;
-    background-color: rgb(199, 235, 154);
 }
 
 .Input {
@@ -18,7 +18,7 @@
 
 .Days {
     display: flex;
-    border: solid black 0.1em;
+    border: solid #113946 0.1em;
 }
 
 .Completion {
@@ -26,13 +26,14 @@
 }
 
 .AddDayButton {
-    background-color: rgb(245, 193, 163);
-    border: black 0.1em;
+    background-color: #1e5e74;
+    color: #FFF2D8;
+    border: solid #113946 0.1em;
     cursor: pointer;
 }
 
 .AddDayButton:hover {
-    background-color: rgb(244, 136, 74);
+    background-color: #257f9d;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
 }
 
@@ -56,11 +57,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: rgb(205, 205, 205);
+    background: #EAD7BB;
     padding: 1em;
     border-radius: 0.8em;
     width: 80%;
     max-width: 22em;
+    border: solid #113946 0.1em;
 }
 
 .Message {
@@ -73,8 +75,8 @@
 }
 
 .Link {
-    background-color: #c4fae2;
-    color: black;
+    background-color: #113946;
+    color: #FFF2D8;
     text-decoration: none;
     display: inline-block;
     padding: 0.7em;
@@ -83,20 +85,21 @@
 }
 
 .Link:hover {
-    background-color: #c2dbf5;
+    background-color: #257f9d;
 }
 
 .Close {
-    background-color: #c3c3c3;
-    color: black;
+    background-color: #113946;
+    color: #FFF2D8;
     text-decoration: none;
     margin-top: 0.8em;
     cursor: pointer;
     padding: 0.5em;
+    border: solid #113946 0.1em;
 }
 
 .Close:hover {
-    background-color: #ffc6c6;
+    background-color: #257f9d;
 }
 
 .Input[type="number"]::-webkit-inner-spin-button,
@@ -113,6 +116,7 @@
 @media only screen and (max-width: 576px) {
     .CreateMeso {
         margin-left: 0;
+        padding-bottom: 19vh;
     }
 
     .Days {

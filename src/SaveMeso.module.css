@@ -3,14 +3,16 @@
 }
 
 .SubmitButton {
-    background-color: rgb(242, 161, 192);
-    border: solid black 0.1em;
+    background-color: #4f7b89;
+    color: white;
+    border: solid #113946 0.1em;
     cursor: pointer;
 }
 
 .SubmitButton:hover {
-    background-color: rgb(236, 97, 150);
+    background-color: #72bdda;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
+    color: black;
 }
 
 .SubmitButtonDisabled {
@@ -21,12 +23,12 @@
 }
 
 .SubmitButtonDisabled:hover {
-    background-color: #a62828;
+    background-color: #213d67;
     color: rgb(249, 249, 249);
 }
 
 .ValidationMessage {
-    color: rgb(199, 0, 0);
+    color: #3d6590;
     margin-bottom: 1em;
     font-size: .85em;
 }
