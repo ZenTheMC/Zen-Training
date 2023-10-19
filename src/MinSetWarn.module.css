@@ -12,7 +12,7 @@
 }
 
 .modal {
-    background-color: #cbf0f7;
+    background-color: #e8c785;
     padding: 20px;
     border-radius: 8px;
     width: 300px;
@@ -22,14 +22,13 @@
 .closeButton {
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #ff5050;
-    color: #fff;
+    background-color: #1b5e74;
+    color: #FFF2D8;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .closeButton:hover {
-    background-color: #87c25a;
-    color: black;
+    background-color: #0056b3;
 }

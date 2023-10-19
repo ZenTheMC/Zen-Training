@@ -3,13 +3,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(165, 161, 161);
+    background-color: #FFF2D8;
     margin-left: 15%;
     width: 85%;
+    color: #113946;
 }
 
 .Exercise {
     margin-bottom: 4em;
+    background-color: #FFF2D8;
 }
 
 .ExerciseName {
@@ -35,15 +37,15 @@
     margin-bottom: 2em;
     margin-top: 2em;
     font-weight: bold;
-    background-color: rgb(233, 108, 108);
-    color: rgb(84, 0, 0);
+    background-color: #4d3487;
+    color: #FFF2D8;
     box-shadow: 0.1em 0.1em 0.1em 0.1em;
     cursor: pointer;
-    border: solid black 0.1em;
+    border: solid #BCA37F 0.1em;
 }
 
 .EndMesoEarly:hover {
-    background-color: red;
+    background-color: #A62828;
     box-shadow: 0.2em 0.2em 0.2em 0.2em;
     color: black;
 }
@@ -51,39 +53,45 @@
 .AddSet {
     cursor: pointer;
     margin-right: 0.3em;
-    background-color: rgb(159, 212, 79);
-    border: solid black 0.1em;
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 0.1em;
 }
 
 .AddSet:hover {
-    background-color: rgb(47, 172, 47);
+    background-color: #3091b1;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
 }
 
 .RemoveSet {
     cursor: pointer;
     margin-left: 0.3em;
-    background-color: rgb(231, 168, 168);
-    border: solid black 0.1em;
+    background-color: #257f9d;
+    color: #FFF2D8;
+    border: solid #257f9d 0.1em;
 }
 
 .RemoveSet:hover {
-    background-color: rgb(197, 65, 65);
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
+    background-color: #113946;
 }
 
 .LogSet {
     cursor: pointer;
-    border: solid black 0.1em;
+    border: solid #113946 0.1em;
     margin: 0.2em;
-    background-color: rgb(175, 213, 251);
+    background-color: #2a5867;
+    color: #FFF2D8;
 }
 
 .LogSet:hover {
-    background-color: rgb(0, 115, 255);
+    background-color: #25a482;
+    box-shadow: 0.1em 0.1em 0.1em 0.1em;
 }
 
 .Weight, .Reps{
-    background-color: rgb(212, 229, 246);
-    border: solid black 0.1em;
+    background-color: #eed8ab;
+    border: solid #113946 0.1em;
     text-align: center;
     margin: 0.1em;
     appearance: none;

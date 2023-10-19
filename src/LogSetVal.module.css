@@ -12,7 +12,7 @@
 }
 
 .Menu {
-    background-color: #cbf0f7;
+    background-color: #e8c785;
     padding: 20px;
     border-radius: 8px;
     width: 300px;
@@ -22,7 +22,7 @@
 .Button {
     margin-top: 1em;
     padding: 0.7em;
-    background-color: #ff5050;
+    background-color: #4d3487;
     color: #fff;
     border: none;
     border-radius: 0.5em;
@@ -30,6 +30,6 @@
 }
 
 .Button:hover {
-    background-color: #87c25a;
+    background-color: #5a76c2;
     color: black;
 }

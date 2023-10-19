@@ -2,11 +2,12 @@
     border: 0.3em solid;
     padding: 0.1em;
     margin-bottom: 0.5em;
-    background-color: rgb(174, 201, 245);
+    background-color: #e8c785;
 }
 
 .Completed {
-    background-color: rgb(155, 181, 221);
+    background-color: #465fa0;
+    color: #FFF2D8;
     text-align: center;
     border: 0.15em solid;
     padding: 0.1em;
@@ -14,7 +15,8 @@
 }
 
 .Incomplete {
-    background-color: rgb(192, 216, 255);
+    background-color: #1b5e74;
+    color: #FFF2D8;
     text-align: center;
     border: 0.15em solid;
     padding: 0.1em;
@@ -23,13 +25,13 @@
 .Completed:hover {
     box-shadow: 0.02em 0.02em 0.02em 0.02em;
     cursor: pointer;
-    background-color: rgb(179, 230, 104);
+    background-color: rgb(129, 157, 87);
 }
 
 .Incomplete:hover {
     box-shadow: 0.02em 0.02em 0.02em 0.02em;
     cursor: pointer;
-    background-color: rgb(222, 184, 122);
+    background-color: rgb(204, 135, 92);
 }
 
 /* Media query for mobile resolutions */
@@ -46,13 +48,5 @@
         border-width: 0.15em;
         padding: 0.09em;
         cursor: pointer;
-    }
-
-    .Completed {
-        background-color: rgb(200, 220, 119);
-    }
-
-    .Incomplete {
-        background-color: rgb(222, 184, 122);
     }
 }
