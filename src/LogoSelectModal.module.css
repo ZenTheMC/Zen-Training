@@ -11,7 +11,7 @@
 }
 
 .LogoModalContent {
-  background: rgb(180, 226, 249);
+  background: #EAD7BB;
   padding: 20px;
   border-radius: 8px;
   display: flex;
@@ -45,11 +45,12 @@
 }
 
 .TabButton:hover {
-  background: #6c9cfa;
+  background: #113946;
+  color: #FFF2D8;
 }
 
 .ActiveTab {
-  background: #e6e6e6;
+  background: #FFF2D8;
 }
 
 @media only screen and (max-width: 576px) {
@@ -83,6 +84,7 @@
   }
   
   .ActiveTab {
-    background: #05a1f6;
+    background: #113946;
+    color: #FFF2D8;
   }
 }

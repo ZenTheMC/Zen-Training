@@ -21,16 +21,17 @@
 
 .link {
     text-decoration: none;
-    color: #86B2A9;
+    color: #2c559c;
     font-weight: bold;
     padding: 5px;
-    background-color: #ffe0e0;
+    background-color: #e9cd8c;
     border-radius: 5px;
     transition: background-color 0.2s;
 }
 
 .link:hover {
-    background-color: #689B8C;
+    background-color: #856215;
+    color: #EAD7BB;
 }
 
 .Close {

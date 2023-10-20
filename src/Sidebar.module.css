@@ -2,36 +2,37 @@
     width: 15vw;
     height: 100vh;
     position: fixed;
-    background-color: #abcdef;
+    background-color: #EAD7BB;
     padding: 2vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border: #113946 0.1em solid;
 }
 
 .Link {
     text-decoration: none;
-    color: black;
-    background-color: rgb(250, 230, 204);
+    background-color: #113946;
+    color: #FFF2D8;
+    border: solid #113946 0.1em;
     padding: 1.2em;
-    border: solid black 0.1em;
     cursor: pointer;
     text-align: center;
     font-size: 1.2em;
 }
 
 .Link:hover {
-    box-shadow: 0.1em 0.1em 0.1em 0.1em;
-    background-color: rgb(251, 255, 0);
+    box-shadow: black 0.1em 0.1em 0.1em 0.1em;
+    background-color: #23667d;
 }
 
 .SignOutButton {
     padding: 1em;
     border-radius: 50%;
     cursor: pointer;
-    background-color: rgb(224, 156, 156);
+    background-color: rgb(112, 43, 43);
     border: solid black 0.1em;
-    color: black;
+    color: #FFF2D8;
     font-weight: bold;
     align-self: center;
     height: 3.5em;
@@ -40,7 +41,7 @@
 }
 
 .SignOutButton:hover {
-    background-color: rgb(248, 88, 88);
+    background-color: rgb(221, 85, 85);
     box-shadow: black 0.1em 0.1em 0.1em 0.1em;
     color: white;
 }
@@ -49,9 +50,9 @@
     padding: 1em;
     border-radius: 50%;
     cursor: pointer;
-    background-color: rgb(207, 183, 255);
+    background-color: #4d3487;
     border: solid black 0.1em;
-    color: black;
+    color: #FFF2D8;
     font-weight: bold;
     align-self: center;
     height: 4em;
@@ -60,9 +61,8 @@
 }
 
 .Help:hover {
-    background-color: rgb(141, 88, 248);
+    background-color: rgb(127, 90, 202);
     box-shadow: black 0.1em 0.1em 0.1em 0.1em;
-    color: white;
 }
 
 .Logo {

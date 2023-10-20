@@ -18,7 +18,7 @@
     transform: translateX(-50%);
     width: 60%;
     max-width: 500px;
-    background-color: #abcdef;
+    background-color: #EAD7BB;
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -27,7 +27,9 @@
 }
 
 .Tabs {
-    background-color: rgb(250, 230, 204);
+    background-color: #BCA37F;
+    color: #fff5dd;
+    font-weight: bold;
     padding: 10px;
     border: solid black 1px;
     cursor: pointer;
@@ -36,7 +38,8 @@
 
 .Tabs:hover {
     box-shadow: 1px 1px 1px 1px;
-    background-color: rgb(251, 255, 0);
+    background-color: rgb(254, 214, 69);
+    color: black;
 }
 
 .TabMenu {
@@ -46,7 +49,8 @@
 }
 
 .TabContent {
-    background-color: #e1d7fa;
+    background-color: #1d4f5f;
+    color: #fff5dd;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
@@ -57,14 +61,14 @@
     padding: 10px;
     border-radius: 50%;
     cursor: pointer;
-    background-color: rgb(204, 179, 255);
-    border: solid black 1px;
-    color: black;
+    background-color: #4d3487;
+    border: solid black 0.1em;
+    color: #FFF2D8;
 }
 
 .Close:hover {
     box-shadow: 1px 1px 1px 1px;
-    background-color: rgb(196, 93, 255);
+    background-color: rgb(127, 90, 202);
 }
 
 .Instructions {
