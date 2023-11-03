@@ -7,7 +7,7 @@
 
 **Link to project:** [Zen Training](https://js-react-hypertrophy-app.web.app/)
 
-![alt tag](http://placecorgi.com/1200/650)
+![App Logo]([http://placecorgi.com/1200/650](https://drive.google.com/file/d/1gGnr6plBqmlXUcIZfX6BupiOU4hIxQeY/view?usp=sharing))
 
 ## How It's Made:
 
