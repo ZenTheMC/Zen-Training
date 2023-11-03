@@ -5,9 +5,11 @@
 
 -You also get to have custom choices, like your preferred logo/icon, creating new custom exercises, etc.
 
-**Link to project:** [Zen Training](https://js-react-hypertrophy-app.web.app/)
+**Link to project:**
 
-![App Logo](https://drive.google.com/uc?export=view&id=10UyPlVHJuwWnU7ENwLH8ThgpQFN76EVq)
+[Zen Training](https://js-react-hypertrophy-app.web.app/)
+
+![App Logo](https://drive.google.com/uc?export=view&id=10UyPlVHJuwWnU7ENwLH8ThgpQFN76EVq) ![App Screenshot](https://drive.google.com/uc?export=view&id=1p-5VreUYXkSwCTotZpjzMkm7YSQUc-o7)
 
 ## How It's Made:
 
