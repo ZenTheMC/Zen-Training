@@ -1,6 +1,8 @@
 # Zen Training
 Your very own training coach and workout database!
+
 This app allows you to CREATE your own programs, RUN them, VIEW them and have many utility options, COMPLETE and/or DELETE programs.
+
 You also get to have custom choices, like your preferred logo/icon, creating new custom exercises, etc.
 
 **Link to project:** [Zen Training](https://js-react-hypertrophy-app.web.app/)
