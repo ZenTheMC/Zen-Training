@@ -7,7 +7,7 @@
 
 **Link to project:** [Zen Training](https://js-react-hypertrophy-app.web.app/)
 
-![App Logo](https://drive.google.com/file/d/1gGnr6plBqmlXUcIZfX6BupiOU4hIxQeY/view?usp=sharing)
+![App Logo](https://drive.google.com/uc?export=view&id=1gGnr6plBqmlXUcIZfX6BupiOU4hIxQeY)
 
 ## How It's Made:
 
