@@ -2,7 +2,7 @@
 
 PROBLEM: Many people I've worked with have no idea how to construct their training program when they first came to me.
 
------------------------------------------------------------------------------------------------------------
+
 
 SOLUTION: I created a user-friendly, science-based, and individualized responsive full-stack application:
 
