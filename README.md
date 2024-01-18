@@ -1,10 +1,6 @@
 # Zen Training
 -Your very own training coach and workout database!
 
--This app allows you to CREATE your own programs, RUN them, VIEW them and have many utility options, COMPLETE and/or DELETE programs.
-
--You also get to have custom choices, like your preferred logo/icon, creating new custom exercises, etc.
-
 **Link to project:**
 
 [Zen Training](https://js-react-hypertrophy-app.web.app/)
@@ -15,7 +11,9 @@
 
 **Tech used:** HTML, CSS, JavaScript, React, Node, Firebase as an SaaS.
 
-TO-DO // *In-depth description of how I built this app* // TO-DO
+-Users can CREATE programs, RUN them to eventual COMPLETION, VIEW a list of them and have many utility options like DELETING them & ADDING notes.
+
+-Includes many custom features, like selecting from a list of logos/icons, creating new custom exercises, etc.
 
 ## Optimizations (*Contributions Welcome*)
 
