@@ -12,7 +12,7 @@ SOLUTION: I created a user-friendly, science-based, and individualized responsiv
 
 [Zen Training](https://js-react-hypertrophy-app.web.app/)
 
-![App Logo](https://drive.google.com/uc?export=view&id=1sU_QAk5b6znlI9fhuEPg1-dYt-8u6iD9) ![App Screenshot](https://drive.google.com/uc?export=view&id=1Z7kmKYL1oBCRCzmTmWd43xv_D_omCQ9h)
+![App Logo](https://drive.google.com/uc?export=view&id=1sU_QAk5b6znlI9fhuEPg1-dYt-8u6iD9) ![App Screenshot](https://drive.google.com/uc?export=view&id=1y1xqrysg4fbJEtK0yh2yhaD6wLOgxOau)
 
 ## How It's Made:
 
