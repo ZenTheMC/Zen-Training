@@ -112,7 +112,7 @@ const MesoList = ({ userId }) => {
     mesocycles.forEach(meso => adjustTextAreaHeight(meso.id));
   }, [notes, mesocycles]);
 
-  let displayedMesocycles = mesocycles;
+  let displayedMesocycles = [...mesocycles];
 
   if (searchTerm) {
     displayedMesocycles = displayedMesocycles.filter(meso => meso.name.toLowerCase().includes(searchTerm.toLowerCase()));
