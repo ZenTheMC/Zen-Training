@@ -28,7 +28,7 @@ const SaveMeso = ({ meso, setMeso, mesoName, setMesoName, mesoWeeks, setMesoWeek
             for (let week = 1; week <= Number(mesoWeeks); week++) {
                 meso.days.forEach(day => {
                     const deepCopiedDay = deepCopy(day);
-                    replicatedDays.push({ ...deepCopiedDay, week, completed: false });;
+                    replicatedDays.push({ ...deepCopiedDay, week, completed: false });
                 });
             }
     
