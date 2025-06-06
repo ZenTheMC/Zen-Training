@@ -65,6 +65,26 @@
     box-shadow: black 0.1em 0.1em 0.1em 0.1em;
 }
 
+.ToggleTheme {
+    padding: 0.8em;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #4d3487;
+    border: solid black 0.1em;
+    color: #FFF2D8;
+    font-weight: bold;
+    align-self: center;
+    height: 3em;
+    width: 3em;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+}
+
+.ToggleTheme:hover {
+    background-color: rgb(127, 90, 202);
+    box-shadow: black 0.1em 0.1em 0.1em 0.1em;
+}
+
 .Logo {
     height: 10em;
     width: 10em;
@@ -88,6 +108,13 @@
     .Link, .SignOutButton, .Help {
         font-size: 0.8em;
         padding: 0.3em;
+    }
+
+    .ToggleTheme {
+        height: 2em;
+        width: 2em;
+        padding: 0.3em;
+        margin-bottom: 0;
     }
 
     .Link {

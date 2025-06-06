@@ -16,6 +16,7 @@ const MainRoutes = () => {
   const [user] = useAuthState(auth);
   const location = useLocation();
   const [selectedLogo, setSelectedLogo] = useState(defaultLogo);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const shouldRenderSidebar = user && !["/signin", "/signup"].includes(location.pathname);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLogoKey, setSelectedLogoKey] = useState(localStorage.getItem('logoPreference') || 'logo2');
@@ -26,7 +27,12 @@ const MainRoutes = () => {
             .then(logoPreference => setSelectedLogo(logoPreference))
             .catch(error => console.error("Error fetching logo preference:", error));
     }
-  }, [user]);  
+  }, [user]);
+
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', darkMode);
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
 
   const handleLogoSelection = (selectedLogo, userId) => {
     setSelectedLogo(selectedLogo);
@@ -37,10 +43,12 @@ const MainRoutes = () => {
   const handleLogoOpen = () => {
     setIsModalOpen(true);
   };
-  
+
   const handleLogoClose = () => {
     setIsModalOpen(false);
   };
+
+  const toggleDarkMode = () => setDarkMode(prev => !prev);
   
   const handleLogoSelect = (selectedLogoKey = null) => {
     if (selectedLogoKey) {
@@ -58,7 +66,16 @@ const MainRoutes = () => {
 
   return (
     <>
-      {shouldRenderSidebar && <Sidebar logo={selectedLogo} onLogoClick={handleLogoOpen} onLogoSelect={handleLogoSelection} userId={user?.uid} />}
+      {shouldRenderSidebar && (
+        <Sidebar
+          logo={selectedLogo}
+          onLogoClick={handleLogoOpen}
+          onLogoSelect={handleLogoSelection}
+          userId={user?.uid}
+          toggleDarkMode={toggleDarkMode}
+          isDarkMode={darkMode}
+        />
+      )}
       <LogoSelectModal isOpen={isModalOpen} onSelect={handleLogoSelect} onClose={() => setIsModalOpen(false)}/>
       <Routes>
         <Route path="/signin" element={user ? <Navigate to="/mesocycles" /> : <SignInForm selectedLogoKey={selectedLogoKey} onLogoClick={handleLogoOpen} />} />
